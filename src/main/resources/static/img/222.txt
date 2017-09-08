@@ -1,0 +1,6 @@
+VPN : itc-lzf    vpn.0904
+
+SVN : 	svn liuzhenfei
+	    :123456
+
+svn://10.135.8.53/gpsservice 

@@ -15,7 +15,7 @@ public class FileUploadResponseUtil {
 
     private String error;
 
-    private List<Map<String,String>> initialPreview;
+    private List<String> initialPreview;
 
     private List<Map<String,String>> initialPreviewConfig;
 

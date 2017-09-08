@@ -25,21 +25,43 @@
     <form enctype="multipart/form-data" method="post">
         <input id="kv-explorer" type="file" name="file" multiple>
         <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary ">Submit</button>
         <button type="reset" class="btn btn-default">Reset</button>
     </form>
 </div>
 </body>
 <script>
     $(document).ready(function () {
-
+        var btns = '<button type="button" class="kv-cust-btn btn btn-xs btn-default" title="Download" data-key="{dataKey}">' +
+                '<i class="glyphicon glyphicon-download"></i>' +
+                '</button>';
         $("#kv-explorer").fileinput({
             language: 'zh', //设置语言
+            showPreview:true,
+            showCancel:true,
+            showUpload: true,//是否显示上传按钮
+            showRemove: true,//是否显示删除按钮
+            showCaption: true,//是否显示输入框
             dropZoneEnabled: false,
+            previewFileIcon: '<i class="glyphicon glyphicon-file"></i>',
+            allowedPreviewTypes: null, // set to empty, null or false to disable preview for all types
             uploadUrl: '/upload/fileupload',// 服务器端上传处理程序
+            deleteUrl:'/upload/deletefile',
+            previewFileIconSettings: {
+                'docx': '<i  class="glyphicon glyphicon-file"></i>',
+                'xlsx': '<i class="glyphicon glyphicon-file"></i>',
+                'pptx': '<i class="glyphicon glyphicon-file"></i>',
+                'jpg': '<i class="glyphicon glyphicon-picture"></i>',
+                'pdf': '<i class="glyphicon glyphicon-file"></i>',
+                'zip': '<i class="glyphicon glyphicon-file"></i>',
+            },
+            otherActionButtons: btns, //自定义按钮
             uploadAsync: true,  //异步上传
             //allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
             maxFileCount: 5     //最大上传文件数为5
+        }).on("fileuploaded", function(event, outData) {
+            //文件上传成功后返回的数据
+            console.log(outData.response);
         });
 
        /* $("#kv-explorer").fileinput({
