@@ -6,11 +6,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="school" />
+        <module name="discovery" />
+        <module name="service1" />
+        <module name="service2" />
+        <module name="springmvcModule" />
+        <module name="swagger2Module" />
+        <module name="templateModule" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="discovery" target="1.8" />
       <module name="school" target="1.8" />
+      <module name="service1" target="1.8" />
+      <module name="service2" target="1.8" />
+      <module name="springCloudModule" target="1.8" />
+      <module name="springmvcModule" target="1.8" />
+      <module name="swagger2Module" target="1.8" />
+      <module name="templateModule" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

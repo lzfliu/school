@@ -3,14 +3,19 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.lzf</groupId>
   <artifactId>school</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>swagger2Module</module>
+    <module>templateModule</module>
+    <module>springCloudModule</module>
+  </modules>
 
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.4.RELEASE</version>
+    <version>1.5.6.RELEASE</version>
     <relativePath/>
   </parent>
 
@@ -22,30 +27,13 @@
 
 
   <dependencies>
+    <!-- 构建springmvc的依赖包. -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
-    <!-- 引入freeMarker的依赖包. -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-freemarker</artifactId>
-    </dependency>
-
-    <!-- 引入thymeleaf的依赖包. -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-      <version>1.2.20</version>
-    </dependency>
-
-
+    <!--简化enitty代码,提供get/set等注解，简化代码-->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -53,22 +41,25 @@
       <!--简化enitty代码-->
     </dependency>
 
-
-    <dependency>
-      <groupId>org.mybatis.spring.boot</groupId>
-      <artifactId>mybatis-spring-boot-starter</artifactId>
-      <version>1.1.1</version>
-    </dependency>
-
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.38</version>
-    </dependency>
+    <!-- 提供开发热部署依赖-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional> <!-- 这个需要为 true 热部署才有效 -->
+    </dependency>
+    <!--引入JUnit测试依赖-->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>4.3.9.RELEASE</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <!-- 表示开发的时候引入，发布的时候不会加载此包 -->
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
