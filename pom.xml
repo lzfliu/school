@@ -9,6 +9,7 @@
     <module>swagger2Module</module>
     <module>templateModule</module>
     <module>springCloudModule</module>
+      <module>groovyModule</module>
   </modules>
 
 
