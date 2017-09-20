@@ -15,4 +15,4 @@ zuul:
       url: http://localhost:8081/
     service2:                                               # 可以随便写，在zuul上面唯一即可；当这里的值 = service-id时，service-id可以不写。
       path: /service2/**                                    # 想要映射到的路径
-      service-id: compute-service2
+      service-id: service2

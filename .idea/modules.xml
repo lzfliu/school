@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/springCloudModule/discovery/discovery.iml" filepath="$PROJECT_DIR$/springCloudModule/discovery/discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springCloudModule/gateway/gateway.iml" filepath="$PROJECT_DIR$/springCloudModule/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/groovyModule/groovyModule.iml" filepath="$PROJECT_DIR$/groovyModule/groovyModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybatisModule/mybatisModule.iml" filepath="$PROJECT_DIR$/mybatisModule/mybatisModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/school.iml" filepath="$PROJECT_DIR$/school.iml" />
       <module fileurl="file://$PROJECT_DIR$/springCloudModule/service1/service1.iml" filepath="$PROJECT_DIR$/springCloudModule/service1/service1.iml" />
       <module fileurl="file://$PROJECT_DIR$/springCloudModule/service2/service2.iml" filepath="$PROJECT_DIR$/springCloudModule/service2/service2.iml" />

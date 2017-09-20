@@ -2,7 +2,7 @@ server:
   port: 8082
 spring:
   application:
-    name: compute-service2
+    name: service2
 eureka:
   client:
     serviceUrl:

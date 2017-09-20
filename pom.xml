@@ -10,6 +10,7 @@
     <module>templateModule</module>
     <module>springCloudModule</module>
       <module>groovyModule</module>
+      <module>mybatisModule</module>
   </modules>
 
 
@@ -48,19 +49,21 @@
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional> <!-- 这个需要为 true 热部署才有效 -->
     </dependency>
-    <!--引入JUnit测试依赖-->
+    <!--引入测试依赖-->
     <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-test</artifactId>
-        <version>4.3.9.RELEASE</version>
-        <scope>test</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version> 1.5.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>4.3.6.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <!-- 表示开发的时候引入，发布的时候不会加载此包 -->
-      <scope>test</scope>
+      <version> 4.12</version>
     </dependency>
 
   </dependencies>

@@ -7,6 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="discovery" />
+        <module name="gateway" />
+        <module name="groovyModule" />
+        <module name="mybatisModule" />
         <module name="service1" />
         <module name="service2" />
         <module name="springmvcModule" />
@@ -15,7 +18,11 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="config" target="1.8" />
       <module name="discovery" target="1.8" />
+      <module name="gateway" target="1.8" />
+      <module name="groovyModule" target="1.8" />
+      <module name="mybatisModule" target="1.8" />
       <module name="school" target="1.8" />
       <module name="service1" target="1.8" />
       <module name="service2" target="1.8" />

@@ -2,8 +2,11 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/groovyModule" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mybatisModule" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springCloudModule" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springCloudModule/discovery" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springCloudModule/gateway" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springCloudModule/service1" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springCloudModule/service2" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/swagger2Module" charset="UTF-8" />
