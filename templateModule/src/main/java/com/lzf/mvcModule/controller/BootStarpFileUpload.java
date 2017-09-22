@@ -2,6 +2,8 @@ package com.lzf.mvcModule.controller;
 
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lzf.mvcModule.utils.FileUploadResponseUtil;
 import com.lzf.mvcModule.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +38,11 @@ public class BootStarpFileUpload {
         return "freemarker/plugins/fileupload/bootstrapfileuplaod_1";
     }
 
+  @RequestMapping("/index2")
+    public String bootstrapfileuplaod_2(){
+        return "freemarker/plugins/fileupload/bootstrapfileuplaod_2";
+    }
+
 
 
     /**
@@ -56,7 +63,14 @@ public class BootStarpFileUpload {
             String filePath = FILEUPLOADPATH; //文件上传位置
             try {
                 String targetFileName = FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-                makePreview(initialPreview,fileName,targetFileName);
+                /*
+                    上传成功后，不想显示图片，或者上传的文件不是图片格式请用下面方法。
+                 */
+               // makePreview(initialPreview,fileName,targetFileName);
+                /*
+                    上传成功后，显示图片请用下面方法。
+                 */
+                makePreview4Img(initialPreview,fileName,targetFileName);
                 makePreviewConfig(initialPreviewConfig,fileName,targetFileName);
             } catch (Exception e) {
                 responseUtil.setError("上传失败，请重新上传！");
@@ -64,14 +78,42 @@ public class BootStarpFileUpload {
         }
         responseUtil.setInitialPreview(initialPreview);
         responseUtil.setInitialPreviewConfig(initialPreviewConfig);
-       /* JSONObject json = (JSONObject) JSON.toJSON(responseUtil);
-        System.out.println(json.toJSONString());*/
-        return "";
+        JSONObject json = (JSONObject) JSON.toJSON(responseUtil);
+        System.out.println(json.toJSONString());
+        return json.toJSONString();
     }
-//    width='284' height='160'
+
+    private void makePreview4Img(List<String> initialPreview, String fileName, String targetFileName) {
+        StringBuffer str = new StringBuffer("<img src='/img/111.jpg' class='kv-preview-data file-preview-image' style='height:160px'>");
+        initialPreview.add(str.toString());
+    }
+
     private void makePreview(List<String> initialPreview, String fileName, String targetFileName) {
-        StringBuffer str = new StringBuffer("<div class='file-preview-text'><h1><i class='glyphicon glyphicon-picture'></i></h1></div>");
-       // StringBuffer str = new StringBuffer("<div src='/img/222.txt' class='file-preview-other file-other-icon glyphicon glyphicon-file'>");
+        //glyphicon glyphicon-file
+        String suffix = fileName.substring(fileName.lastIndexOf("."),fileName.length());
+        StringBuffer str = new StringBuffer("<div class='kv-preview-data file-preview-other-frame'><div class='file-preview-other'><span class='file-other-icon'>");
+        switch (suffix){
+            case ".jpg": case ".png": case ".gif":
+                str.append("<i class='fa fa-file-photo-o text-success'></i>");
+                break;
+            case ".doc":
+                str.append("<i class='fa fa-file-word-o text-success'></i>");
+                break;
+            case ".xls":case ".xlsx":
+                str.append("<i class='fa fa-file-excel-o text-success'></i>");
+                break;
+            case ".zip":
+                str.append("<i class='fa fa-file-archive-o text-success'></i>");
+                break;
+            case ".pdf":
+                str.append("<i class='fa fa-file-pdf-o text-success'></i>");
+                break;
+            default:
+                str.append("<i class='glyphicon glyphicon-file text-success'></i>");
+                break;
+        }
+
+        str.append("</span></div></div>");
         initialPreview.add(str.toString());
 
     }
@@ -96,9 +138,23 @@ public class BootStarpFileUpload {
     public  String deletefile(HttpServletRequest request ,
                               @PathVariable("fileName") String fileName,
                               @PathVariable("suffix") String suffix) {
+
         fileName = FILEUPLOADPATH + fileName+"."+suffix;
         boolean falg = FileUtil.deleteFile(fileName);
         System.out.println(fileName);
+        return "{}";
+
+    }
+
+    @RequestMapping(value = "/deletefileAll" )
+    @ResponseBody
+    public  String deletefile(HttpServletRequest request) {
+        FileUploadResponseUtil responseUtil = new FileUploadResponseUtil();
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
+        for (int i = 0; i < files.size(); ++i) {
+            MultipartFile file = files.get(i);
+            System.out.println(file.getOriginalFilename());
+        }
         return "{}";
     }
 

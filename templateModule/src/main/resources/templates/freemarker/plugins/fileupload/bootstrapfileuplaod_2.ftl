@@ -33,9 +33,6 @@
 </body>
 <script>
     $(document).ready(function () {
-        var btns = '<button type="button" class="kv-cust-btn btn btn-xs btn-default" title="Download" data-key="{dataKey}">' +
-                '<i class="glyphicon glyphicon-download"></i>' +
-                '</button>';
         $("#kv-explorer").fileinput({
             language: 'zh', //设置语言
             uploadUrl: '/upload/fileupload',// 服务器端上传处理程序
@@ -47,25 +44,12 @@
             showRemove: false,//是否显示删除按钮
             showCaption: true,//是否显示输入框
             dropZoneEnabled: false,//是否显示拖拽区域
-            maxFileCount: 5,    //最大上传文件数为5
-           // previewFileIcon: '<i class="glyphicon glyphicon-file"></i>',
-            allowedPreviewTypes: null, // set to empty, null or false to disable preview for all types
-            previewFileIconSettings: {
-                'doc': '<i class="fa fa-file-word-o text-primary"></i>',
-                'xls': '<i class="fa fa-file-excel-o text-success"></i>',
-                'xlsx': '<i class="fa fa-file-excel-o text-success"></i>',
-                'ppt': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
-                'jpg': '<i class="fa fa-file-photo-o text-warning"></i>',
-                'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
-                'zip': '<i class="fa fa-file-archive-o text-muted"></i>'
-            },
-            layoutTemplates:{
-                actionZoom:'' //去掉小图片的浏览按钮
-            },
-            otherActionButtons: btns //自定义按钮
-            //allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            maxFileCount: 5    //最大上传文件数为5
+          /*  initialPreview: [
+                '<img src="/img/111.jpg" class="kv-preview-data file-preview-image" style="height:160px">',
+            ]*/
 
-        })
+        });
 
         //异步上传返回结果处理
         $("#kv-explorer").on("fileuploaded", function (event, data, previewId, index) {

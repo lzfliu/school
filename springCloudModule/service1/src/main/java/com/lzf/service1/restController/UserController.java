@@ -1,6 +1,7 @@
 package com.lzf.service1.restController;
 
 import com.lzf.service1.entity.User;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -10,12 +11,13 @@ import java.util.*;
 
 @RestController
 @RequestMapping(value="/users")
+@Api( description = "操作User相关的增删改查")
 public class UserController {
 
     // 创建线程安全的Map
     static Map<Long, User> users = Collections.synchronizedMap(new HashMap<Long, User>());
 
-    @ApiOperation(value="获取用户列表", notes="")
+    @ApiOperation(value="获取用户列表", notes="获取用户列表")
     @RequestMapping(value="/", method= RequestMethod.GET)
     public List<User> getUserList() {
         // 处理"/users/"的GET请求，用来获取用户列表

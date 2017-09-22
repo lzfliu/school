@@ -36,7 +36,12 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.0.0</version>
         </dependency>
-
+        <!-- 阿里系的Druid依赖包 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.20</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>xxx</finalName>

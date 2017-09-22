@@ -39,4 +39,10 @@ public class PersonController {
         return r;
     }
 
+    @ApiOperation(value="测试热部署", notes="")
+    @RequestMapping(value="/getString", method= RequestMethod.GET)
+    public String getString() {
+        return "测试热部署";
+    }
+
 }

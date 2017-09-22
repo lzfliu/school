@@ -3,9 +3,9 @@ server:
 spring:
   application:
     name: user
+  profiles:
+    active: dev
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8080/eureka/
-  instance:
-    status-page-url: http://localhost:${server.port}/swagger-ui.html # ${server.port}为该服务的端口号/${spring.application.name}

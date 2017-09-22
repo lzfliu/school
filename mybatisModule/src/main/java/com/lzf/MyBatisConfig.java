@@ -26,6 +26,15 @@ public class MyBatisConfig {
         p.setProperty("rowBoundsWithCount", "true");
         p.setProperty("reasonable", "true");
         pageHelper.setProperties(p);
+
         return pageHelper;
     }
+
+
+ /*   @Bean
+    public MybatisMapperRefresh setMybatisMapperRefresh(){
+        return null;
+    }*/
+
+
 }

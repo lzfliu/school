@@ -24,6 +24,7 @@ public class hello {
     @RequestMapping("/helloHtml")
     public String helloHtml(Map<String,Object> map){
         map.put("hello","from TemplateController.helloHtml");
+        map.put("lzf","lzf1234");
         return"/thymeleaf/helloHtml";
     }
 
