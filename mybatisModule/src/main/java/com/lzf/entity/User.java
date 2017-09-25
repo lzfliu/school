@@ -51,4 +51,15 @@ public class User {
     public void setSex(String sex) {
         this.sex = sex == null ? null : sex.trim();
     }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age='" + age + '\'' +
+                ", sex='" + sex + '\'' +
+                '}';
+    }
 }

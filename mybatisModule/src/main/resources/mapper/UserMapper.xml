@@ -23,6 +23,11 @@
     <include refid="Base_Column_List" />
     from test_user
   </select>
+  <select id="selectByProcedure" statementType="CALLABLE"  parameterType="com.lzf.entity.User" resultType="com.lzf.entity.User">
+    call test(
+     #{username,jdbcType=VARCHAR,mode=IN},
+     #{username,jdbcType=VARCHAR,mode=OUT})
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from test_user
     where id = #{id,jdbcType=INTEGER}

@@ -38,9 +38,9 @@ public class TestUserDao {
 
         User user = new User();
 
-        user.setUsername("王五");
-        user.setAge("40");
-        user.setSex("男");
+        user.setUsername("李三");
+        user.setAge("50");
+        user.setSex("女");
 
         userMapper.insertSelective(user);
     }
@@ -60,6 +60,22 @@ public class TestUserDao {
 
 
     }
+
+
+    @Test
+    public void testProcedure(){
+
+        User user = new User();
+        user.setUsername("三");
+        List<User> users = userMapper.selectByProcedure(user);
+        System.out.println(users.size());
+        for (User user1 : users) {
+            System.out.println(user1.toString());
+        }
+
+    }
+
+
 
     /**
       * 例2：支持 ServletRequest,Map,POJO 对象，需要配合 params 参数

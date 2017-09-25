@@ -11,27 +11,45 @@
     <schema id="5" parent="1" name="performance_schema"/>
     <schema id="6" parent="1" name="sys"/>
     <table id="7" parent="2" name="test_user"/>
-    <column id="8" parent="7" name="id">
+    <view id="8" parent="2" name="user_view">
+      <Comment>VIEW</Comment>
+    </view>
+    <routine id="9" parent="2" name="test">
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <column id="10" parent="7" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="9" parent="7" name="username">
+    <column id="11" parent="7" name="username">
       <Position>2</Position>
       <DataType>varchar(32)|0</DataType>
     </column>
-    <column id="10" parent="7" name="age">
+    <column id="12" parent="7" name="age">
       <Position>3</Position>
       <DataType>varchar(3)|0</DataType>
     </column>
-    <column id="11" parent="7" name="sex">
+    <column id="13" parent="7" name="sex">
       <Position>4</Position>
       <DataType>varchar(2)|0</DataType>
     </column>
-    <key id="12" parent="7" name="PRIMARY">
+    <key id="14" parent="7" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
+    <column id="15" parent="8" name="username">
+      <Position>1</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <argument id="16" parent="9" name="username">
+      <DataType>varchar(32)|0</DataType>
+    </argument>
+    <argument id="17" parent="9" name="user">
+      <ArgumentDirection>O</ArgumentDirection>
+      <DataType>varchar(512)|0</DataType>
+    </argument>
   </database-model>
 </dataSource>
