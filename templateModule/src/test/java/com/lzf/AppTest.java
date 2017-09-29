@@ -31,8 +31,15 @@ public class AppTest
     /**
      * Rigourous Test :-)
      */
-    public void testApp()
-    {
-        assertTrue( true );
+    public void testApp(){
+
+        int a = 1;
+        System.out.println(a++);
+
+        int b = 1;
+        System.out.println(++b);
+
+        int c = a + ++b;
+        System.out.println(c);
     }
 }
