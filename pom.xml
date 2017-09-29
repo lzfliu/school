@@ -11,6 +11,8 @@
     <module>springCloudModule</module>
     <module>groovyModule</module>
     <module>mybatisModule</module>
+    <module>quartzModule</module>
+      <module>redisModule</module>
   </modules>
 
 
