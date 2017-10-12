@@ -1,6 +1,5 @@
 package com.lzf;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lzf.dao.UserMapper;
@@ -15,13 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * 描述:
  * 测试mybatisDAO
  *
- * @outhor liuzhenfei
+ * @author liuzhenfei
  * @create 2017-09-20 上午 10:19
  */
 @RunWith(SpringRunner.class)
@@ -123,7 +120,8 @@ public class TestUserDao {
         System.out.println("*************************   getNavigateLastPage()："+page.getNavigateLastPage()+"    ************************");
         System.out.println("*************************   getNavigatepageNums()："+page.getNavigatepageNums()+"    ************************");
         System.out.println("*************************   getNavigatePages()："+page.getNavigatePages()+"    ************************");
-
+        System.out.println("page.getTotal()的值是：---" + page.getTotal() + "，当前方法demo14PageNumAndPageSize()");
+        System.out.println("isHasPreviousPage()的值是：---" + page.isHasPreviousPage() + "，当前方法=TestUserDao.demo14PageNumAndPageSize()");
     }
 
 

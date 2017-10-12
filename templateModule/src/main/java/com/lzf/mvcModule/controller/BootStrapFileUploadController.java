@@ -22,7 +22,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/upload")
-public class BootStarpFileUpload {
+public class BootStrapFileUploadController {
 
     @Value("${fileupload.path}")
     private String FILEUPLOADPATH;
