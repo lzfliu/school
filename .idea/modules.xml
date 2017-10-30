@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/springCloudModule/discovery/discovery.iml" filepath="$PROJECT_DIR$/springCloudModule/discovery/discovery.iml" />
       <module fileurl="file://$PROJECT_DIR$/springCloudModule/gateway/gateway.iml" filepath="$PROJECT_DIR$/springCloudModule/gateway/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/groovyModule/groovyModule.iml" filepath="$PROJECT_DIR$/groovyModule/groovyModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springMVCModule/src/main/main.iml" filepath="$PROJECT_DIR$/springMVCModule/src/main/main.iml" />
       <module fileurl="file://$PROJECT_DIR$/mybatisModule/mybatisModule.iml" filepath="$PROJECT_DIR$/mybatisModule/mybatisModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/quartzModule/quartzModule.iml" filepath="$PROJECT_DIR$/quartzModule/quartzModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/redisModule/redisModule.iml" filepath="$PROJECT_DIR$/redisModule/redisModule.iml" />
@@ -12,8 +13,9 @@
       <module fileurl="file://$PROJECT_DIR$/springCloudModule/service1/service1.iml" filepath="$PROJECT_DIR$/springCloudModule/service1/service1.iml" />
       <module fileurl="file://$PROJECT_DIR$/springCloudModule/service2/service2.iml" filepath="$PROJECT_DIR$/springCloudModule/service2/service2.iml" />
       <module fileurl="file://$PROJECT_DIR$/springCloudModule/springCloudModule.iml" filepath="$PROJECT_DIR$/springCloudModule/springCloudModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springMVCModule/springMVCModule.iml" filepath="$PROJECT_DIR$/springMVCModule/springMVCModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/swagger2Module/swagger2Module.iml" filepath="$PROJECT_DIR$/swagger2Module/swagger2Module.iml" />
-      <module fileurl="file://$PROJECT_DIR$/templateModule/templateModule.iml" filepath="$PROJECT_DIR$/templateModule/templateModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springMVCModule/src/test/test.iml" filepath="$PROJECT_DIR$/springMVCModule/src/test/test.iml" />
     </modules>
   </component>
 </project>
