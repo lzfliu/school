@@ -38,7 +38,7 @@ public class BootStrapFileUploadController {
         return "freemarker/plugins/fileupload/bootstrapfileuplaod_1";
     }
 
-  @RequestMapping("/index2")
+    @RequestMapping("/index2")
     public String bootstrapfileuplaod_2(){
         return "freemarker/plugins/fileupload/bootstrapfileuplaod_2";
     }

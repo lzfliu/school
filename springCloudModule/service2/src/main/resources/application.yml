@@ -8,4 +8,4 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8080/eureka/
   instance:
-    status-page-url: http://localhost:${server.port}/swagger-ui.html # ${server.port}为该服务的端口号
+    status-page-url: http://localhost:8089/swagger-ui.html # ${server.port}为该服务的端口号

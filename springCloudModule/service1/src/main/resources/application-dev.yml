@@ -1,3 +1,3 @@
 eureka:
   instance:
-    status-page-url: http://localhost:${server.port}/swagger-ui.html # ${server.port}为该服务的端口号/${spring.application.name}
+    status-page-url: http://localhost:8089/swagger-ui.html # ${server.port}为该服务的端口号/${spring.application.name}
