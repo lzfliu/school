@@ -7,14 +7,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>templateModule</artifactId>
+    <artifactId>springMVCModule</artifactId>
     <packaging>jar</packaging>
     <dependencies>
-        <!-- 引入freeMarker的依赖包.
+        <!-- 引入freeMarker的依赖包. -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency> -->
+        </dependency>
         <!-- 引入thymeleaf的依赖包. -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

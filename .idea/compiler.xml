@@ -15,8 +15,8 @@
         <module name="service1" />
         <module name="service2" />
         <module name="springmvcModule" />
+        <module name="springMVCModule" />
         <module name="swagger2Module" />
-        <module name="templateModule" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -31,6 +31,7 @@
       <module name="service1" target="1.8" />
       <module name="service2" target="1.8" />
       <module name="springCloudModule" target="1.8" />
+      <module name="springMVCModule" target="1.8" />
       <module name="springmvcModule" target="1.8" />
       <module name="swagger2Module" target="1.8" />
       <module name="templateModule" target="1.8" />

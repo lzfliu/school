@@ -65,4 +65,20 @@ public class MapBeanUtils {
         return map;
     }
 
+    /**
+     *  Object -->Object
+     * @param obj 数据对象
+     * @param beanClass 返回对象
+     * @return map
+     * @throws Exception
+     */
+    public static Object objectToobject(Object obj, Class<?> beanClass) throws Exception {
+        if(obj == null){
+            return null;
+        }
+        Map<String, Object> stringObjectMap = objectToMap(obj);
+        Object bean = mapToObject(stringObjectMap, beanClass);
+        return bean;
+    }
+
 }

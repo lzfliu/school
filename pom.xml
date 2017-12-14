@@ -7,12 +7,12 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>swagger2Module</module>
-    <module>templateModule</module>
+    <module>springMVCModule</module>
     <module>springCloudModule</module>
     <module>groovyModule</module>
     <module>mybatisModule</module>
     <module>quartzModule</module>
-      <module>redisModule</module>
+    <module>redisModule</module>
   </modules>
 
 
@@ -50,7 +50,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional> <!-- 这个需要为 true 热部署才有效 -->
-      <scope>true</scope>
+      <scope>runtime</scope>
     </dependency>
     <!--引入测试依赖-->
     <dependency>
