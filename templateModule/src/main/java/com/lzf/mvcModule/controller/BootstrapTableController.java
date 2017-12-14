@@ -25,8 +25,8 @@ public class BootstrapTableController {
     /**
      * 返回html模板.
      */
-    @RequestMapping( value = "/hello", method = RequestMethod.GET )
-    public String helloHtml(Map<String,Object> map){
+    @RequestMapping( value = "/bootstrapTable", method = RequestMethod.GET )
+    public String bootstrapTable(Map<String,Object> map){
         return "bootstrapTable";
     }
 
@@ -53,5 +53,16 @@ public class BootstrapTableController {
 
         return JSON.toJSONString(list);
     }
+
+
+    /**
+     * 返回html模板.
+     */
+    @RequestMapping( value = "/bootstrapValidator", method = RequestMethod.GET )
+    public String bootstrapValidator(Map<String,Object> map){
+        return "bootstrapValidator";
+    }
+
+
 
 }
