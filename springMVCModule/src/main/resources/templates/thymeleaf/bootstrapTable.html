@@ -2,20 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Hello World!</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/plugins/bootstraptable/bootstrap-table.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/plugins/bootstraptable/bootstrap-table.min.css}"/>
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/plugins/bootstraptable/bootstrap-table.min.js}"></script>
     <script th:src="@{/plugins/bootstraptable/bootstrap-table-zh-CN.min.js}"></script>
 </head>
 <body>
+<div class="row">
+    <div class="col-sm-12">
+        <table id="table1"></table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table id="table2"></table>
+    </div>
+</div>
 
-<table id="table"></table>
 </body>
 </html>
 <script>
-    $('#table').bootstrapTable({
+    $('#table1').bootstrapTable({
         columns: [{
             field: 'id',
             title: 'Item ID'
@@ -36,4 +45,32 @@
             price: '$2'
         }]
     });
+
+    $('#table2').bootstrapTable({
+        columns: [{
+            field: 'id',
+            title: 'Item ID'
+        }, {
+            field: 'name',
+            title: 'Item Name'
+        }, {
+            field: 'price',
+            title: 'Item Price'
+        },{
+            field : 'id',
+            align : "center",
+            title : '操作',
+            formatter : function operateFormatter(value, row,
+                                                  index) {
+               var url = '<a onclick="fulsh()">'+value+'</a>';
+                return url;
+            }
+        }],
+        url:"/table/tableData"
+    });
+
+    function fulsh(){
+        $("#table2").bootstrapTable("refresh");
+    }
+
 </script>

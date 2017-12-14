@@ -53,8 +53,8 @@ public class BootStrapFileUploadController {
     public  String uploadImg(HttpServletRequest request) {
         FileUploadResponseUtil responseUtil = new FileUploadResponseUtil();
         responseUtil.setAppend(true);
-        List<String> initialPreview = new ArrayList<>();
-        List<Map<String,String>> initialPreviewConfig = new ArrayList<>();
+        List<String> initialPreview = new ArrayList<String>();
+        List<Map<String,String>> initialPreviewConfig = new ArrayList<Map<String,String>>();
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
         MultipartFile file = null;
         for (int i = 0; i < files.size(); ++i) {
@@ -120,7 +120,7 @@ public class BootStrapFileUploadController {
 
     private void makePreviewConfig(List<Map<String, String>> initialPreviewConfig, String fileName, String targetFileName) {
         targetFileName = targetFileName.replace('.','/');
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<String, String>();
         map.put("caption",fileName);
         map.put("width","120px");
         map.put("url","/upload/deletefile/"+targetFileName);
