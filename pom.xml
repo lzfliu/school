@@ -13,6 +13,7 @@
     <module>mybatisModule</module>
     <module>quartzModule</module>
     <module>redisModule</module>
+      <module>webServiceModule</module>
   </modules>
 
 
