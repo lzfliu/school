@@ -59,7 +59,7 @@ public class BootstrapTableController {
      * 返回html模板.
      */
     @RequestMapping( value = "/bootstrapValidator", method = RequestMethod.GET )
-    public String bootstrapValidator(Map<String,Object> map){
+    public String bootstrapValidator(){
         return "bootstrapValidator";
     }
 
