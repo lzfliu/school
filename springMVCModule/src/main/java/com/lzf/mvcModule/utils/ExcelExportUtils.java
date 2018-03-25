@@ -3,6 +3,9 @@ package com.lzf.mvcModule.utils;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -26,16 +29,26 @@ public class ExcelExportUtils {
         int[] columnWidth = {10, 20, 30};
         String[][] dataList = {{"001", "2015-01-01", "IT"},
                 {"002", "2015-01-02", "市场部"}, {"003", "2015-01-03", "测试"}};
+        List<List<String>> excelData = new ArrayList<>();
+        for (String[] strings : dataList) {
+            List<String> rowData = new ArrayList<>();
+            excelData.add(rowData);
+            for (String string : strings) {
+                rowData.add(string);
+            }
+        }
+
+
         String[] columnName = {"单号", "申请时间", "申请部门"};
         new ExcelExportUtils().ExportNoResponse(sheetName, titleName, fileName,
-                columnNumber, columnWidth, columnName, dataList);
+                columnNumber, columnWidth, Arrays.asList(columnName), excelData);
     }
 
     public void ExportWithResponse(String sheetName, String titleName,
                                    String fileName, int columnNumber, int[] columnWidth,
-                                   String[] columnName, String[][] dataList,
+                                   List<String> columnName, List<List<String>> dataList,
                                    HttpServletResponse response) throws Exception {
-        if (columnNumber == columnWidth.length && columnWidth.length == columnName.length) {
+        if (columnNumber == columnWidth.length && columnWidth.length == columnName.size()) {
             // 第一步，创建一个webbook，对应一个Excel文件
             HSSFWorkbook wb = new HSSFWorkbook();
             // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet
@@ -94,12 +107,12 @@ public class ExcelExportUtils {
             // 第四.一步，创建表头的列
             for (int i = 0; i < columnNumber; i++) {
                 HSSFCell cell = row.createCell(i);
-                cell.setCellValue(columnName[i]);
+                cell.setCellValue(columnName.get(i));
                 cell.setCellStyle(style);
             }
 
             // 第五步，创建单元格，并设置值
-            for (int i = 0; i < dataList.length; i++) {
+            for (int i = 0; i < dataList.size(); i++) {
                 row = sheet.createRow((int) i + 2);
                 // 为数据内容设置特点新单元格样式1 自动换行 上下居中
                 HSSFCellStyle zidonghuanhang = wb.createCellStyle();
@@ -129,7 +142,7 @@ public class ExcelExportUtils {
                 HSSFCell datacell = null;
                 for (int j = 0; j < columnNumber; j++) {
                     datacell = row.createCell(j);
-                    datacell.setCellValue(dataList[i][j]);
+                    datacell.setCellValue(dataList.get(i).get(j));
                     datacell.setCellStyle(zidonghuanhang2);
                 }
             }
@@ -160,8 +173,8 @@ public class ExcelExportUtils {
 
     public void ExportNoResponse(String sheetName, String titleName,
                                  String fileName, int columnNumber, int[] columnWidth,
-                                 String[] columnName, String[][] dataList) throws Exception {
-        if (columnNumber == columnWidth.length && columnWidth.length == columnName.length) {
+                                 List<String> columnName, List<List<String>> dataList) throws Exception {
+        if (columnNumber == columnWidth.length && columnWidth.length == columnName.size()) {
             // 第一步，创建一个webbook，对应一个Excel文件
             HSSFWorkbook wb = new HSSFWorkbook();
             // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet
@@ -220,12 +233,12 @@ public class ExcelExportUtils {
             // 第四.一步，创建表头的列
             for (int i = 0; i < columnNumber; i++) {
                 HSSFCell cell = row.createCell(i);
-                cell.setCellValue(columnName[i]);
+                cell.setCellValue(columnName.get(i));
                 cell.setCellStyle(style);
             }
 
             // 第五步，创建单元格，并设置值
-            for (int i = 0; i < dataList.length; i++) {
+            for (int i = 0; i < dataList.size(); i++) {
                 row = sheet.createRow((int) i + 2);
                 // 为数据内容设置特点新单元格样式1 自动换行 上下居中
                 HSSFCellStyle zidonghuanhang = wb.createCellStyle();
@@ -256,7 +269,7 @@ public class ExcelExportUtils {
                 HSSFCell datacell = null;
                 for (int j = 0; j < columnNumber; j++) {
                     datacell = row.createCell(j);
-                    datacell.setCellValue(dataList[i][j]);
+                    datacell.setCellValue(dataList.get(i).get(j));
                     datacell.setCellStyle(zidonghuanhang2);
                 }
             }
