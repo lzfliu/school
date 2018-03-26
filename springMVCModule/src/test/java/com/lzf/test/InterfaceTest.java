@@ -19,7 +19,7 @@ public class InterfaceTest {
 
 
         Map<String,Object> dataMap = new HashMap<>();
-        dataMap.put("order_sn","123456");
+        dataMap.put("order_sn","1234567");
         dataMap.put("vin","123456");
         dataMap.put("province_name","山东");
         dataMap.put("city_name","青岛");
