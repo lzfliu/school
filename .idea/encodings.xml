@@ -11,7 +11,10 @@
     <file url="file://$PROJECT_DIR$/springCloudModule/gateway" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springCloudModule/service1" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springCloudModule/service2" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springCloudModule/swagger" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springMVCModule" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/swagger2Module" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/webServiceModule" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

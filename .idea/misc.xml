@@ -13,6 +13,8 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/springCloudModule/config/pom.xml" />
+        <option value="$PROJECT_DIR$/springCloudModule/swagger/pom.xml" />
+        <option value="$PROJECT_DIR$/webServiceModule/pom.xml" />
       </set>
     </option>
   </component>

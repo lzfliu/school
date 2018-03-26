@@ -44,18 +44,18 @@ public class InterfaceTest {
                 dataSbf.append(value);
             }
         }
-        System.out.println(dataSbf);
 
         String dataStr = "6c758991b43db5a9e990b068a056061"+dataSbf.toString()+"6c758991b43db5a9e990b068a056061";
+        System.out.println(dataStr);
 
         String sign = MD5(dataStr);
 
         dataMap.put("sign",sign);
 
         System.out.println("sign:"+sign);
-        String url = "http://39.155.165.2:27000/qinvin/index/sync";
-        String post = HttpUtil.post(url, dataMap, HttpUtil.CONTENT_TYPE_FORM);
-        System.out.println(post);
+//        String url = "http://39.155.165.2:27000/qinvin/index/sync";
+//        String post = HttpUtil.post(url, dataMap, HttpUtil.CONTENT_TYPE_FORM);
+//        System.out.println(post);
 
     }
 
