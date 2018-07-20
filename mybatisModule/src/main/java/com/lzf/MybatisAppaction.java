@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @MapperScan("com.lzf.dao")
 @SpringBootApplication
+@EnableTransactionManagement
 public class MybatisAppaction {
 
     public static void main(String[] args) throws Exception {
