@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.BizChannelMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.BizChannel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="channel_role" property="channelRole" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="loan_stop" property="loanStop" jdbcType="TINYINT" />
+    <result column="trust_account_no" property="trustAccountNo" jdbcType="VARCHAR" />
+    <result column="trust_account_bank" property="trustAccountBank" jdbcType="VARCHAR" />
+    <result column="trust_account_owner" property="trustAccountOwner" jdbcType="VARCHAR" />
+    <result column="recive_account_no" property="reciveAccountNo" jdbcType="VARCHAR" />
+    <result column="recive_account_bank" property="reciveAccountBank" jdbcType="VARCHAR" />
+    <result column="recive_account_owner" property="reciveAccountOwner" jdbcType="VARCHAR" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+    <result column="created_on" property="createdOn" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+    <result column="is_available" property="isAvailable" jdbcType="TINYINT" />
+    <result column="entrust_account_no" property="entrustAccountNo" jdbcType="VARCHAR" />
+    <result column="entrust_account_bank" property="entrustAccountBank" jdbcType="VARCHAR" />
+    <result column="entrust_account_owner" property="entrustAccountOwner" jdbcType="VARCHAR" />
+    <result column="lazy_upload" property="lazyUpload" jdbcType="BIT" />
+    <result column="quality_dealer" property="qualityDealer" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="serial_num" property="serialNum" jdbcType="VARCHAR" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+    <result column="delete_at" property="deleteAt" jdbcType="TIMESTAMP" />
+    <result column="bond" property="bond" jdbcType="DECIMAL" />
+    <result column="trust_account_up" property="trustAccountUp" jdbcType="LONGVARCHAR" />
+    <result column="recive_account_up" property="reciveAccountUp" jdbcType="LONGVARCHAR" />
+    <result column="entrust_account_up" property="entrustAccountUp" jdbcType="LONGVARCHAR" />
+    <result column="check_remark" property="checkRemark" jdbcType="LONGVARCHAR" />
+    <result column="update_remark" property="updateRemark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from biz_channel
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.BizChannel" >
+    insert into biz_channel (id, channel_role, company_id, 
+      parent_id, loan_stop, trust_account_no, 
+      trust_account_bank, trust_account_owner, recive_account_no, 
+      recive_account_bank, recive_account_owner, 
+      `sequence`, created_on, created_by, 
+      is_delete, is_available, entrust_account_no, 
+      entrust_account_bank, entrust_account_owner, 
+      lazy_upload, quality_dealer, `status`, 
+      serial_num, data_type, delete_at, 
+      bond, trust_account_up, recive_account_up, 
+      entrust_account_up, check_remark, 
+      update_remark)
+    values (#{id,jdbcType=VARCHAR}, #{channelRole,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=VARCHAR}, #{loanStop,jdbcType=TINYINT}, #{trustAccountNo,jdbcType=VARCHAR}, 
+      #{trustAccountBank,jdbcType=VARCHAR}, #{trustAccountOwner,jdbcType=VARCHAR}, #{reciveAccountNo,jdbcType=VARCHAR}, 
+      #{reciveAccountBank,jdbcType=VARCHAR}, #{reciveAccountOwner,jdbcType=VARCHAR}, 
+      #{sequence,jdbcType=INTEGER}, #{createdOn,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=TINYINT}, #{isAvailable,jdbcType=TINYINT}, #{entrustAccountNo,jdbcType=VARCHAR}, 
+      #{entrustAccountBank,jdbcType=VARCHAR}, #{entrustAccountOwner,jdbcType=VARCHAR}, 
+      #{lazyUpload,jdbcType=BIT}, #{qualityDealer,jdbcType=BIT}, #{status,jdbcType=VARCHAR}, 
+      #{serialNum,jdbcType=VARCHAR}, #{dataType,jdbcType=VARCHAR}, #{deleteAt,jdbcType=TIMESTAMP}, 
+      #{bond,jdbcType=DECIMAL}, #{trustAccountUp,jdbcType=LONGVARCHAR}, #{reciveAccountUp,jdbcType=LONGVARCHAR}, 
+      #{entrustAccountUp,jdbcType=LONGVARCHAR}, #{checkRemark,jdbcType=LONGVARCHAR}, 
+      #{updateRemark,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.BizChannel" >
+    update biz_channel
+    set channel_role = #{channelRole,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      loan_stop = #{loanStop,jdbcType=TINYINT},
+      trust_account_no = #{trustAccountNo,jdbcType=VARCHAR},
+      trust_account_bank = #{trustAccountBank,jdbcType=VARCHAR},
+      trust_account_owner = #{trustAccountOwner,jdbcType=VARCHAR},
+      recive_account_no = #{reciveAccountNo,jdbcType=VARCHAR},
+      recive_account_bank = #{reciveAccountBank,jdbcType=VARCHAR},
+      recive_account_owner = #{reciveAccountOwner,jdbcType=VARCHAR},
+      `sequence` = #{sequence,jdbcType=INTEGER},
+      created_on = #{createdOn,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      is_available = #{isAvailable,jdbcType=TINYINT},
+      entrust_account_no = #{entrustAccountNo,jdbcType=VARCHAR},
+      entrust_account_bank = #{entrustAccountBank,jdbcType=VARCHAR},
+      entrust_account_owner = #{entrustAccountOwner,jdbcType=VARCHAR},
+      lazy_upload = #{lazyUpload,jdbcType=BIT},
+      quality_dealer = #{qualityDealer,jdbcType=BIT},
+      `status` = #{status,jdbcType=VARCHAR},
+      serial_num = #{serialNum,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      delete_at = #{deleteAt,jdbcType=TIMESTAMP},
+      bond = #{bond,jdbcType=DECIMAL},
+      trust_account_up = #{trustAccountUp,jdbcType=LONGVARCHAR},
+      recive_account_up = #{reciveAccountUp,jdbcType=LONGVARCHAR},
+      entrust_account_up = #{entrustAccountUp,jdbcType=LONGVARCHAR},
+      check_remark = #{checkRemark,jdbcType=LONGVARCHAR},
+      update_remark = #{updateRemark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, channel_role, company_id, parent_id, loan_stop, trust_account_no, trust_account_bank, 
+    trust_account_owner, recive_account_no, recive_account_bank, recive_account_owner, 
+    `sequence`, created_on, created_by, is_delete, is_available, entrust_account_no, 
+    entrust_account_bank, entrust_account_owner, lazy_upload, quality_dealer, `status`, 
+    serial_num, data_type, delete_at, bond, trust_account_up, recive_account_up, entrust_account_up, 
+    check_remark, update_remark
+    from biz_channel
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, channel_role, company_id, parent_id, loan_stop, trust_account_no, trust_account_bank, 
+    trust_account_owner, recive_account_no, recive_account_bank, recive_account_owner, 
+    `sequence`, created_on, created_by, is_delete, is_available, entrust_account_no, 
+    entrust_account_bank, entrust_account_owner, lazy_upload, quality_dealer, `status`, 
+    serial_num, data_type, delete_at, bond, trust_account_up, recive_account_up, entrust_account_up, 
+    check_remark, update_remark
+    from biz_channel
+  </select>
+</mapper>

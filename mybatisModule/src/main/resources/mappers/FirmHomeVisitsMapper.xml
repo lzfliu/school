@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.FirmHomeVisitsMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.FirmHomeVisits" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="pids" property="pids" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="disable" property="disable" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="contact_man" property="contactMan" jdbcType="VARCHAR" />
+    <result column="enterprise" property="enterprise" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from firm_home_visits
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.FirmHomeVisits" >
+    insert into firm_home_visits (id, pid, pids, 
+      `name`, province, city, 
+      district, address, create_by, 
+      update_by, `disable`, `status`, 
+      mobile, contact_man, enterprise, 
+      created_at, updated_at, deleted_at
+      )
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{pids,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{updateBy,jdbcType=VARCHAR}, #{disable,jdbcType=TINYINT}, #{status,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{contactMan,jdbcType=VARCHAR}, #{enterprise,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.FirmHomeVisits" >
+    update firm_home_visits
+    set pid = #{pid,jdbcType=INTEGER},
+      pids = #{pids,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      `disable` = #{disable,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      contact_man = #{contactMan,jdbcType=VARCHAR},
+      enterprise = #{enterprise,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, pid, pids, `name`, province, city, district, address, create_by, update_by, 
+    `disable`, `status`, mobile, contact_man, enterprise, created_at, updated_at, deleted_at
+    from firm_home_visits
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, pid, pids, `name`, province, city, district, address, create_by, update_by, 
+    `disable`, `status`, mobile, contact_man, enterprise, created_at, updated_at, deleted_at
+    from firm_home_visits
+  </select>
+</mapper>

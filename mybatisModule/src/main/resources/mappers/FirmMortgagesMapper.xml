@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.FirmMortgagesMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.FirmMortgages" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="linkman" property="linkman" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="disable" property="disable" jdbcType="TINYINT" />
+    <result column="create_by" property="createBy" jdbcType="CHAR" />
+    <result column="update_by" property="updateBy" jdbcType="CHAR" />
+    <result column="enterprise" property="enterprise" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from firm_mortgages
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.FirmMortgages" >
+    insert into firm_mortgages (id, `name`, linkman, 
+      mobile, province, city, 
+      district, address, `status`, 
+      `disable`, create_by, update_by, 
+      enterprise, created_at, updated_at, 
+      deleted_at)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{disable,jdbcType=TINYINT}, #{createBy,jdbcType=CHAR}, #{updateBy,jdbcType=CHAR}, 
+      #{enterprise,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{deletedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.FirmMortgages" >
+    update firm_mortgages
+    set `name` = #{name,jdbcType=VARCHAR},
+      linkman = #{linkman,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      `disable` = #{disable,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=CHAR},
+      update_by = #{updateBy,jdbcType=CHAR},
+      enterprise = #{enterprise,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, `name`, linkman, mobile, province, city, district, address, `status`, 
+    `disable`, create_by, update_by, enterprise, created_at, updated_at, deleted_at
+    from firm_mortgages
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, `name`, linkman, mobile, province, city, district, address, `status`, 
+    `disable`, create_by, update_by, enterprise, created_at, updated_at, deleted_at
+    from firm_mortgages
+  </select>
+</mapper>

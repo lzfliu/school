@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.DealerProductProfitsForCas1Mapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.DealerProductProfits" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dealer_id" property="dealerId" jdbcType="INTEGER" />
+    <result column="one_price" property="onePrice" jdbcType="VARCHAR" />
+    <result column="one_profit" property="oneProfit" jdbcType="VARCHAR" />
+    <result column="two_price" property="twoPrice" jdbcType="VARCHAR" />
+    <result column="two_profit" property="twoProfit" jdbcType="VARCHAR" />
+    <result column="three_price" property="threePrice" jdbcType="VARCHAR" />
+    <result column="three_profit" property="threeProfit" jdbcType="VARCHAR" />
+    <result column="dealer_product_id" property="dealerProductId" jdbcType="INTEGER" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="business" property="business" jdbcType="TINYINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dealer_product_profits
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.DealerProductProfits" >
+    insert into dealer_product_profits (id, dealer_id, one_price, 
+      one_profit, two_price, two_profit, 
+      three_price, three_profit, dealer_product_id, 
+      `disable`, create_by, update_by, 
+      created_at, updated_at, deleted_at, 
+      business)
+    values (#{id,jdbcType=INTEGER}, #{dealerId,jdbcType=INTEGER}, #{onePrice,jdbcType=VARCHAR}, 
+      #{oneProfit,jdbcType=VARCHAR}, #{twoPrice,jdbcType=VARCHAR}, #{twoProfit,jdbcType=VARCHAR}, 
+      #{threePrice,jdbcType=VARCHAR}, #{threeProfit,jdbcType=VARCHAR}, #{dealerProductId,jdbcType=INTEGER}, 
+      #{disable,jdbcType=BIT}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}, 
+      #{business,jdbcType=TINYINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.DealerProductProfits" >
+    update dealer_product_profits
+    set dealer_id = #{dealerId,jdbcType=INTEGER},
+      one_price = #{onePrice,jdbcType=VARCHAR},
+      one_profit = #{oneProfit,jdbcType=VARCHAR},
+      two_price = #{twoPrice,jdbcType=VARCHAR},
+      two_profit = #{twoProfit,jdbcType=VARCHAR},
+      three_price = #{threePrice,jdbcType=VARCHAR},
+      three_profit = #{threeProfit,jdbcType=VARCHAR},
+      dealer_product_id = #{dealerProductId,jdbcType=INTEGER},
+      `disable` = #{disable,jdbcType=BIT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      business = #{business,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, dealer_id, one_price, one_profit, two_price, two_profit, three_price, 
+    three_profit, dealer_product_id, `disable`, create_by, update_by, created_at, updated_at, 
+    deleted_at, business
+    from dealer_product_profits
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, dealer_id, one_price, one_profit, two_price, two_profit, three_price, 
+    three_profit, dealer_product_id, `disable`, create_by, update_by, created_at, updated_at, 
+    deleted_at, business
+    from dealer_product_profits
+  </select>
+</mapper>

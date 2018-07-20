@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.ProductFlowMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.ProductFlow" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="qualification_template_id" property="qualificationTemplateId" jdbcType="VARCHAR" />
+    <result column="loan_template_id" property="loanTemplateId" jdbcType="VARCHAR" />
+    <result column="need_insurance" property="needInsurance" jdbcType="TINYINT" />
+    <result column="insurance_template_id" property="insuranceTemplateId" jdbcType="VARCHAR" />
+    <result column="capital_template_id" property="capitalTemplateId" jdbcType="VARCHAR" />
+    <result column="pledge_template_id" property="pledgeTemplateId" jdbcType="VARCHAR" />
+    <result column="is_available" property="isAvailable" jdbcType="BIT" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_on" property="createdOn" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product_flow
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.ProductFlow" >
+    insert into product_flow (id, product_id, qualification_template_id, 
+      loan_template_id, need_insurance, insurance_template_id, 
+      capital_template_id, pledge_template_id, is_available, 
+      created_by, created_on, is_delete
+      )
+    values (#{id,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{qualificationTemplateId,jdbcType=VARCHAR}, 
+      #{loanTemplateId,jdbcType=VARCHAR}, #{needInsurance,jdbcType=TINYINT}, #{insuranceTemplateId,jdbcType=VARCHAR}, 
+      #{capitalTemplateId,jdbcType=VARCHAR}, #{pledgeTemplateId,jdbcType=VARCHAR}, #{isAvailable,jdbcType=BIT}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdOn,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.ProductFlow" >
+    update product_flow
+    set product_id = #{productId,jdbcType=VARCHAR},
+      qualification_template_id = #{qualificationTemplateId,jdbcType=VARCHAR},
+      loan_template_id = #{loanTemplateId,jdbcType=VARCHAR},
+      need_insurance = #{needInsurance,jdbcType=TINYINT},
+      insurance_template_id = #{insuranceTemplateId,jdbcType=VARCHAR},
+      capital_template_id = #{capitalTemplateId,jdbcType=VARCHAR},
+      pledge_template_id = #{pledgeTemplateId,jdbcType=VARCHAR},
+      is_available = #{isAvailable,jdbcType=BIT},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_on = #{createdOn,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, product_id, qualification_template_id, loan_template_id, need_insurance, 
+    insurance_template_id, capital_template_id, pledge_template_id, is_available, created_by, 
+    created_on, is_delete
+    from product_flow
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, product_id, qualification_template_id, loan_template_id, need_insurance, 
+    insurance_template_id, capital_template_id, pledge_template_id, is_available, created_by, 
+    created_on, is_delete
+    from product_flow
+  </select>
+</mapper>

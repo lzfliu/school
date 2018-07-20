@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.FirmDocumentsMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.FirmDocuments" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="linkman" property="linkman" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="disable" property="disable" jdbcType="TINYINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="enterprise" property="enterprise" jdbcType="VARCHAR" />
+    <result column="mortgage" property="mortgage" jdbcType="TINYINT" />
+    <result column="weekday" property="weekday" jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from firm_documents
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.FirmDocuments" >
+    insert into firm_documents (id, parent_id, parent_ids, 
+      `name`, linkman, mobile, 
+      province, city, district, 
+      address, `status`, `disable`, 
+      create_by, update_by, created_at, 
+      enterprise, mortgage, weekday, 
+      updated_at, deleted_at)
+    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{parentIds,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{disable,jdbcType=TINYINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{enterprise,jdbcType=VARCHAR}, #{mortgage,jdbcType=TINYINT}, #{weekday,jdbcType=VARCHAR}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.FirmDocuments" >
+    update firm_documents
+    set parent_id = #{parentId,jdbcType=INTEGER},
+      parent_ids = #{parentIds,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      linkman = #{linkman,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIT},
+      `disable` = #{disable,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      enterprise = #{enterprise,jdbcType=VARCHAR},
+      mortgage = #{mortgage,jdbcType=TINYINT},
+      weekday = #{weekday,jdbcType=VARCHAR},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, parent_id, parent_ids, `name`, linkman, mobile, province, city, district, 
+    address, `status`, `disable`, create_by, update_by, created_at, enterprise, mortgage, 
+    weekday, updated_at, deleted_at
+    from firm_documents
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, parent_id, parent_ids, `name`, linkman, mobile, province, city, district, 
+    address, `status`, `disable`, create_by, update_by, created_at, enterprise, mortgage, 
+    weekday, updated_at, deleted_at
+    from firm_documents
+  </select>
+</mapper>

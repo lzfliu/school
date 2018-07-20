@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.Cas1RelationMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.Cas1Relation" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="cas1_id" property="cas1Id" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cas1_relation
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.Cas1Relation" >
+    insert into cas1_relation (id, `type`, cas1_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{cas1Id,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.Cas1Relation" >
+    update cas1_relation
+    set `type` = #{type,jdbcType=VARCHAR},
+      cas1_id = #{cas1Id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, `type`, cas1_id
+    from cas1_relation
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, `type`, cas1_id
+    from cas1_relation
+  </select>
+  <select id="findByParams" resultType="com.lzf.entity.Cas1Relation">
+     select id, `type`, cas1_id
+    from cas1_relation
+    where type = #{type,jdbcType=VARCHAR} and cas1_id =#{cas1Id,jdbcType=VARCHAR}
+  </select>
+</mapper>

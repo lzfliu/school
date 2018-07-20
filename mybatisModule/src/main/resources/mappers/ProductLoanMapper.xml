@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.ProductLoanMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.ProductLoan" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="month_num" property="monthNum" jdbcType="VARCHAR" />
+    <result column="manage_fee" property="manageFee" jdbcType="DECIMAL" />
+    <result column="interest" property="interest" jdbcType="DECIMAL" />
+    <result column="rent" property="rent" jdbcType="DECIMAL" />
+    <result column="month_status" property="monthStatus" jdbcType="BIT" />
+    <result column="insurance_rate" property="insuranceRate" jdbcType="DECIMAL" />
+    <result column="insurance_multi_rate" property="insuranceMultiRate" jdbcType="DECIMAL" />
+    <result column="created_on" property="createdOn" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+    <result column="is_available" property="isAvailable" jdbcType="TINYINT" />
+    <result column="manage_fee_type" property="manageFeeType" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product_loan
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.ProductLoan" >
+    insert into product_loan (id, product_id, month_num, 
+      manage_fee, interest, rent, 
+      month_status, insurance_rate, insurance_multi_rate, 
+      created_on, created_by, is_delete, 
+      is_available, manage_fee_type)
+    values (#{id,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{monthNum,jdbcType=VARCHAR}, 
+      #{manageFee,jdbcType=DECIMAL}, #{interest,jdbcType=DECIMAL}, #{rent,jdbcType=DECIMAL}, 
+      #{monthStatus,jdbcType=BIT}, #{insuranceRate,jdbcType=DECIMAL}, #{insuranceMultiRate,jdbcType=DECIMAL}, 
+      #{createdOn,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{isDelete,jdbcType=TINYINT}, 
+      #{isAvailable,jdbcType=TINYINT}, #{manageFeeType,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.ProductLoan" >
+    update product_loan
+    set product_id = #{productId,jdbcType=VARCHAR},
+      month_num = #{monthNum,jdbcType=VARCHAR},
+      manage_fee = #{manageFee,jdbcType=DECIMAL},
+      interest = #{interest,jdbcType=DECIMAL},
+      rent = #{rent,jdbcType=DECIMAL},
+      month_status = #{monthStatus,jdbcType=BIT},
+      insurance_rate = #{insuranceRate,jdbcType=DECIMAL},
+      insurance_multi_rate = #{insuranceMultiRate,jdbcType=DECIMAL},
+      created_on = #{createdOn,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      is_available = #{isAvailable,jdbcType=TINYINT},
+      manage_fee_type = #{manageFeeType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, product_id, month_num, manage_fee, interest, rent, month_status, insurance_rate, 
+    insurance_multi_rate, created_on, created_by, is_delete, is_available, manage_fee_type
+    from product_loan
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, product_id, month_num, manage_fee, interest, rent, month_status, insurance_rate, 
+    insurance_multi_rate, created_on, created_by, is_delete, is_available, manage_fee_type
+    from product_loan
+  </select>
+</mapper>

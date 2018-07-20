@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.SysCompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.SysCompany" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="linkman" property="linkman" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="created_on" property="createdOn" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+    <result column="is_available" property="isAvailable" jdbcType="TINYINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="credit_code" property="creditCode" jdbcType="VARCHAR" />
+    <result column="credit" property="credit" jdbcType="VARCHAR" />
+    <result column="can_acp" property="canAcp" jdbcType="BIT" />
+    <result column="can_sp" property="canSp" jdbcType="BIT" />
+    <result column="can_dealer" property="canDealer" jdbcType="BIT" />
+    <result column="can_mortgage" property="canMortgage" jdbcType="BIT" />
+    <result column="can_capital" property="canCapital" jdbcType="BIT" />
+    <result column="can_help_mortgage" property="canHelpMortgage" jdbcType="BIT" />
+    <result column="can_visit" property="canVisit" jdbcType="BIT" />
+    <result column="core_customer_id" property="coreCustomerId" jdbcType="VARCHAR" />
+    <result column="is_quality_dealer" property="isQualityDealer" jdbcType="BIT" />
+    <result column="can_document" property="canDocument" jdbcType="BIT" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="district_name" property="districtName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="serial_num" property="serialNum" jdbcType="VARCHAR" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+    <result column="delete_at" property="deleteAt" jdbcType="TIMESTAMP" />
+    <result column="check_remark" property="checkRemark" jdbcType="LONGVARCHAR" />
+    <result column="update_remark" property="updateRemark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_company
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.SysCompany" >
+    insert into sys_company (id, `name`, phone, 
+      linkman, address, created_on, 
+      created_by, is_delete, is_available, 
+      code, credit_code, credit, 
+      can_acp, can_sp, can_dealer, can_mortgage, 
+      can_capital, can_help_mortgage, can_visit, 
+      core_customer_id, is_quality_dealer, can_document, 
+      province, province_name, city, 
+      city_name, district, district_name, 
+      `status`, serial_num, data_type, 
+      delete_at, check_remark, update_remark
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{linkman,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{createdOn,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{isDelete,jdbcType=TINYINT}, #{isAvailable,jdbcType=TINYINT}, 
+      #{code,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR}, #{credit,jdbcType=VARCHAR}, 
+      #{canAcp,jdbcType=BIT}, #{canSp,jdbcType=BIT}, #{canDealer,jdbcType=BIT}, #{canMortgage,jdbcType=BIT}, 
+      #{canCapital,jdbcType=BIT}, #{canHelpMortgage,jdbcType=BIT}, #{canVisit,jdbcType=BIT}, 
+      #{coreCustomerId,jdbcType=VARCHAR}, #{isQualityDealer,jdbcType=BIT}, #{canDocument,jdbcType=BIT}, 
+      #{province,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{districtName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{serialNum,jdbcType=VARCHAR}, #{dataType,jdbcType=VARCHAR}, 
+      #{deleteAt,jdbcType=TIMESTAMP}, #{checkRemark,jdbcType=LONGVARCHAR}, #{updateRemark,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.SysCompany" >
+    update sys_company
+    set `name` = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      linkman = #{linkman,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      created_on = #{createdOn,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      is_available = #{isAvailable,jdbcType=TINYINT},
+      code = #{code,jdbcType=VARCHAR},
+      credit_code = #{creditCode,jdbcType=VARCHAR},
+      credit = #{credit,jdbcType=VARCHAR},
+      can_acp = #{canAcp,jdbcType=BIT},
+      can_sp = #{canSp,jdbcType=BIT},
+      can_dealer = #{canDealer,jdbcType=BIT},
+      can_mortgage = #{canMortgage,jdbcType=BIT},
+      can_capital = #{canCapital,jdbcType=BIT},
+      can_help_mortgage = #{canHelpMortgage,jdbcType=BIT},
+      can_visit = #{canVisit,jdbcType=BIT},
+      core_customer_id = #{coreCustomerId,jdbcType=VARCHAR},
+      is_quality_dealer = #{isQualityDealer,jdbcType=BIT},
+      can_document = #{canDocument,jdbcType=BIT},
+      province = #{province,jdbcType=VARCHAR},
+      province_name = #{provinceName,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      district_name = #{districtName,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      serial_num = #{serialNum,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      delete_at = #{deleteAt,jdbcType=TIMESTAMP},
+      check_remark = #{checkRemark,jdbcType=LONGVARCHAR},
+      update_remark = #{updateRemark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, `name`, phone, linkman, address, created_on, created_by, is_delete, is_available, 
+    code, credit_code, credit, can_acp, can_sp, can_dealer, can_mortgage, can_capital, 
+    can_help_mortgage, can_visit, core_customer_id, is_quality_dealer, can_document, 
+    province, province_name, city, city_name, district, district_name, `status`, serial_num, 
+    data_type, delete_at, check_remark, update_remark
+    from sys_company
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, `name`, phone, linkman, address, created_on, created_by, is_delete, is_available, 
+    code, credit_code, credit, can_acp, can_sp, can_dealer, can_mortgage, can_capital, 
+    can_help_mortgage, can_visit, core_customer_id, is_quality_dealer, can_document, 
+    province, province_name, city, city_name, district, district_name, `status`, serial_num, 
+    data_type, delete_at, check_remark, update_remark
+    from sys_company
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" >
+    select id, `name`, phone, linkman, address, created_on, created_by, is_delete, is_available,
+    code, credit_code, credit, can_acp, can_sp, can_dealer, can_mortgage, can_capital,
+    can_help_mortgage, can_visit, core_customer_id, is_quality_dealer, can_document,
+    province, province_name, city, city_name, district, district_name, `status`, serial_num,
+    data_type, delete_at, check_remark, update_remark
+    from sys_company where name =  #{name,jdbcType=VARCHAR}
+  </select>
+</mapper>

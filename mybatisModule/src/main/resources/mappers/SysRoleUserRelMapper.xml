@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzf.dao.SysRoleUserRelMapper">
+  <resultMap id="BaseResultMap" type="com.lzf.entity.SysRoleUserRel">
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lzf.entity.SysRoleUserRel">
+    insert into sys_role_user_rel (role_id, user_id)
+    values (#{roleId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select role_id, user_id
+    from sys_role_user_rel
+  </select>
+</mapper>

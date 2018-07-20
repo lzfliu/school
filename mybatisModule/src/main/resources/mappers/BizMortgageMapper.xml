@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.BizMortgageMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.BizMortgage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="material_package_id" property="materialPackageId" jdbcType="VARCHAR" />
+    <result column="mortgage_sign_type" property="mortgageSignType" jdbcType="VARCHAR" />
+    <result column="is_available" property="isAvailable" jdbcType="BIT" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_on" property="createdOn" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="serial_num" property="serialNum" jdbcType="VARCHAR" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+    <result column="delete_at" property="deleteAt" jdbcType="TIMESTAMP" />
+    <result column="cities" property="cities" jdbcType="LONGVARCHAR" />
+    <result column="check_remark" property="checkRemark" jdbcType="LONGVARCHAR" />
+    <result column="update_remark" property="updateRemark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from biz_mortgage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.BizMortgage" >
+    insert into biz_mortgage (id, company_id, material_package_id, 
+      mortgage_sign_type, is_available, created_by, 
+      created_on, is_delete, `status`, 
+      serial_num, data_type, delete_at, 
+      cities, check_remark, update_remark
+      )
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{materialPackageId,jdbcType=VARCHAR}, 
+      #{mortgageSignType,jdbcType=VARCHAR}, #{isAvailable,jdbcType=BIT}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdOn,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT}, #{status,jdbcType=VARCHAR}, 
+      #{serialNum,jdbcType=VARCHAR}, #{dataType,jdbcType=VARCHAR}, #{deleteAt,jdbcType=TIMESTAMP}, 
+      #{cities,jdbcType=LONGVARCHAR}, #{checkRemark,jdbcType=LONGVARCHAR}, #{updateRemark,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.BizMortgage" >
+    update biz_mortgage
+    set company_id = #{companyId,jdbcType=VARCHAR},
+      material_package_id = #{materialPackageId,jdbcType=VARCHAR},
+      mortgage_sign_type = #{mortgageSignType,jdbcType=VARCHAR},
+      is_available = #{isAvailable,jdbcType=BIT},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_on = #{createdOn,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT},
+      `status` = #{status,jdbcType=VARCHAR},
+      serial_num = #{serialNum,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      delete_at = #{deleteAt,jdbcType=TIMESTAMP},
+      cities = #{cities,jdbcType=LONGVARCHAR},
+      check_remark = #{checkRemark,jdbcType=LONGVARCHAR},
+      update_remark = #{updateRemark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, company_id, material_package_id, mortgage_sign_type, is_available, created_by, 
+    created_on, is_delete, `status`, serial_num, data_type, delete_at, cities, check_remark, 
+    update_remark
+    from biz_mortgage
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, company_id, material_package_id, mortgage_sign_type, is_available, created_by, 
+    created_on, is_delete, `status`, serial_num, data_type, delete_at, cities, check_remark, 
+    update_remark
+    from biz_mortgage
+  </select>
+</mapper>

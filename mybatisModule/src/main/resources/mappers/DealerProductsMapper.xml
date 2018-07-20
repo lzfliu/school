@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.DealerProductsMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.DealerProducts" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="is_available" property="isAvailable" jdbcType="TINYINT" />
+    <result column="created_on" property="createdOn" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+    <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dealer_products
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.DealerProducts" >
+    insert into dealer_products (id, company_id, product_id, 
+      data_type, `status`, is_available, 
+      created_on, created_by, is_delete, 
+      channel_id, content)
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
+      #{dataType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{isAvailable,jdbcType=TINYINT}, 
+      #{createdOn,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{isDelete,jdbcType=TINYINT}, 
+      #{channelId,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.DealerProducts" >
+    update dealer_products
+    set company_id = #{companyId,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      is_available = #{isAvailable,jdbcType=TINYINT},
+      created_on = #{createdOn,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      channel_id = #{channelId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, company_id, product_id, data_type, `status`, is_available, created_on, 
+    created_by, is_delete, channel_id, content
+    from dealer_products
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, company_id, product_id, data_type, `status`, is_available, created_on, 
+    created_by, is_delete, channel_id, content
+    from dealer_products
+  </select>
+</mapper>

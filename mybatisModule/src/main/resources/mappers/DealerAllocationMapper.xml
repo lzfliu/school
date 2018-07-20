@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.DealerAllocationMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.DealerAllocation" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="dealer_id" property="dealerId" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="serial_num" property="serialNum" jdbcType="VARCHAR" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+    <result column="delete_at" property="deleteAt" jdbcType="TIMESTAMP" />
+    <result column="check_remark" property="checkRemark" jdbcType="LONGVARCHAR" />
+    <result column="update_remark" property="updateRemark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dealer_allocation
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.DealerAllocation" >
+    insert into dealer_allocation (id, dealer_id, company_name,
+      `status`, serial_num, data_type, 
+      delete_at, check_remark, update_remark
+      )
+    values (#{id,jdbcType=VARCHAR}, #{dealerId,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT}, #{serialNum,jdbcType=VARCHAR}, #{dataType,jdbcType=VARCHAR}, 
+      #{deleteAt,jdbcType=TIMESTAMP}, #{checkRemark,jdbcType=LONGVARCHAR}, #{updateRemark,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.DealerAllocation" >
+    update dealer_allocation
+    set dealer_id = #{dealerId,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      serial_num = #{serialNum,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      delete_at = #{deleteAt,jdbcType=TIMESTAMP},
+      check_remark = #{checkRemark,jdbcType=LONGVARCHAR},
+      update_remark = #{updateRemark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, dealer_id, company_name,  `status`, serial_num, data_type, delete_at, check_remark,
+    update_remark
+    from dealer_allocation
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, dealer_id, company_name,`status`, serial_num, data_type, delete_at, check_remark,
+    update_remark
+    from dealer_allocation
+  </select>
+</mapper>

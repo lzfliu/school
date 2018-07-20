@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.ProductLoansMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.ProductLoans" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="month_num" property="monthNum" jdbcType="INTEGER" />
+    <result column="manage_fee" property="manageFee" jdbcType="VARCHAR" />
+    <result column="interest" property="interest" jdbcType="VARCHAR" />
+    <result column="rent" property="rent" jdbcType="VARCHAR" />
+    <result column="formula_id" property="formulaId" jdbcType="TINYINT" />
+    <result column="baoxian_rate" property="baoxianRate" jdbcType="VARCHAR" />
+    <result column="baoxianbei_rate" property="baoxianbeiRate" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_loans
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.ProductLoans" >
+    insert into product_loans (id, product_id, month_num, 
+      manage_fee, interest, rent, 
+      formula_id, baoxian_rate, baoxianbei_rate, 
+      created_at, updated_at)
+    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{monthNum,jdbcType=INTEGER}, 
+      #{manageFee,jdbcType=VARCHAR}, #{interest,jdbcType=VARCHAR}, #{rent,jdbcType=VARCHAR}, 
+      #{formulaId,jdbcType=TINYINT}, #{baoxianRate,jdbcType=VARCHAR}, #{baoxianbeiRate,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.ProductLoans" >
+    update product_loans
+    set product_id = #{productId,jdbcType=INTEGER},
+      month_num = #{monthNum,jdbcType=INTEGER},
+      manage_fee = #{manageFee,jdbcType=VARCHAR},
+      interest = #{interest,jdbcType=VARCHAR},
+      rent = #{rent,jdbcType=VARCHAR},
+      formula_id = #{formulaId,jdbcType=TINYINT},
+      baoxian_rate = #{baoxianRate,jdbcType=VARCHAR},
+      baoxianbei_rate = #{baoxianbeiRate,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, product_id, month_num, manage_fee, interest, rent, formula_id, baoxian_rate, 
+    baoxianbei_rate, created_at, updated_at
+    from product_loans
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, product_id, month_num, manage_fee, interest, rent, formula_id, baoxian_rate, 
+    baoxianbei_rate, created_at, updated_at
+    from product_loans
+  </select>
+</mapper>

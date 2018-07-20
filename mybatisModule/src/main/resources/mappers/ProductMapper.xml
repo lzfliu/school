@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.Product" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="describes" property="describes" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="capital_company_id" property="capitalCompanyId" jdbcType="VARCHAR" />
+    <result column="financial_company_id" property="financialCompanyId" jdbcType="VARCHAR" />
+    <result column="lenders_company_id" property="lendersCompanyId" jdbcType="VARCHAR" />
+    <result column="is_gps" property="isGps" jdbcType="BIT" />
+    <result column="is_robbery" property="isRobbery" jdbcType="BIT" />
+    <result column="is_imprest" property="isImprest" jdbcType="BIT" />
+    <result column="discount" property="discount" jdbcType="VARCHAR" />
+    <result column="month_formula_id" property="monthFormulaId" jdbcType="VARCHAR" />
+    <result column="baofei_formula_id" property="baofeiFormulaId" jdbcType="VARCHAR" />
+    <result column="loanamount_formula_id" property="loanamountFormulaId" jdbcType="VARCHAR" />
+    <result column="baoe_formula_id" property="baoeFormulaId" jdbcType="VARCHAR" />
+    <result column="is_match_loanyear" property="isMatchLoanyear" jdbcType="VARCHAR" />
+    <result column="feerate" property="feerate" jdbcType="BIT" />
+    <result column="overrate" property="overrate" jdbcType="DECIMAL" />
+    <result column="overrate_formula_id" property="overrateFormulaId" jdbcType="VARCHAR" />
+    <result column="material_package_id" property="materialPackageId" jdbcType="VARCHAR" />
+    <result column="first_upper" property="firstUpper" jdbcType="INTEGER" />
+    <result column="per_upper" property="perUpper" jdbcType="INTEGER" />
+    <result column="repay_type" property="repayType" jdbcType="VARCHAR" />
+    <result column="min_down_payment" property="minDownPayment" jdbcType="DECIMAL" />
+    <result column="max_down_payment" property="maxDownPayment" jdbcType="DECIMAL" />
+    <result column="discount_amount" property="discountAmount" jdbcType="DECIMAL" />
+    <result column="devices" property="devices" jdbcType="VARCHAR" />
+    <result column="max_loan_rate" property="maxLoanRate" jdbcType="DECIMAL" />
+    <result column="min_loan" property="minLoan" jdbcType="DECIMAL" />
+    <result column="max_loan" property="maxLoan" jdbcType="DECIMAL" />
+    <result column="created_on" property="createdOn" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+    <result column="is_available" property="isAvailable" jdbcType="TINYINT" />
+    <result column="insurance_product_code" property="insuranceProductCode" jdbcType="VARCHAR" />
+    <result column="product_type" property="productType" jdbcType="VARCHAR" />
+    <result column="is_affiliated" property="isAffiliated" jdbcType="BIT" />
+    <result column="overdraft_formula_id" property="overdraftFormulaId" jdbcType="VARCHAR" />
+    <result column="max_mileage" property="maxMileage" jdbcType="DOUBLE" />
+    <result column="business_type" property="businessType" jdbcType="VARCHAR" />
+    <result column="examine" property="examine" jdbcType="TINYINT" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+    <result column="audit" property="audit" jdbcType="VARCHAR" />
+    <result column="serial_num" property="serialNum" jdbcType="VARCHAR" />
+    <result column="check_remark" property="checkRemark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.Product" >
+    insert into product (id, code, `name`, 
+      describes, `status`, capital_company_id, 
+      financial_company_id, lenders_company_id, is_gps, 
+      is_robbery, is_imprest, discount, 
+      month_formula_id, baofei_formula_id, loanamount_formula_id, 
+      baoe_formula_id, is_match_loanyear, feerate, 
+      overrate, overrate_formula_id, material_package_id, 
+      first_upper, per_upper, repay_type, 
+      min_down_payment, max_down_payment, discount_amount, 
+      devices, max_loan_rate, min_loan, 
+      max_loan, created_on, created_by, 
+      is_delete, is_available, insurance_product_code, 
+      product_type, is_affiliated, overdraft_formula_id, 
+      max_mileage, business_type, examine, 
+      data_type, `audit`, serial_num, 
+      check_remark)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{describes,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{capitalCompanyId,jdbcType=VARCHAR}, 
+      #{financialCompanyId,jdbcType=VARCHAR}, #{lendersCompanyId,jdbcType=VARCHAR}, #{isGps,jdbcType=BIT}, 
+      #{isRobbery,jdbcType=BIT}, #{isImprest,jdbcType=BIT}, #{discount,jdbcType=VARCHAR}, 
+      #{monthFormulaId,jdbcType=VARCHAR}, #{baofeiFormulaId,jdbcType=VARCHAR}, #{loanamountFormulaId,jdbcType=VARCHAR}, 
+      #{baoeFormulaId,jdbcType=VARCHAR}, #{isMatchLoanyear,jdbcType=VARCHAR}, #{feerate,jdbcType=BIT}, 
+      #{overrate,jdbcType=DECIMAL}, #{overrateFormulaId,jdbcType=VARCHAR}, #{materialPackageId,jdbcType=VARCHAR}, 
+      #{firstUpper,jdbcType=INTEGER}, #{perUpper,jdbcType=INTEGER}, #{repayType,jdbcType=VARCHAR}, 
+      #{minDownPayment,jdbcType=DECIMAL}, #{maxDownPayment,jdbcType=DECIMAL}, #{discountAmount,jdbcType=DECIMAL}, 
+      #{devices,jdbcType=VARCHAR}, #{maxLoanRate,jdbcType=DECIMAL}, #{minLoan,jdbcType=DECIMAL}, 
+      #{maxLoan,jdbcType=DECIMAL}, #{createdOn,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=TINYINT}, #{isAvailable,jdbcType=TINYINT}, #{insuranceProductCode,jdbcType=VARCHAR}, 
+      #{productType,jdbcType=VARCHAR}, #{isAffiliated,jdbcType=BIT}, #{overdraftFormulaId,jdbcType=VARCHAR}, 
+      #{maxMileage,jdbcType=DOUBLE}, #{businessType,jdbcType=VARCHAR}, #{examine,jdbcType=TINYINT}, 
+      #{dataType,jdbcType=VARCHAR}, #{audit,jdbcType=VARCHAR}, #{serialNum,jdbcType=VARCHAR}, 
+      #{checkRemark,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.Product" >
+    update product
+    set code = #{code,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      describes = #{describes,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      capital_company_id = #{capitalCompanyId,jdbcType=VARCHAR},
+      financial_company_id = #{financialCompanyId,jdbcType=VARCHAR},
+      lenders_company_id = #{lendersCompanyId,jdbcType=VARCHAR},
+      is_gps = #{isGps,jdbcType=BIT},
+      is_robbery = #{isRobbery,jdbcType=BIT},
+      is_imprest = #{isImprest,jdbcType=BIT},
+      discount = #{discount,jdbcType=VARCHAR},
+      month_formula_id = #{monthFormulaId,jdbcType=VARCHAR},
+      baofei_formula_id = #{baofeiFormulaId,jdbcType=VARCHAR},
+      loanamount_formula_id = #{loanamountFormulaId,jdbcType=VARCHAR},
+      baoe_formula_id = #{baoeFormulaId,jdbcType=VARCHAR},
+      is_match_loanyear = #{isMatchLoanyear,jdbcType=VARCHAR},
+      feerate = #{feerate,jdbcType=BIT},
+      overrate = #{overrate,jdbcType=DECIMAL},
+      overrate_formula_id = #{overrateFormulaId,jdbcType=VARCHAR},
+      material_package_id = #{materialPackageId,jdbcType=VARCHAR},
+      first_upper = #{firstUpper,jdbcType=INTEGER},
+      per_upper = #{perUpper,jdbcType=INTEGER},
+      repay_type = #{repayType,jdbcType=VARCHAR},
+      min_down_payment = #{minDownPayment,jdbcType=DECIMAL},
+      max_down_payment = #{maxDownPayment,jdbcType=DECIMAL},
+      discount_amount = #{discountAmount,jdbcType=DECIMAL},
+      devices = #{devices,jdbcType=VARCHAR},
+      max_loan_rate = #{maxLoanRate,jdbcType=DECIMAL},
+      min_loan = #{minLoan,jdbcType=DECIMAL},
+      max_loan = #{maxLoan,jdbcType=DECIMAL},
+      created_on = #{createdOn,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      is_available = #{isAvailable,jdbcType=TINYINT},
+      insurance_product_code = #{insuranceProductCode,jdbcType=VARCHAR},
+      product_type = #{productType,jdbcType=VARCHAR},
+      is_affiliated = #{isAffiliated,jdbcType=BIT},
+      overdraft_formula_id = #{overdraftFormulaId,jdbcType=VARCHAR},
+      max_mileage = #{maxMileage,jdbcType=DOUBLE},
+      business_type = #{businessType,jdbcType=VARCHAR},
+      examine = #{examine,jdbcType=TINYINT},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      `audit` = #{audit,jdbcType=VARCHAR},
+      serial_num = #{serialNum,jdbcType=VARCHAR},
+      check_remark = #{checkRemark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, code, `name`, describes, `status`, capital_company_id, financial_company_id, 
+    lenders_company_id, is_gps, is_robbery, is_imprest, discount, month_formula_id, baofei_formula_id, 
+    loanamount_formula_id, baoe_formula_id, is_match_loanyear, feerate, overrate, overrate_formula_id, 
+    material_package_id, first_upper, per_upper, repay_type, min_down_payment, max_down_payment, 
+    discount_amount, devices, max_loan_rate, min_loan, max_loan, created_on, created_by, 
+    is_delete, is_available, insurance_product_code, product_type, is_affiliated, overdraft_formula_id, 
+    max_mileage, business_type, examine, data_type, `audit`, serial_num, check_remark
+    from product
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, code, `name`, describes, `status`, capital_company_id, financial_company_id, 
+    lenders_company_id, is_gps, is_robbery, is_imprest, discount, month_formula_id, baofei_formula_id, 
+    loanamount_formula_id, baoe_formula_id, is_match_loanyear, feerate, overrate, overrate_formula_id, 
+    material_package_id, first_upper, per_upper, repay_type, min_down_payment, max_down_payment, 
+    discount_amount, devices, max_loan_rate, min_loan, max_loan, created_on, created_by, 
+    is_delete, is_available, insurance_product_code, product_type, is_affiliated, overdraft_formula_id, 
+    max_mileage, business_type, examine, data_type, `audit`, serial_num, check_remark
+    from product
+  </select>
+</mapper>

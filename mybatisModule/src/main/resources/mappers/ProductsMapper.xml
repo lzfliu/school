@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.ProductsMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.Products" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="process_id" property="processId" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="shortname" property="shortname" jdbcType="VARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="capital_id" property="capitalId" jdbcType="VARCHAR" />
+    <result column="loanrule_id" property="loanruleId" jdbcType="VARCHAR" />
+    <result column="mortgage_id" property="mortgageId" jdbcType="VARCHAR" />
+    <result column="is_gps" property="isGps" jdbcType="BIT" />
+    <result column="is_robbery" property="isRobbery" jdbcType="BIT" />
+    <result column="is_discount" property="isDiscount" jdbcType="BIT" />
+    <result column="contract_package_id" property="contractPackageId" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="loan_cont_type" property="loanContType" jdbcType="VARCHAR" />
+    <result column="loan_cont_num" property="loanContNum" jdbcType="VARCHAR" />
+    <result column="loan_cont_copy_num" property="loanContCopyNum" jdbcType="VARCHAR" />
+    <result column="mort_cont_type" property="mortContType" jdbcType="VARCHAR" />
+    <result column="mort_cont_num" property="mortContNum" jdbcType="VARCHAR" />
+    <result column="bank_card_type" property="bankCardType" jdbcType="BIT" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_account_name" property="bankAccountName" jdbcType="VARCHAR" />
+    <result column="bank_account_id" property="bankAccountId" jdbcType="VARCHAR" />
+    <result column="invoice_ids" property="invoiceIds" jdbcType="VARCHAR" />
+    <result column="is_imprest" property="isImprest" jdbcType="BIT" />
+    <result column="material_receiver" property="materialReceiver" jdbcType="VARCHAR" />
+    <result column="material_address" property="materialAddress" jdbcType="VARCHAR" />
+    <result column="material_contacter" property="materialContacter" jdbcType="VARCHAR" />
+    <result column="material_phone" property="materialPhone" jdbcType="VARCHAR" />
+    <result column="disable" property="disable" jdbcType="TINYINT" />
+    <result column="min_loan" property="minLoan" jdbcType="VARCHAR" />
+    <result column="dq_year" property="dqYear" jdbcType="VARCHAR" />
+    <result column="baofei_formula_id" property="baofeiFormulaId" jdbcType="VARCHAR" />
+    <result column="loanamount_formula_id" property="loanamountFormulaId" jdbcType="VARCHAR" />
+    <result column="baoe_formula_id" property="baoeFormulaId" jdbcType="VARCHAR" />
+    <result column="overloan_formula_id" property="overloanFormulaId" jdbcType="VARCHAR" />
+    <result column="is_match_loanyear" property="isMatchLoanyear" jdbcType="VARCHAR" />
+    <result column="repayment_type" property="repaymentType" jdbcType="VARCHAR" />
+    <result column="feerate" property="feerate" jdbcType="TINYINT" />
+    <result column="loanrate" property="loanrate" jdbcType="DECIMAL" />
+    <result column="overrate" property="overrate" jdbcType="DECIMAL" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="material_package_id" property="materialPackageId" jdbcType="INTEGER" />
+    <result column="borrower_insurance_year" property="borrowerInsuranceYear" jdbcType="VARCHAR" />
+    <result column="loanmoney_range" property="loanmoneyRange" jdbcType="VARCHAR" />
+    <result column="downpayment_rate_range" property="downpaymentRateRange" jdbcType="VARCHAR" />
+    <result column="int_over" property="intOver" jdbcType="BIT" />
+    <result column="used_car" property="usedCar" jdbcType="BIT" />
+    <result column="is_guakao" property="isGuakao" jdbcType="BIT" />
+    <result column="max_km" property="maxKm" jdbcType="VARCHAR" />
+    <result column="carage_limit" property="carageLimit" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from products
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.Products" >
+    insert into products (id, process_id, code, 
+      `name`, shortname, keywords, 
+      `describe`, logo, `status`, 
+      capital_id, loanrule_id, mortgage_id, 
+      is_gps, is_robbery, is_discount, contract_package_id, 
+      create_by, update_by, loan_cont_type, 
+      loan_cont_num, loan_cont_copy_num, mort_cont_type, 
+      mort_cont_num, bank_card_type, bank_name, 
+      bank_account_name, bank_account_id, invoice_ids, 
+      is_imprest, material_receiver, material_address, 
+      material_contacter, material_phone, `disable`, 
+      min_loan, dq_year, baofei_formula_id, 
+      loanamount_formula_id, baoe_formula_id, overloan_formula_id, 
+      is_match_loanyear, repayment_type, feerate, 
+      loanrate, overrate, created_at, 
+      updated_at, deleted_at, material_package_id, 
+      borrower_insurance_year, loanmoney_range, 
+      downpayment_rate_range, int_over, used_car, 
+      is_guakao, max_km, carage_limit
+      )
+    values (#{id,jdbcType=INTEGER}, #{processId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{shortname,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
+      #{describe,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{capitalId,jdbcType=VARCHAR}, #{loanruleId,jdbcType=VARCHAR}, #{mortgageId,jdbcType=VARCHAR}, 
+      #{isGps,jdbcType=BIT}, #{isRobbery,jdbcType=BIT}, #{isDiscount,jdbcType=BIT}, #{contractPackageId,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{loanContType,jdbcType=VARCHAR}, 
+      #{loanContNum,jdbcType=VARCHAR}, #{loanContCopyNum,jdbcType=VARCHAR}, #{mortContType,jdbcType=VARCHAR}, 
+      #{mortContNum,jdbcType=VARCHAR}, #{bankCardType,jdbcType=BIT}, #{bankName,jdbcType=VARCHAR}, 
+      #{bankAccountName,jdbcType=VARCHAR}, #{bankAccountId,jdbcType=VARCHAR}, #{invoiceIds,jdbcType=VARCHAR}, 
+      #{isImprest,jdbcType=BIT}, #{materialReceiver,jdbcType=VARCHAR}, #{materialAddress,jdbcType=VARCHAR}, 
+      #{materialContacter,jdbcType=VARCHAR}, #{materialPhone,jdbcType=VARCHAR}, #{disable,jdbcType=TINYINT}, 
+      #{minLoan,jdbcType=VARCHAR}, #{dqYear,jdbcType=VARCHAR}, #{baofeiFormulaId,jdbcType=VARCHAR}, 
+      #{loanamountFormulaId,jdbcType=VARCHAR}, #{baoeFormulaId,jdbcType=VARCHAR}, #{overloanFormulaId,jdbcType=VARCHAR}, 
+      #{isMatchLoanyear,jdbcType=VARCHAR}, #{repaymentType,jdbcType=VARCHAR}, #{feerate,jdbcType=TINYINT}, 
+      #{loanrate,jdbcType=DECIMAL}, #{overrate,jdbcType=DECIMAL}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}, #{materialPackageId,jdbcType=INTEGER}, 
+      #{borrowerInsuranceYear,jdbcType=VARCHAR}, #{loanmoneyRange,jdbcType=VARCHAR}, 
+      #{downpaymentRateRange,jdbcType=VARCHAR}, #{intOver,jdbcType=BIT}, #{usedCar,jdbcType=BIT}, 
+      #{isGuakao,jdbcType=BIT}, #{maxKm,jdbcType=VARCHAR}, #{carageLimit,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.Products" >
+    update products
+    set process_id = #{processId,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      shortname = #{shortname,jdbcType=VARCHAR},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      capital_id = #{capitalId,jdbcType=VARCHAR},
+      loanrule_id = #{loanruleId,jdbcType=VARCHAR},
+      mortgage_id = #{mortgageId,jdbcType=VARCHAR},
+      is_gps = #{isGps,jdbcType=BIT},
+      is_robbery = #{isRobbery,jdbcType=BIT},
+      is_discount = #{isDiscount,jdbcType=BIT},
+      contract_package_id = #{contractPackageId,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      loan_cont_type = #{loanContType,jdbcType=VARCHAR},
+      loan_cont_num = #{loanContNum,jdbcType=VARCHAR},
+      loan_cont_copy_num = #{loanContCopyNum,jdbcType=VARCHAR},
+      mort_cont_type = #{mortContType,jdbcType=VARCHAR},
+      mort_cont_num = #{mortContNum,jdbcType=VARCHAR},
+      bank_card_type = #{bankCardType,jdbcType=BIT},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_account_name = #{bankAccountName,jdbcType=VARCHAR},
+      bank_account_id = #{bankAccountId,jdbcType=VARCHAR},
+      invoice_ids = #{invoiceIds,jdbcType=VARCHAR},
+      is_imprest = #{isImprest,jdbcType=BIT},
+      material_receiver = #{materialReceiver,jdbcType=VARCHAR},
+      material_address = #{materialAddress,jdbcType=VARCHAR},
+      material_contacter = #{materialContacter,jdbcType=VARCHAR},
+      material_phone = #{materialPhone,jdbcType=VARCHAR},
+      `disable` = #{disable,jdbcType=TINYINT},
+      min_loan = #{minLoan,jdbcType=VARCHAR},
+      dq_year = #{dqYear,jdbcType=VARCHAR},
+      baofei_formula_id = #{baofeiFormulaId,jdbcType=VARCHAR},
+      loanamount_formula_id = #{loanamountFormulaId,jdbcType=VARCHAR},
+      baoe_formula_id = #{baoeFormulaId,jdbcType=VARCHAR},
+      overloan_formula_id = #{overloanFormulaId,jdbcType=VARCHAR},
+      is_match_loanyear = #{isMatchLoanyear,jdbcType=VARCHAR},
+      repayment_type = #{repaymentType,jdbcType=VARCHAR},
+      feerate = #{feerate,jdbcType=TINYINT},
+      loanrate = #{loanrate,jdbcType=DECIMAL},
+      overrate = #{overrate,jdbcType=DECIMAL},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      material_package_id = #{materialPackageId,jdbcType=INTEGER},
+      borrower_insurance_year = #{borrowerInsuranceYear,jdbcType=VARCHAR},
+      loanmoney_range = #{loanmoneyRange,jdbcType=VARCHAR},
+      downpayment_rate_range = #{downpaymentRateRange,jdbcType=VARCHAR},
+      int_over = #{intOver,jdbcType=BIT},
+      used_car = #{usedCar,jdbcType=BIT},
+      is_guakao = #{isGuakao,jdbcType=BIT},
+      max_km = #{maxKm,jdbcType=VARCHAR},
+      carage_limit = #{carageLimit,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, process_id, code, `name`, shortname, keywords, `describe`, logo, `status`, 
+    capital_id, loanrule_id, mortgage_id, is_gps, is_robbery, is_discount, contract_package_id, 
+    create_by, update_by, loan_cont_type, loan_cont_num, loan_cont_copy_num, mort_cont_type, 
+    mort_cont_num, bank_card_type, bank_name, bank_account_name, bank_account_id, invoice_ids, 
+    is_imprest, material_receiver, material_address, material_contacter, material_phone, 
+    `disable`, min_loan, dq_year, baofei_formula_id, loanamount_formula_id, baoe_formula_id, 
+    overloan_formula_id, is_match_loanyear, repayment_type, feerate, loanrate, overrate, 
+    created_at, updated_at, deleted_at, material_package_id, borrower_insurance_year, 
+    loanmoney_range, downpayment_rate_range, int_over, used_car, is_guakao, max_km, carage_limit
+    from products
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, process_id, code, `name`, shortname, keywords, `describe`, logo, `status`, 
+    capital_id, loanrule_id, mortgage_id, is_gps, is_robbery, is_discount, contract_package_id, 
+    create_by, update_by, loan_cont_type, loan_cont_num, loan_cont_copy_num, mort_cont_type, 
+    mort_cont_num, bank_card_type, bank_name, bank_account_name, bank_account_id, invoice_ids, 
+    is_imprest, material_receiver, material_address, material_contacter, material_phone, 
+    `disable`, min_loan, dq_year, baofei_formula_id, loanamount_formula_id, baoe_formula_id, 
+    overloan_formula_id, is_match_loanyear, repayment_type, feerate, loanrate, overrate, 
+    created_at, updated_at, deleted_at, material_package_id, borrower_insurance_year, 
+    loanmoney_range, downpayment_rate_range, int_over, used_car, is_guakao, max_km, carage_limit
+    from products
+  </select>
+</mapper>

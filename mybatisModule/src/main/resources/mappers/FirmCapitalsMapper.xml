@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.FirmCapitalsMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.FirmCapitals" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="linkman" property="linkman" jdbcType="VARCHAR" />
+    <result column="loan_linkman" property="loanLinkman" jdbcType="VARCHAR" />
+    <result column="loan_phone" property="loanPhone" jdbcType="VARCHAR" />
+    <result column="loan_mobile" property="loanMobile" jdbcType="VARCHAR" />
+    <result column="loan_fax" property="loanFax" jdbcType="VARCHAR" />
+    <result column="loan_postcode" property="loanPostcode" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="contract_template_id" property="contractTemplateId" jdbcType="INTEGER" />
+    <result column="due_date" property="dueDate" jdbcType="VARCHAR" />
+    <result column="enterprise" property="enterprise" jdbcType="VARCHAR" />
+    <result column="bank_card_type" property="bankCardType" jdbcType="TINYINT" />
+    <result column="isprefee" property="isprefee" jdbcType="VARCHAR" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+    <result column="first_beneficiary" property="firstBeneficiary" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="supportprivate" property="supportprivate" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from firm_capitals
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.FirmCapitals" >
+    insert into firm_capitals (id, `name`, linkman, 
+      loan_linkman, loan_phone, loan_mobile, 
+      loan_fax, loan_postcode, mobile, 
+      province, city, district, 
+      address, contract_template_id, due_date, 
+      enterprise, bank_card_type, isprefee, 
+      `disable`, first_beneficiary, update_by, 
+      create_by, created_at, updated_at, 
+      deleted_at, `status`, supportprivate
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, 
+      #{loanLinkman,jdbcType=VARCHAR}, #{loanPhone,jdbcType=VARCHAR}, #{loanMobile,jdbcType=VARCHAR}, 
+      #{loanFax,jdbcType=VARCHAR}, #{loanPostcode,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{contractTemplateId,jdbcType=INTEGER}, #{dueDate,jdbcType=VARCHAR}, 
+      #{enterprise,jdbcType=VARCHAR}, #{bankCardType,jdbcType=TINYINT}, #{isprefee,jdbcType=VARCHAR}, 
+      #{disable,jdbcType=BIT}, #{firstBeneficiary,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{supportprivate,jdbcType=BIT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.FirmCapitals" >
+    update firm_capitals
+    set `name` = #{name,jdbcType=VARCHAR},
+      linkman = #{linkman,jdbcType=VARCHAR},
+      loan_linkman = #{loanLinkman,jdbcType=VARCHAR},
+      loan_phone = #{loanPhone,jdbcType=VARCHAR},
+      loan_mobile = #{loanMobile,jdbcType=VARCHAR},
+      loan_fax = #{loanFax,jdbcType=VARCHAR},
+      loan_postcode = #{loanPostcode,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      contract_template_id = #{contractTemplateId,jdbcType=INTEGER},
+      due_date = #{dueDate,jdbcType=VARCHAR},
+      enterprise = #{enterprise,jdbcType=VARCHAR},
+      bank_card_type = #{bankCardType,jdbcType=TINYINT},
+      isprefee = #{isprefee,jdbcType=VARCHAR},
+      `disable` = #{disable,jdbcType=BIT},
+      first_beneficiary = #{firstBeneficiary,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=VARCHAR},
+      supportprivate = #{supportprivate,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, `name`, linkman, loan_linkman, loan_phone, loan_mobile, loan_fax, loan_postcode, 
+    mobile, province, city, district, address, contract_template_id, due_date, enterprise, 
+    bank_card_type, isprefee, `disable`, first_beneficiary, update_by, create_by, created_at, 
+    updated_at, deleted_at, `status`, supportprivate
+    from firm_capitals
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, `name`, linkman, loan_linkman, loan_phone, loan_mobile, loan_fax, loan_postcode, 
+    mobile, province, city, district, address, contract_template_id, due_date, enterprise, 
+    bank_card_type, isprefee, `disable`, first_beneficiary, update_by, create_by, created_at, 
+    updated_at, deleted_at, `status`, supportprivate
+    from firm_capitals
+  </select>
+</mapper>

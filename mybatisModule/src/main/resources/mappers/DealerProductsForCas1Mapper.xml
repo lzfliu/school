@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.DealerProductsForCas1Mapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.DealerProducts" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dealer_id" property="dealerId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="used_at" property="usedAt" jdbcType="TIMESTAMP" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dealer_products
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.DealerProducts" >
+    insert into dealer_products (id, dealer_id, product_id, 
+      `disable`, create_by, update_by, 
+      used_at, created_at, updated_at, 
+      deleted_at)
+    values (#{id,jdbcType=INTEGER}, #{dealerId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{disable,jdbcType=BIT}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, 
+      #{usedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{deletedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.DealerProducts" >
+    update dealer_products
+    set dealer_id = #{dealerId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      `disable` = #{disable,jdbcType=BIT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      used_at = #{usedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, dealer_id, product_id, `disable`, create_by, update_by, used_at, created_at, 
+    updated_at, deleted_at
+    from dealer_products
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, dealer_id, product_id, `disable`, create_by, update_by, used_at, created_at, 
+    updated_at, deleted_at
+    from dealer_products
+  </select>
+</mapper>

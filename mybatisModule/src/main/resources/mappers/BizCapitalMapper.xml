@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.BizCapitalMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.BizCapital" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="repay_type" property="repayType" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="first_beneficiary" property="firstBeneficiary" jdbcType="VARCHAR" />
+    <result column="repay_day_type" property="repayDayType" jdbcType="VARCHAR" />
+    <result column="loan_sign_type" property="loanSignType" jdbcType="VARCHAR" />
+    <result column="rate_type" property="rateType" jdbcType="VARCHAR" />
+    <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+    <result column="account_bank" property="accountBank" jdbcType="VARCHAR" />
+    <result column="account_owner" property="accountOwner" jdbcType="VARCHAR" />
+    <result column="allow_private_account" property="allowPrivateAccount" jdbcType="BIT" />
+    <result column="mortgages" property="mortgages" jdbcType="VARCHAR" />
+    <result column="max_loan_rate" property="maxLoanRate" jdbcType="DECIMAL" />
+    <result column="overrate" property="overrate" jdbcType="DECIMAL" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="is_available" property="isAvailable" jdbcType="BIT" />
+    <result column="created_on" property="createdOn" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+    <result column="min_pay_down" property="minPayDown" jdbcType="DECIMAL" />
+    <result column="rate_delay" property="rateDelay" jdbcType="DECIMAL" />
+    <result column="transfer_key" property="transferKey" jdbcType="VARCHAR" />
+    <result column="total_document_id" property="totalDocumentId" jdbcType="VARCHAR" />
+    <result column="is_need_appointment" property="isNeedAppointment" jdbcType="BIT" />
+    <result column="order_date_provider" property="orderDateProvider" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="serial_num" property="serialNum" jdbcType="VARCHAR" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+    <result column="delete_at" property="deleteAt" jdbcType="TIMESTAMP" />
+    <result column="check_remark" property="checkRemark" jdbcType="LONGVARCHAR" />
+    <result column="update_remark" property="updateRemark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from biz_capital
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.BizCapital" >
+    insert into biz_capital (id, company_id, repay_type, 
+      card_type, first_beneficiary, repay_day_type, 
+      loan_sign_type, rate_type, account_no, 
+      account_bank, account_owner, allow_private_account, 
+      mortgages, max_loan_rate, overrate, 
+      created_by, is_available, created_on, 
+      is_delete, min_pay_down, rate_delay, 
+      transfer_key, total_document_id, is_need_appointment, 
+      order_date_provider, `status`, serial_num, 
+      data_type, delete_at, check_remark, 
+      update_remark)
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{repayType,jdbcType=VARCHAR}, 
+      #{cardType,jdbcType=VARCHAR}, #{firstBeneficiary,jdbcType=VARCHAR}, #{repayDayType,jdbcType=VARCHAR}, 
+      #{loanSignType,jdbcType=VARCHAR}, #{rateType,jdbcType=VARCHAR}, #{accountNo,jdbcType=VARCHAR}, 
+      #{accountBank,jdbcType=VARCHAR}, #{accountOwner,jdbcType=VARCHAR}, #{allowPrivateAccount,jdbcType=BIT}, 
+      #{mortgages,jdbcType=VARCHAR}, #{maxLoanRate,jdbcType=DECIMAL}, #{overrate,jdbcType=DECIMAL}, 
+      #{createdBy,jdbcType=VARCHAR}, #{isAvailable,jdbcType=BIT}, #{createdOn,jdbcType=TIMESTAMP}, 
+      #{isDelete,jdbcType=BIT}, #{minPayDown,jdbcType=DECIMAL}, #{rateDelay,jdbcType=DECIMAL}, 
+      #{transferKey,jdbcType=VARCHAR}, #{totalDocumentId,jdbcType=VARCHAR}, #{isNeedAppointment,jdbcType=BIT}, 
+      #{orderDateProvider,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{serialNum,jdbcType=VARCHAR}, 
+      #{dataType,jdbcType=VARCHAR}, #{deleteAt,jdbcType=TIMESTAMP}, #{checkRemark,jdbcType=LONGVARCHAR}, 
+      #{updateRemark,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.BizCapital" >
+    update biz_capital
+    set company_id = #{companyId,jdbcType=VARCHAR},
+      repay_type = #{repayType,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      first_beneficiary = #{firstBeneficiary,jdbcType=VARCHAR},
+      repay_day_type = #{repayDayType,jdbcType=VARCHAR},
+      loan_sign_type = #{loanSignType,jdbcType=VARCHAR},
+      rate_type = #{rateType,jdbcType=VARCHAR},
+      account_no = #{accountNo,jdbcType=VARCHAR},
+      account_bank = #{accountBank,jdbcType=VARCHAR},
+      account_owner = #{accountOwner,jdbcType=VARCHAR},
+      allow_private_account = #{allowPrivateAccount,jdbcType=BIT},
+      mortgages = #{mortgages,jdbcType=VARCHAR},
+      max_loan_rate = #{maxLoanRate,jdbcType=DECIMAL},
+      overrate = #{overrate,jdbcType=DECIMAL},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      is_available = #{isAvailable,jdbcType=BIT},
+      created_on = #{createdOn,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=BIT},
+      min_pay_down = #{minPayDown,jdbcType=DECIMAL},
+      rate_delay = #{rateDelay,jdbcType=DECIMAL},
+      transfer_key = #{transferKey,jdbcType=VARCHAR},
+      total_document_id = #{totalDocumentId,jdbcType=VARCHAR},
+      is_need_appointment = #{isNeedAppointment,jdbcType=BIT},
+      order_date_provider = #{orderDateProvider,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      serial_num = #{serialNum,jdbcType=VARCHAR},
+      data_type = #{dataType,jdbcType=VARCHAR},
+      delete_at = #{deleteAt,jdbcType=TIMESTAMP},
+      check_remark = #{checkRemark,jdbcType=LONGVARCHAR},
+      update_remark = #{updateRemark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, company_id, repay_type, card_type, first_beneficiary, repay_day_type, 
+    loan_sign_type, rate_type, account_no, account_bank, account_owner, allow_private_account, 
+    mortgages, max_loan_rate, overrate, created_by, is_available, created_on, is_delete, 
+    min_pay_down, rate_delay, transfer_key, total_document_id, is_need_appointment, order_date_provider, 
+    `status`, serial_num, data_type, delete_at, check_remark, update_remark
+    from biz_capital
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, company_id, repay_type, card_type, first_beneficiary, repay_day_type, 
+    loan_sign_type, rate_type, account_no, account_bank, account_owner, allow_private_account, 
+    mortgages, max_loan_rate, overrate, created_by, is_available, created_on, is_delete, 
+    min_pay_down, rate_delay, transfer_key, total_document_id, is_need_appointment, order_date_provider, 
+    `status`, serial_num, data_type, delete_at, check_remark, update_remark
+    from biz_capital
+  </select>
+</mapper>

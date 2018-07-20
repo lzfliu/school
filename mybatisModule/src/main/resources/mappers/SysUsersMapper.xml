@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.SysUsersMapper">
+    <resultMap id="BaseResultMap" type="com.lzf.entity.SysUsers">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="firm_id" property="firmId" jdbcType="INTEGER"/>
+        <result column="firm_type" property="firmType" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="truename" property="truename" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="disable" property="disable" jdbcType="TINYINT"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="idcard_pic" property="idcardPic" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="INTEGER"/>
+        <result column="city" property="city" jdbcType="INTEGER"/>
+        <result column="district" property="district" jdbcType="INTEGER"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="id_code" property="idCode" jdbcType="VARCHAR"/>
+        <result column="remember_token" property="rememberToken" jdbcType="VARCHAR"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+        <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_users
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.lzf.entity.SysUsers">
+    insert into sys_users (id, firm_id, firm_type, 
+      username, `password`, salt, 
+      email, truename, mobile, 
+      gender, `disable`, `status`, 
+      create_by, update_by, avatar, 
+      idcard_pic, province, city, 
+      district, address, id_code, 
+      remember_token, created_at, updated_at, 
+      deleted_at)
+    values (#{id,jdbcType=INTEGER}, #{firmId,jdbcType=INTEGER}, #{firmType,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=TINYINT}, #{disable,jdbcType=TINYINT}, #{status,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{idcardPic,jdbcType=VARCHAR}, #{province,jdbcType=INTEGER}, #{city,jdbcType=INTEGER}, 
+      #{district,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{idCode,jdbcType=VARCHAR}, 
+      #{rememberToken,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{deletedAt,jdbcType=TIMESTAMP})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.lzf.entity.SysUsers">
+    update sys_users
+    set firm_id = #{firmId,jdbcType=INTEGER},
+      firm_type = #{firmType,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      truename = #{truename,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      `disable` = #{disable,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      idcard_pic = #{idcardPic,jdbcType=VARCHAR},
+      province = #{province,jdbcType=INTEGER},
+      city = #{city,jdbcType=INTEGER},
+      district = #{district,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      id_code = #{idCode,jdbcType=VARCHAR},
+      remember_token = #{rememberToken,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id, firm_id, firm_type, username, `password`, salt, email, truename, mobile, 
+    gender, `disable`, `status`, create_by, update_by, avatar, idcard_pic, province, 
+    city, district, address, id_code, remember_token, created_at, updated_at, deleted_at
+    from sys_users
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, firm_id, firm_type, username, `password`, salt, email, truename, mobile, 
+    gender, `disable`, `status`, create_by, update_by, avatar, idcard_pic, province, 
+    city, district, address, id_code, remember_token, created_at, updated_at, deleted_at
+    from sys_users
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap">
+    select id, firm_id, firm_type, username, `password`, salt, email, truename, mobile,
+    gender, `disable`, `status`, create_by, update_by, avatar, idcard_pic, province,
+    city, district, address, id_code, remember_token, created_at, updated_at, deleted_at
+    from sys_users where firm_type = #{firmType,jdbcType=VARCHAR} and firm_id = #{firmId,jdbcType=INTEGER}
+   </select>
+</mapper>
