@@ -1,6 +1,8 @@
 package com.lzf;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.lzf.dao.*;
 import com.lzf.entity.*;
 import com.lzf.utils.BeanUtils;
@@ -19,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -1193,175 +1196,203 @@ public class TestDao {
 //    }
 //
 
-//    @Test
-//    public void importProduct() throws IOException{
-//        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
-//        List<Products> productsList = productsMapper.selectByProducts();
-//        List<Product> productListForCas2 = new ArrayList<>();
-//        List<ProductFlow> productFlowListForCas2 = new ArrayList<>();
-//        List<ProductLoan> productLoanListForCas2 = new ArrayList<>();
-//        List<ProductUsedCarRule> productUsedCarRuleListForCas2 = new ArrayList<>();
-//        List<Cas1Relation> cas1RelationList = new ArrayList<>();
-//        for (Products products : productsList) {
-//            Product cas2Product = new Product();
-//            cas2Product.setId(IdGenerater.uuid());
-//            cas2Product.setCreatedBy("脚本导入");
-//            cas2Product.setCreatedOn(new Date());
-//            cas2Product.setIsDelete((byte) 0);
-//            cas2Product.setIsAvailable((byte) 1);
-//            cas2Product.setCode(products.getCode());
-//            cas2Product.setExamine((byte) 1);
-//            cas2Product.setStatus("1");
-//            cas2Product.setIsRobbery(false);
-//            cas2Product.setIsGps(false);
-//            cas2Product.setIsMatchLoanyear("0");
-//            cas2Product.setName(products.getName());
-//            cas2Product.setDescribes(products.getDescribe());
-//            if(products.getIsGuakao() != null && products.getIsGuakao()){
-//                cas2Product.setBusinessType("[\"natural_affiliated\"]");
-//                cas2Product.setIsAffiliated(true);
-//            }else{
-//                cas2Product.setBusinessType("[\"natural\"]");
-//                cas2Product.setIsAffiliated(false);
-//            }
-//            if(products.getUsedCar()){
-//                cas2Product.setProductType("2");
-//                if(StringUtils.isNotBlank(products.getMaxKm())){
-//                    cas2Product.setMaxMileage(Double.parseDouble(products.getMaxKm()));
-//                }
-//                cas2Product.setMaterialPackageId("010895c340ff4ffb807a2ba68c760c7f");
-//                String carageLimit = products.getCarageLimit();
-//                if(StringUtils.isNotBlank(carageLimit) && !"0".equals(carageLimit)){
-//                    List<JSONObject> jsonObjects = JSONArray.parseArray(carageLimit, JSONObject.class);
-//                    for (JSONObject jsonObject : jsonObjects) {
-//                        ProductUsedCarRule productUsedCarRule = new ProductUsedCarRule();
-//                        productUsedCarRule.setId(IdGenerater.uuid());
-//                        productUsedCarRule.setCreatedBy("脚本导入");
-//                        productUsedCarRule.setCreatedOn(new Date());
-//                        productUsedCarRule.setIsDelete((byte) 0);
-//                        productUsedCarRule.setIsAvailable((byte) 1);
-//                        productUsedCarRule.setProductId(cas2Product.getId());
-//                        productUsedCarRule.setMinAmount(jsonObject.getBigDecimal("min"));
-//                        productUsedCarRule.setMaxAmount(jsonObject.getBigDecimal("max"));
-//                        productUsedCarRule.setYear(jsonObject.getDouble("year"));
-//                        productUsedCarRuleListForCas2.add(productUsedCarRule);
-//                    }
-//                }
-//            }else{
-//                cas2Product.setProductType("1");
-//                cas2Product.setMaterialPackageId("5d5feb3c5ea265d52937f4eff425f495");
-//            }
-//            cas2Product.setIsImprest(products.getIsImprest());
-//            cas2Product.setRepayType(products.getRepaymentType());
-//            cas2Product.setPerUpper(0);
-//            cas2Product.setFirstUpper(Integer.parseInt(products.getMinLoan()));
-//            cas2Product.setInsuranceProductCode("");//盗抢产品编码
-//            cas2Product.setMinDownPayment(JSON.parseObject(products.getDownpaymentRateRange()).getBigDecimal("min"));
-//            cas2Product.setMaxDownPayment(JSON.parseObject(products.getDownpaymentRateRange()).getBigDecimal("max"));
-//            cas2Product.setMinLoan(JSON.parseObject(products.getLoanmoneyRange()).getBigDecimal("min"));
-//            cas2Product.setMaxLoan(JSON.parseObject(products.getLoanmoneyRange()).getBigDecimal("max"));
-//            cas2Product.setMaxLoanRate(products.getLoanrate());
-//            cas2Product.setOverrate(products.getOverrate());
-//
-//            String overloanFormulaId = products.getOverloanFormulaId();//CAS1 超融公式
-//
-//            if("11".equals(overloanFormulaId)){
-//                cas2Product.setOverrateFormulaId("calculationFinancialAmountForPrincipal");
-//            }else{
-//                cas2Product.setOverrateFormulaId("calculationFinancialAmountForCarPrice");
-//            }
-//            cas2Product.setOverdraftFormulaId("calculationOverdraft");//透支总额
-//            Byte formulaId = products.getProductLoansList().get(0).getFormulaId();//CAS1 月供公式
-//            if(9 == formulaId){
-//                cas2Product.setOverrateFormulaId("calculationYearMonthlyCompoundInterest");
-//            }else{
-//                cas2Product.setOverrateFormulaId("calculationAccrualMonthlyRate");
-//            }
-//            cas2Product.setBaofeiFormulaId("calculationPremium");
-//            Boolean intOver = products.getIntOver();
-//            String baoeFormulaId = products.getBaoeFormulaId();
-//            if("4".equals(baoeFormulaId)){
-//                cas2Product.setBaoeFormulaId("calculationBaoeForOverdraft");
-//            }else{
-//                cas2Product.setBaoeFormulaId("calculationBaoeForTotalAmount");
-//            }
-//            if(intOver){
-//                cas2Product.setLoanamountFormulaId("calculationTotalAmountForRoundUp");
-//            }else{
-//                cas2Product.setLoanamountFormulaId("calculationTotalAmount");
-//            }
-//            cas2Product.setDiscount("no"); //是否贴息
-//            cas2Product.setCapitalCompanyId("");//资方公司
-//            Byte feerate = products.getFeerate();
-//            if(1 == feerate){
-//                cas2Product.setFeerate(2);
-//            }else {
-//                cas2Product.setFeerate(1);
-//            }
-//            List<ProductLoans> productLoansList = products.getProductLoansList();
-//            for (ProductLoans productLoans : productLoansList) {
-//                ProductLoan productLoan = new ProductLoan();
-//                productLoan.setId(IdGenerater.uuid());
-//                productLoan.setCreatedBy("脚本导入");
-//                productLoan.setCreatedOn(new Date());
-//                productLoan.setIsDelete((byte) 0);
-//                productLoan.setIsAvailable((byte) 1);
-//                productLoan.setProductId(cas2Product.getId());
-//
-//                productLoan.setMonthNum(productLoans.getMonthNum().toString());
-//                productLoan.setManageFeeType("1");
-//                productLoan.setManageFee(new BigDecimal(productLoans.getManageFee()));
-//                productLoan.setInterest(new BigDecimal(productLoans.getInterest()));
-//                productLoan.setRent(new BigDecimal(productLoans.getRent()));
-//                productLoan.setInsuranceRate(new BigDecimal(productLoans.getBaoxianRate()));
-//                productLoan.setInsuranceMultiRate(new BigDecimal(productLoans.getBaoxianbeiRate()));
-//                productLoan.setMonthStatus(true);
-//                productLoanListForCas2.add(productLoan);
-//            }
-//
-//            ProductFlow productFlow = new ProductFlow();
-//            productFlow.setId(IdGenerater.uuid());
-//            productFlow.setCreatedBy("脚本导入");
-//            productFlow.setCreatedOn(new Date());
-//            productFlow.setIsDelete(false);
-//            productFlow.setIsAvailable(true);
-//            productFlow.setProductId(cas2Product.getId());
-//            productFlow.setQualificationTemplateId("qualification");
-//            productFlow.setLoanTemplateId("loanApproval");
-//            productFlow.setInsuranceTemplateId("insurance");
-//            productFlow.setCapitalTemplateId("shjz_capital");
-//            productFlow.setPledgeTemplateId("mortgage");
-//            productFlow.setNeedInsurance((byte) 1);
-//            productFlowListForCas2.add(productFlow);
-//            productListForCas2.add(cas2Product);
-//
-//            Cas1Relation cas1Relation = new Cas1Relation();
-//            cas1Relation.setId(cas2Product.getId());
-//            cas1Relation.setType("Product");
-//            cas1Relation.setCas1Id(products.getId()+"");
-//            cas1RelationList.add(cas1Relation);
-//
-//        }
-//        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-//        for (Product product : productListForCas2) {
-//            productMapper.insert(product);
-//        }
-//        for (ProductLoan productLoan : productLoanListForCas2) {
-//            productLoanMapper.insert(productLoan);
-//        }
-//
-//        for (ProductFlow productFlow : productFlowListForCas2) {
-//            productFlowMapper.insert(productFlow);
-//        }
-//        for (ProductUsedCarRule productUsedCarRule : productUsedCarRuleListForCas2) {
-//            productUsedCarRuleMapper.insert(productUsedCarRule);
-//        }
-//
-//        for (Cas1Relation cas1Relation : cas1RelationList) {
-//            cas1RelationMapper.insert(cas1Relation);
-//        }
-//
-//    }
+    @Test
+    public void importProduct() throws IOException, CloneNotSupportedException {
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+        List<Products> productsList = productsMapper.selectByProducts();
+        List<Product> productListForCas2 = new ArrayList<>();
+        List<ProductFlow> productFlowListForCas2 = new ArrayList<>();
+        List<ProductLoan> productLoanListForCas2 = new ArrayList<>();
+        List<ProductUsedCarRule> productUsedCarRuleListForCas2 = new ArrayList<>();
+        List<Cas1Relation> cas1RelationList = new ArrayList<>();
+        for (Products products : productsList) {
+            Product cas2Product = new Product();
+            cas2Product.setId(IdGenerater.uuid());
+            String productCloneId = IdGenerater.uuid();
+            cas2Product.setCreatedBy("脚本导入");
+            cas2Product.setCreatedOn(new Date());
+            cas2Product.setIsDelete((byte) 0);
+            cas2Product.setIsAvailable((byte) 1);
+            cas2Product.setCode(products.getCode());
+            cas2Product.setExamine((byte) 1);
+            cas2Product.setStatus("1");
+            cas2Product.setIsRobbery(false);
+            cas2Product.setIsGps(false);
+            cas2Product.setIsMatchLoanyear("0");
+            cas2Product.setName(products.getName());
+            cas2Product.setDescribes(products.getDescribe());
+            if(products.getIsGuakao() != null && products.getIsGuakao()){
+                cas2Product.setBusinessType("[\"natural_affiliated\"]");
+                cas2Product.setIsAffiliated(true);
+            }else{
+                cas2Product.setBusinessType("[\"natural\"]");
+                cas2Product.setIsAffiliated(false);
+            }
+            if(products.getUsedCar()){
+                cas2Product.setProductType("2");
+                if(StringUtils.isNotBlank(products.getMaxKm())){
+                    cas2Product.setMaxMileage(Double.parseDouble(products.getMaxKm()));
+                }
+                cas2Product.setMaterialPackageId("010895c340ff4ffb807a2ba68c760c7f");
+                String carageLimit = products.getCarageLimit();
+                if(StringUtils.isNotBlank(carageLimit) && !"0".equals(carageLimit)){
+                    List<JSONObject> jsonObjects = JSONArray.parseArray(carageLimit, JSONObject.class);
+                    for (JSONObject jsonObject : jsonObjects) {
+                        ProductUsedCarRule productUsedCarRule = new ProductUsedCarRule();
+                        productUsedCarRule.setId(IdGenerater.uuid());
+                        productUsedCarRule.setCreatedBy("脚本导入");
+                        productUsedCarRule.setCreatedOn(new Date());
+                        productUsedCarRule.setIsDelete((byte) 0);
+                        productUsedCarRule.setIsAvailable((byte) 1);
+                        productUsedCarRule.setProductId(cas2Product.getId());
+                        productUsedCarRule.setMinAmount(jsonObject.getBigDecimal("min"));
+                        productUsedCarRule.setMaxAmount(jsonObject.getBigDecimal("max"));
+                        productUsedCarRule.setYear(jsonObject.getDouble("year"));
+                        ProductUsedCarRule clone = productUsedCarRule.clone();
+                        clone.setId(IdGenerater.uuid());
+                        clone.setProductId(productCloneId);
+                        productUsedCarRuleListForCas2.add(clone);
+                        productUsedCarRuleListForCas2.add(productUsedCarRule);
+                    }
+                }
+            }else{
+                cas2Product.setProductType("1");
+                cas2Product.setMaterialPackageId("5d5feb3c5ea265d52937f4eff425f495");
+            }
+            cas2Product.setIsImprest(products.getIsImprest());
+            cas2Product.setRepayType(products.getRepaymentType());
+            cas2Product.setPerUpper(0);
+            cas2Product.setFirstUpper(Integer.parseInt(products.getMinLoan()));
+            cas2Product.setInsuranceProductCode("");//盗抢产品编码
+            cas2Product.setMinDownPayment(JSON.parseObject(products.getDownpaymentRateRange()).getBigDecimal("min"));
+            cas2Product.setMaxDownPayment(JSON.parseObject(products.getDownpaymentRateRange()).getBigDecimal("max"));
+            cas2Product.setMinLoan(JSON.parseObject(products.getLoanmoneyRange()).getBigDecimal("min"));
+            cas2Product.setMaxLoan(JSON.parseObject(products.getLoanmoneyRange()).getBigDecimal("max"));
+            cas2Product.setMaxLoanRate(products.getLoanrate());
+            cas2Product.setOverrate(products.getOverrate());
+
+            String overloanFormulaId = products.getOverloanFormulaId();//CAS1 超融公式
+
+            if("11".equals(overloanFormulaId)){
+                cas2Product.setOverrateFormulaId("calculationFinancialAmountForPrincipal");
+            }else{
+                cas2Product.setOverrateFormulaId("calculationFinancialAmountForCarPrice");
+            }
+            cas2Product.setOverdraftFormulaId("calculationOverdraft");//透支总额
+            Byte formulaId = products.getProductLoansList().get(0).getFormulaId();//CAS1 月供公式
+            if(9 == formulaId){
+                cas2Product.setOverrateFormulaId("calculationYearMonthlyCompoundInterest");
+            }else{
+                cas2Product.setOverrateFormulaId("calculationAccrualMonthlyRate");
+            }
+            cas2Product.setBaofeiFormulaId("calculationPremium");
+            Boolean intOver = products.getIntOver();
+            String baoeFormulaId = products.getBaoeFormulaId();
+            if("4".equals(baoeFormulaId)){
+                cas2Product.setBaoeFormulaId("calculationBaoeForOverdraft");
+            }else{
+                cas2Product.setBaoeFormulaId("calculationBaoeForTotalAmount");
+            }
+            if(intOver){
+                cas2Product.setLoanamountFormulaId("calculationTotalAmountForRoundUp");
+            }else{
+                cas2Product.setLoanamountFormulaId("calculationTotalAmount");
+            }
+            cas2Product.setDiscount("no"); //是否贴息
+            cas2Product.setCapitalCompanyId("");//资方公司
+            Byte feerate = products.getFeerate();
+            if(1 == feerate){
+                cas2Product.setFeerate(2);
+            }else {
+                cas2Product.setFeerate(1);
+            }
+            List<ProductLoans> productLoansList = products.getProductLoansList();
+            for (ProductLoans productLoans : productLoansList) {
+                ProductLoan productLoan = new ProductLoan();
+                productLoan.setId(IdGenerater.uuid());
+                productLoan.setCreatedBy("脚本导入");
+                productLoan.setCreatedOn(new Date());
+                productLoan.setIsDelete((byte) 0);
+                productLoan.setIsAvailable((byte) 1);
+                productLoan.setProductId(cas2Product.getId());
+
+                productLoan.setMonthNum(productLoans.getMonthNum().toString());
+                productLoan.setManageFeeType("1");
+                productLoan.setManageFee(new BigDecimal(productLoans.getManageFee()));
+                productLoan.setInterest(new BigDecimal(productLoans.getInterest()));
+                productLoan.setRent(new BigDecimal(productLoans.getRent()));
+                productLoan.setInsuranceRate(new BigDecimal(productLoans.getBaoxianRate()));
+                productLoan.setInsuranceMultiRate(new BigDecimal(productLoans.getBaoxianbeiRate()));
+                productLoan.setMonthStatus(true);
+                ProductLoan clone = productLoan.clone();
+                clone.setId(IdGenerater.uuid());
+                clone.setProductId(productCloneId);
+                productLoanListForCas2.add(clone);
+                productLoanListForCas2.add(productLoan);
+            }
+
+            ProductFlow productFlow = new ProductFlow();
+            productFlow.setId(IdGenerater.uuid());
+            productFlow.setCreatedBy("脚本导入");
+            productFlow.setCreatedOn(new Date());
+            productFlow.setIsDelete(false);
+            productFlow.setIsAvailable(true);
+            productFlow.setProductId(cas2Product.getId());
+            productFlow.setQualificationTemplateId("qualification");
+            productFlow.setLoanTemplateId("loanApproval");
+            productFlow.setInsuranceTemplateId("insurance");
+            productFlow.setCapitalTemplateId("shjz_capital");
+            productFlow.setPledgeTemplateId("mortgage");
+            productFlow.setNeedInsurance((byte) 1);
+            ProductFlow flowClone = productFlow.clone();
+            flowClone.setId(IdGenerater.uuid());
+            flowClone.setProductId(productCloneId);
+            productFlowListForCas2.add(flowClone);
+            productFlowListForCas2.add(productFlow);
+
+            cas2Product.setDataType("stage");
+            cas2Product.setAudit("1");
+            cas2Product.setSerialNum(productCloneId);
+            Product clone = cas2Product.clone();
+
+            clone.setId(productCloneId);
+            clone.setDataType("online");
+            clone.setSerialNum(cas2Product.getId());
+
+
+            productListForCas2.add(cas2Product);
+            productListForCas2.add(clone);
+
+            Cas1Relation cas1Relation = new Cas1Relation();
+            cas1Relation.setId(cas2Product.getId());
+            cas1Relation.setType("Product");
+            cas1Relation.setCas1Id(products.getId()+"");
+            Cas1Relation cas1RelationClone = cas1Relation.clone();
+            cas1RelationClone.setId(productCloneId);
+            cas1RelationList.add(cas1RelationClone);
+            cas1RelationList.add(cas1Relation);
+
+        }
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        for (Product product : productListForCas2) {
+            productMapper.insert(product);
+        }
+        for (ProductLoan productLoan : productLoanListForCas2) {
+            productLoanMapper.insert(productLoan);
+        }
+
+        for (ProductFlow productFlow : productFlowListForCas2) {
+            productFlowMapper.insert(productFlow);
+        }
+        for (ProductUsedCarRule productUsedCarRule : productUsedCarRuleListForCas2) {
+            productUsedCarRuleMapper.insert(productUsedCarRule);
+        }
+
+        for (Cas1Relation cas1Relation : cas1RelationList) {
+            cas1RelationMapper.insert(cas1Relation);
+        }
+
+    }
 //
 //    //TODO 导入经销商单证抵押关系、经销商产品关系、经销商产品佣金关系
 //    @Test

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ProductLoan implements Serializable {
+public class ProductLoan implements Serializable ,Cloneable{
     private String id;
 
     private String productId;
@@ -170,5 +170,10 @@ public class ProductLoan implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public ProductLoan clone() throws CloneNotSupportedException {
+        return (ProductLoan) super.clone();
     }
 }

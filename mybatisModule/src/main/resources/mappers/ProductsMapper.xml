@@ -59,7 +59,27 @@
     <result column="is_guakao" property="isGuakao" jdbcType="BIT" />
     <result column="max_km" property="maxKm" jdbcType="VARCHAR" />
     <result column="carage_limit" property="carageLimit" jdbcType="LONGVARCHAR" />
+    <collection property="productLoansList"  column="id" ofType="com.lzf.entity.ProductLoans" select="selectProductLoans" fetchType="eager"></collection>
   </resultMap>
+
+<resultMap id="productLoansType" type="com.lzf.entity.ProductLoans" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="month_num" property="monthNum" jdbcType="INTEGER" />
+    <result column="manage_fee" property="manageFee" jdbcType="VARCHAR" />
+    <result column="interest" property="interest" jdbcType="VARCHAR" />
+    <result column="rent" property="rent" jdbcType="VARCHAR" />
+    <result column="formula_id" property="formulaId" jdbcType="TINYINT" />
+    <result column="baoxian_rate" property="baoxianRate" jdbcType="VARCHAR" />
+    <result column="baoxianbei_rate" property="baoxianbeiRate" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+</resultMap>
+  <select id="selectProductLoans" resultMap="productLoansType">
+    select * from product_loans where product_id=#{id,jdbcType=INTEGER}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from products
     where id = #{id,jdbcType=INTEGER}
@@ -190,5 +210,18 @@
     created_at, updated_at, deleted_at, material_package_id, borrower_insurance_year, 
     loanmoney_range, downpayment_rate_range, int_over, used_car, is_guakao, max_km, carage_limit
     from products
+  </select>
+  <select id="selectByProducts" resultMap="BaseResultMap">
+    select id, process_id, code, `name`, shortname, keywords, `describe`, logo, `status`,
+    capital_id, loanrule_id, mortgage_id, is_gps, is_robbery, is_discount, contract_package_id,
+    create_by, update_by, loan_cont_type, loan_cont_num, loan_cont_copy_num, mort_cont_type,
+    mort_cont_num, bank_card_type, bank_name, bank_account_name, bank_account_id, invoice_ids,
+    is_imprest, material_receiver, material_address, material_contacter, material_phone,
+    `disable`, min_loan, dq_year, baofei_formula_id, loanamount_formula_id, baoe_formula_id,
+    overloan_formula_id, is_match_loanyear, repayment_type, feerate, loanrate, overrate,
+    created_at, updated_at, deleted_at, material_package_id, borrower_insurance_year,
+    loanmoney_range, downpayment_rate_range, int_over, used_car, is_guakao, max_km, carage_limit
+    from products
+    where capital_id = '14'
   </select>
 </mapper>

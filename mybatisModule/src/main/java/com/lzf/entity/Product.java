@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Product implements Serializable {
+public class Product implements Serializable,Cloneable {
     private String id;
 
     private String code;
@@ -39,7 +39,7 @@ public class Product implements Serializable {
 
     private String isMatchLoanyear;
 
-    private Boolean feerate;
+    private Integer feerate;
 
     private BigDecimal overrate;
 
@@ -235,11 +235,11 @@ public class Product implements Serializable {
         this.isMatchLoanyear = isMatchLoanyear == null ? null : isMatchLoanyear.trim();
     }
 
-    public Boolean getFeerate() {
+    public Integer getFeerate() {
         return feerate;
     }
 
-    public void setFeerate(Boolean feerate) {
+    public void setFeerate(Integer feerate) {
         this.feerate = feerate;
     }
 
@@ -465,6 +465,11 @@ public class Product implements Serializable {
 
     public void setCheckRemark(String checkRemark) {
         this.checkRemark = checkRemark == null ? null : checkRemark.trim();
+    }
+
+    @Override
+    public Product clone() throws CloneNotSupportedException {
+        return (Product) super.clone();
     }
 
     @Override

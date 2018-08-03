@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ProductUsedCarRule implements Serializable {
+public class ProductUsedCarRule implements Serializable ,Cloneable{
     private String id;
 
     private String productId;
@@ -115,5 +115,10 @@ public class ProductUsedCarRule implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public ProductUsedCarRule clone() throws CloneNotSupportedException {
+        return (ProductUsedCarRule) super.clone();
     }
 }
