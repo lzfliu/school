@@ -154,7 +154,7 @@
     collection_username, dq_username, dq_password, pledge, pledge_ids, invoice_later,
     loan_stop, `disable`, create_by, update_by, created_at, updated_at, deleted_at, `status`,
     firm_linkman, firm_mobile, firm_address, gpsdevices, is_good
-    from firm_dealers where business = 2
+    from firm_dealers where business = 2 and deleted_at is null
   </select>
   <select id="selectSP" resultMap="BaseResultMap">
  select id, `name`, short, code, p_id, p_ids, mobile, linkman, fix_phone, email, province,
@@ -163,7 +163,7 @@
     collection_username, dq_username, dq_password, pledge, pledge_ids, invoice_later,
     loan_stop, `disable`, create_by, update_by, created_at, updated_at, deleted_at, `status`,
     firm_linkman, firm_mobile, firm_address, gpsdevices, is_good
-    from firm_dealers where business = 0
+    from firm_dealers where business = 0 and deleted_at is null
   </select>
   <select id="selectDealer" resultMap="BaseResultMap">
  select id, `name`, short, code, p_id, p_ids, mobile, linkman, fix_phone, email, province,
@@ -172,6 +172,6 @@
     collection_username, dq_username, dq_password, pledge, pledge_ids, invoice_later,
     loan_stop, `disable`, create_by, update_by, created_at, updated_at, deleted_at, `status`,
     firm_linkman, firm_mobile, firm_address, gpsdevices, is_good
-    from firm_dealers where business = 1
+    from firm_dealers where business = 1 and deleted_at is null
   </select>
 </mapper>

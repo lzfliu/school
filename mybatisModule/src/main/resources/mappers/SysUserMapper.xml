@@ -67,6 +67,35 @@
       #{online,jdbcType=TINYINT}, #{checkRemark,jdbcType=LONGVARCHAR}, #{updateRemark,jdbcType=LONGVARCHAR}
       )
   </insert>
+  <insert id="insertList" parameterType="com.lzf.entity.SysUser" >
+    insert into sys_user (id, company_id, login_name,
+      `password`, salt, real_name,
+      mobile, email, gender,
+      birth, `type`, avatar, province,
+      city, district, address,
+      created_on, created_by, is_delete,
+      is_available, core_staff_id, province_name,
+      city_name, district_name, mediaIds,
+      idcard, `status`, serial_num,
+      data_type, delete_at, face,
+      `online`, check_remark, update_remark
+      )
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+    (#{pojo.id,jdbcType=VARCHAR}, #{pojo.companyId,jdbcType=VARCHAR}, #{pojo.loginName,jdbcType=VARCHAR},
+      #{pojo.password,jdbcType=VARCHAR}, #{pojo.salt,jdbcType=VARCHAR}, #{pojo.realName,jdbcType=VARCHAR},
+      #{pojo.mobile,jdbcType=VARCHAR}, #{pojo.email,jdbcType=VARCHAR}, #{pojo.gender,jdbcType=TINYINT},
+      #{pojo.birth,jdbcType=DATE}, #{pojo.type,jdbcType=TINYINT}, #{pojo.avatar,jdbcType=VARCHAR}, #{pojo.province,jdbcType=VARCHAR},
+      #{pojo.city,jdbcType=VARCHAR}, #{pojo.district,jdbcType=VARCHAR}, #{pojo.address,jdbcType=VARCHAR},
+      #{pojo.createdOn,jdbcType=TIMESTAMP}, #{pojo.createdBy,jdbcType=VARCHAR}, #{pojo.isDelete,jdbcType=TINYINT},
+      #{pojo.isAvailable,jdbcType=TINYINT}, #{pojo.coreStaffId,jdbcType=VARCHAR}, #{pojo.provinceName,jdbcType=VARCHAR},
+      #{pojo.cityName,jdbcType=VARCHAR}, #{pojo.districtName,jdbcType=VARCHAR}, #{pojo.mediaids,jdbcType=VARCHAR},
+      #{pojo.idcard,jdbcType=VARCHAR}, #{pojo.status,jdbcType=VARCHAR}, #{pojo.serialNum,jdbcType=VARCHAR},
+      #{pojo.dataType,jdbcType=VARCHAR}, #{pojo.deleteAt,jdbcType=TIMESTAMP}, #{pojo.face,jdbcType=TINYINT},
+      #{pojo.online,jdbcType=TINYINT}, #{pojo.checkRemark,jdbcType=LONGVARCHAR}, #{pojo.updateRemark,jdbcType=LONGVARCHAR}
+      )
+    </foreach>
+  </insert>
   <update id="updateByPrimaryKey" parameterType="com.lzf.entity.SysUser" >
     update sys_user
     set company_id = #{companyId,jdbcType=VARCHAR},

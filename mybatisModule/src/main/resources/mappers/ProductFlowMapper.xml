@@ -59,4 +59,20 @@
     created_on, is_delete
     from product_flow
   </select>
+
+  <insert id="insertList" parameterType="com.lzf.entity.ProductFlow" >
+    insert into product_flow (id, product_id, qualification_template_id,
+    loan_template_id, need_insurance, insurance_template_id,
+    capital_template_id, pledge_template_id, is_available,
+    created_by, created_on, is_delete
+    )
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+     (#{pojo.id,jdbcType=VARCHAR}, #{pojo.productId,jdbcType=VARCHAR}, #{pojo.qualificationTemplateId,jdbcType=VARCHAR},
+    #{pojo.loanTemplateId,jdbcType=VARCHAR}, #{pojo.needInsurance,jdbcType=TINYINT}, #{pojo.insuranceTemplateId,jdbcType=VARCHAR},
+    #{pojo.capitalTemplateId,jdbcType=VARCHAR}, #{pojo.pledgeTemplateId,jdbcType=VARCHAR}, #{pojo.isAvailable,jdbcType=BIT},
+    #{pojo.createdBy,jdbcType=VARCHAR}, #{pojo.createdOn,jdbcType=TIMESTAMP}, #{pojo.isDelete,jdbcType=BIT}
+    )
+    </foreach>
+  </insert>
 </mapper>

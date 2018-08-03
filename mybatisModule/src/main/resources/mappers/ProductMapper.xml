@@ -87,6 +87,43 @@
       #{dataType,jdbcType=VARCHAR}, #{audit,jdbcType=VARCHAR}, #{serialNum,jdbcType=VARCHAR}, 
       #{checkRemark,jdbcType=LONGVARCHAR})
   </insert>
+  <insert id="insertList" parameterType="com.lzf.entity.Product" >
+    insert into product (id, code, `name`,
+    describes, `status`, capital_company_id,
+    financial_company_id, lenders_company_id, is_gps,
+    is_robbery, is_imprest, discount,
+    month_formula_id, baofei_formula_id, loanamount_formula_id,
+    baoe_formula_id, is_match_loanyear, feerate,
+    overrate, overrate_formula_id, material_package_id,
+    first_upper, per_upper, repay_type,
+    min_down_payment, max_down_payment, discount_amount,
+    devices, max_loan_rate, min_loan,
+    max_loan, created_on, created_by,
+    is_delete, is_available, insurance_product_code,
+    product_type, is_affiliated, overdraft_formula_id,
+    max_mileage, business_type, examine,
+    data_type, `audit`, serial_num,
+    check_remark)
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+     (#{pojo.id,jdbcType=VARCHAR}, #{pojo.code,jdbcType=VARCHAR}, #{pojo.name,jdbcType=VARCHAR},
+    #{pojo.describes,jdbcType=VARCHAR}, #{pojo.status,jdbcType=VARCHAR}, #{pojo.capitalCompanyId,jdbcType=VARCHAR},
+    #{pojo.financialCompanyId,jdbcType=VARCHAR}, #{pojo.lendersCompanyId,jdbcType=VARCHAR}, #{pojo.isGps,jdbcType=BIT},
+    #{pojo.isRobbery,jdbcType=BIT}, #{pojo.pojo.isImprest,jdbcType=BIT}, #{pojo.discount,jdbcType=VARCHAR},
+    #{pojo.monthFormulaId,jdbcType=VARCHAR}, #{pojo.baofeiFormulaId,jdbcType=VARCHAR}, #{pojo.loanamountFormulaId,jdbcType=VARCHAR},
+    #{pojo.baoeFormulaId,jdbcType=VARCHAR}, #{pojo.isMatchLoanyear,jdbcType=VARCHAR}, #{pojo.feerate,jdbcType=BIT},
+    #{pojo.overrate,jdbcType=DECIMAL}, #{pojo.overrateFormulaId,jdbcType=VARCHAR}, #{pojo.materialPackageId,jdbcType=VARCHAR},
+    #{pojo.firstUpper,jdbcType=INTEGER}, #{pojo.perUpper,jdbcType=INTEGER}, #{pojo.repayType,jdbcType=VARCHAR},
+    #{pojo.minDownPayment,jdbcType=DECIMAL}, #{pojo.maxDownPayment,jdbcType=DECIMAL}, #{pojo.discountAmount,jdbcType=DECIMAL},
+    #{pojo.devices,jdbcType=VARCHAR}, #{pojo.maxLoanRate,jdbcType=DECIMAL}, #{pojo.minLoan,jdbcType=DECIMAL},
+    #{pojo.maxLoan,jdbcType=DECIMAL}, #{pojo.createdOn,jdbcType=TIMESTAMP}, #{pojo.createdBy,jdbcType=VARCHAR},
+    #{pojo.isDelete,jdbcType=TINYINT}, #{pojo.isAvailable,jdbcType=TINYINT}, #{pojo.insuranceProductCode,jdbcType=VARCHAR},
+    #{pojo.productType,jdbcType=VARCHAR}, #{pojo.isAffiliated,jdbcType=BIT}, #{pojo.overdraftFormulaId,jdbcType=VARCHAR},
+    #{pojo.maxMileage,jdbcType=DOUBLE}, #{pojo.businessType,jdbcType=VARCHAR}, #{pojo.examine,jdbcType=TINYINT},
+    #{pojo.dataType,jdbcType=VARCHAR}, #{pojo.audit,jdbcType=VARCHAR}, #{pojo.serialNum,jdbcType=VARCHAR},
+    #{pojo.checkRemark,jdbcType=LONGVARCHAR})
+    </foreach>
+  </insert>
   <update id="updateByPrimaryKey" parameterType="com.lzf.entity.Product" >
     update product
     set code = #{code,jdbcType=VARCHAR},

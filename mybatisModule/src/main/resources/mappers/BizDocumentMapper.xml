@@ -38,4 +38,21 @@
     is_delete, `status`, serial_num, data_type, delete_at, cities, check_remark, update_remark
     from biz_document
   </select>
+  <insert id="insertList" parameterType="com.lzf.entity.BizDocument" >
+    insert into biz_document (id, company_id, parent_id,
+    `type`, `sequence`, is_available,
+    created_by, created_on, is_delete,
+    `status`, serial_num, data_type,
+    delete_at, cities, check_remark,
+    update_remark)
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+    (#{pojo.id,jdbcType=VARCHAR}, #{pojo.companyId,jdbcType=VARCHAR}, #{pojo.parentId,jdbcType=VARCHAR},
+    #{pojo.type,jdbcType=VARCHAR}, #{pojo.sequence,jdbcType=INTEGER}, #{pojo.isAvailable,jdbcType=BIT},
+    #{pojo.createdBy,jdbcType=VARCHAR}, #{pojo.createdOn,jdbcType=TIMESTAMP}, #{pojo.isDelete,jdbcType=BIT},
+    #{pojo.status,jdbcType=VARCHAR}, #{pojo.serialNum,jdbcType=VARCHAR}, #{pojo.dataType,jdbcType=VARCHAR},
+    #{pojo.deleteAt,jdbcType=TIMESTAMP}, #{pojo.cities,jdbcType=LONGVARCHAR}, #{pojo.checkRemark,jdbcType=LONGVARCHAR},
+    #{pojo.updateRemark,jdbcType=LONGVARCHAR})
+    </foreach>
+  </insert>
 </mapper>

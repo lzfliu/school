@@ -1,6 +1,7 @@
 package com.lzf.dao;
 
 import com.lzf.entity.BizChannel;
+
 import java.util.List;
 
 public interface BizChannelMapper {
@@ -13,4 +14,7 @@ public interface BizChannelMapper {
     List<BizChannel> selectAll();
 
     int updateByPrimaryKey(BizChannel record);
+
+    int insertList(List<BizChannel> list);
+
 }

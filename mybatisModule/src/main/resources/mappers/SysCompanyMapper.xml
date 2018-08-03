@@ -67,6 +67,35 @@
       #{deleteAt,jdbcType=TIMESTAMP}, #{checkRemark,jdbcType=LONGVARCHAR}, #{updateRemark,jdbcType=LONGVARCHAR}
       )
   </insert>
+  <insert id="insertList" parameterType="com.lzf.entity.SysCompany" >
+    insert into sys_company (id, `name`, phone,
+    linkman, address, created_on,
+    created_by, is_delete, is_available,
+    code, credit_code, credit,
+    can_acp, can_sp, can_dealer, can_mortgage,
+    can_capital, can_help_mortgage, can_visit,
+    core_customer_id, is_quality_dealer, can_document,
+    province, province_name, city,
+    city_name, district, district_name,
+    `status`, serial_num, data_type,
+    delete_at, check_remark, update_remark
+    )
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+    (#{pojo.id,jdbcType=VARCHAR},#{pojo.name,jdbcType=VARCHAR},#{pojo.phone,jdbcType=VARCHAR},
+   #{pojo.linkman,jdbcType=VARCHAR},#{pojo.address,jdbcType=VARCHAR},#{pojo.createdOn,jdbcType=TIMESTAMP},
+   #{pojo.createdBy,jdbcType=VARCHAR},#{pojo.isDelete,jdbcType=TINYINT},#{pojo.isAvailable,jdbcType=TINYINT},
+   #{pojo.code,jdbcType=VARCHAR},#{pojo.creditCode,jdbcType=VARCHAR},#{pojo.credit,jdbcType=VARCHAR},
+   #{pojo.canAcp,jdbcType=BIT},#{pojo.canSp,jdbcType=BIT},#{pojo.canDealer,jdbcType=BIT},#{pojo.canMortgage,jdbcType=BIT},
+   #{pojo.canCapital,jdbcType=BIT},#{pojo.canHelpMortgage,jdbcType=BIT},#{pojo.canVisit,jdbcType=BIT},
+   #{pojo.coreCustomerId,jdbcType=VARCHAR},#{pojo.isQualityDealer,jdbcType=BIT},#{pojo.canDocument,jdbcType=BIT},
+   #{pojo.province,jdbcType=VARCHAR},#{pojo.provinceName,jdbcType=VARCHAR},#{pojo.city,jdbcType=VARCHAR},
+   #{pojo.cityName,jdbcType=VARCHAR},#{pojo.district,jdbcType=VARCHAR},#{pojo.districtName,jdbcType=VARCHAR},
+   #{pojo.status,jdbcType=VARCHAR},#{pojo.serialNum,jdbcType=VARCHAR},#{pojo.dataType,jdbcType=VARCHAR},
+   #{pojo.deleteAt,jdbcType=TIMESTAMP},#{pojo.checkRemark,jdbcType=LONGVARCHAR},#{pojo.updateRemark,jdbcType=LONGVARCHAR}
+    )
+    </foreach>
+  </insert>
   <update id="updateByPrimaryKey" parameterType="com.lzf.entity.SysCompany" >
     update sys_company
     set `name` = #{name,jdbcType=VARCHAR},

@@ -27,4 +27,17 @@
     is_available
     from product_used_car_rule
   </select>
+  <insert id="insertList" parameterType="com.lzf.entity.ProductUsedCarRule" >
+    insert into product_used_car_rule (id, product_id, min_amount,
+    max_amount, `year`, created_on,
+    created_by, is_delete, is_available
+    )
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+     (#{pojo.id,jdbcType=VARCHAR}, #{pojo.productId,jdbcType=VARCHAR}, #{pojo.minAmount,jdbcType=DECIMAL},
+    #{pojo.maxAmount,jdbcType=DECIMAL}, #{pojo.year,jdbcType=DOUBLE}, #{pojo.createdOn,jdbcType=TIMESTAMP},
+    #{pojo.createdBy,jdbcType=VARCHAR}, #{pojo.isDelete,jdbcType=TINYINT}, #{pojo.isAvailable,jdbcType=TINYINT}
+    )
+    </foreach>
+  </insert>
 </mapper>

@@ -71,6 +71,6 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, pid, pids, `name`, province, city, district, address, create_by, update_by, 
     `disable`, `status`, mobile, contact_man, enterprise, created_at, updated_at, deleted_at
-    from firm_home_visits
+    from firm_home_visits where deleted_at is null
   </select>
 </mapper>

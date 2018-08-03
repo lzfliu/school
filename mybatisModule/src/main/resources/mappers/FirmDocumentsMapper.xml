@@ -77,6 +77,6 @@
     select id, parent_id, parent_ids, `name`, linkman, mobile, province, city, district, 
     address, `status`, `disable`, create_by, update_by, created_at, enterprise, mortgage, 
     weekday, updated_at, deleted_at
-    from firm_documents
+    from firm_documents where deleted_at is null
   </select>
 </mapper>

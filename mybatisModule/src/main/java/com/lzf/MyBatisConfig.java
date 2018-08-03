@@ -43,9 +43,17 @@ public class MyBatisConfig {
         DruidDataSource druidDataSource = new DruidDataSource();
         return druidDataSource;
     }
+
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.source2")
     public DataSource druidDataSource2() {
+        DruidDataSource druidDataSource = new DruidDataSource();
+        return druidDataSource;
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.source3")
+    public DataSource druidDataSource3() {
         DruidDataSource druidDataSource = new DruidDataSource();
         return druidDataSource;
     }
@@ -58,14 +66,18 @@ public class MyBatisConfig {
     @Bean
     @Primary
     public DynamicDataSource dataSource(@Qualifier("druidDataSource1") DataSource myTestDbDataSource,
-                                        @Qualifier("druidDataSource2") DataSource myTestDb2DataSource) {
-        Map<Object, Object> targetDataSources = new HashMap<>();
+                                        @Qualifier("druidDataSource2") DataSource myTestDb2DataSource,
+                                        @Qualifier("druidDataSource3") DataSource myTestDb3DataSource) {
+        Map<Object, Object> targetDataSources = new HashMap<>(16);
         targetDataSources.put(DatabaseType.mytestdb, myTestDbDataSource);
         targetDataSources.put(DatabaseType.mytestdb2, myTestDb2DataSource);
+        targetDataSources.put(DatabaseType.mytestdb3, myTestDb3DataSource);
 
         DynamicDataSource dataSource = new DynamicDataSource();
-        dataSource.setTargetDataSources(targetDataSources);// 该方法是AbstractRoutingDataSource的方法
-        dataSource.setDefaultTargetDataSource(myTestDbDataSource);// 默认的datasource设置为myTestDbDataSource
+        // 该方法是AbstractRoutingDataSource的方法
+        dataSource.setTargetDataSources(targetDataSources);
+        // 默认的datasource设置为myTestDbDataSource
+        dataSource.setDefaultTargetDataSource(myTestDbDataSource);
 
         return dataSource;
     }
@@ -74,12 +86,15 @@ public class MyBatisConfig {
      * 根据数据源创建SqlSessionFactory
      */
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DynamicDataSource ds) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("druidDataSource1") DataSource myTestDbDataSource,
+                                               @Qualifier("druidDataSource2") DataSource myTestDb2DataSource,
+                                               @Qualifier("druidDataSource3") DataSource myTestDb3DataSource) throws Exception {
         SqlSessionFactoryBean fb = new SqlSessionFactoryBean();
-        fb.setDataSource(ds);// 指定数据源(这个必须有，否则报错)
+        // 指定数据源(这个必须有，否则报错)
+        fb.setDataSource(this.dataSource(myTestDbDataSource,myTestDb2DataSource,myTestDb3DataSource));
         // 下边两句仅仅用于*.xml文件，如果整个持久层操作不需要使用到xml文件的话（只用注解就可以搞定），则不加
 //        fb.setTypeAliasesPackage(env.getProperty("mybatis.typeAliasesPackage"));// 指定基包
-        fb.setMapperLocations( new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*.xml"));//
+        fb.setMapperLocations( new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*.xml"));
 
         return fb.getObject();
     }
@@ -88,12 +103,10 @@ public class MyBatisConfig {
      * 配置事务管理器
      */
     @Bean
-    public DataSourceTransactionManager transactionManagerForSource1(@Qualifier("druidDataSource1") DataSource  dataSource) throws Exception {
-        return new DataSourceTransactionManager(dataSource);
-    } @Bean
-    public DataSourceTransactionManager transactionManagerForSource2(@Qualifier("druidDataSource2") DataSource  dataSource) throws Exception {
+    public DataSourceTransactionManager transactionManager(DynamicDataSource dataSource) throws Exception {
         return new DataSourceTransactionManager(dataSource);
     }
+
 
     @Bean
     public PageHelper pageHelper() {

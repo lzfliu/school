@@ -68,6 +68,7 @@ public class BizChannel implements Serializable {
     private String updateRemark;
 
     private static final long serialVersionUID = 1L;
+    private SysCompany company;
 
     public String getId() {
         return id;
@@ -357,5 +358,13 @@ public class BizChannel implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    public void setCompany(SysCompany company) {
+        this.company = company;
+    }
+
+    public SysCompany getCompany() {
+        return company;
     }
 }

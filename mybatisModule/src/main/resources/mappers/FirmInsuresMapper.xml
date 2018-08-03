@@ -63,6 +63,6 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, `name`, linkman, mobile, province, city, district, address, `disable`, 
     enterprise, update_by, create_by, created_at, updated_at, deleted_at
-    from firm_insures
+    from firm_insures where deleted_at is null
   </select>
 </mapper>

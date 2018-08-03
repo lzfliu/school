@@ -7,5 +7,5 @@ package com.lzf;
  * 2）DatabaseType中的变量名称就是数据库的名称
  */
 public enum DatabaseType {
-    mytestdb,mytestdb2
+    mytestdb,mytestdb2,mytestdb3
 }

@@ -49,4 +49,19 @@
     update_remark
     from dealer_allocation
   </select>
+
+  <insert id="insertList" parameterType="com.lzf.entity.DealerAllocation" >
+    insert into dealer_allocation (id, dealer_id, company_name,
+    `status`, serial_num, data_type,
+    delete_at, check_remark, update_remark
+    )
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+    (#{pojo.id,jdbcType=VARCHAR}, #{pojo.dealerId,jdbcType=VARCHAR}, #{pojo.companyName,jdbcType=VARCHAR},
+    #{pojo.status,jdbcType=TINYINT}, #{pojo.serialNum,jdbcType=VARCHAR}, #{pojo.dataType,jdbcType=VARCHAR},
+    #{pojo.deleteAt,jdbcType=TIMESTAMP}, #{pojo.checkRemark,jdbcType=LONGVARCHAR}, #{pojo.updateRemark,jdbcType=LONGVARCHAR}
+    )
+    </foreach>
+  </insert>
+
 </mapper>

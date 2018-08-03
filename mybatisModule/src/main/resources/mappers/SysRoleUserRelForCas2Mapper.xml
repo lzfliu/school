@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzf.dao.SysRoleUserRelForCas2Mapper">
+  <resultMap id="BaseResultMap" type="com.lzf.entity.SysRoleUserRelForCas2">
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lzf.entity.SysRoleUserRelForCas2">
+    insert into sys_role_user_rel (role_id, user_id)
+    values (#{roleId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertList" parameterType="com.lzf.entity.SysRoleUserRelForCas2">
+    insert into sys_role_user_rel (role_id, user_id)
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+     (#{pojo.roleId,jdbcType=VARCHAR}, #{pojo.userId,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select role_id, user_id
+    from sys_role_user_rel
+  </select>
+</mapper>

@@ -53,4 +53,19 @@
     created_by, is_delete, channel_id, content
     from dealer_products
   </select>
+
+  <insert id="insertList" parameterType="com.lzf.entity.DealerProducts" >
+    insert into dealer_products (id, company_id, product_id,
+    data_type, `status`, is_available,
+    created_on, created_by, is_delete,
+    channel_id, content)
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+    (#{pojo.id,jdbcType=VARCHAR}, #{pojo.companyId,jdbcType=VARCHAR}, #{pojo.productId,jdbcType=VARCHAR},
+    #{pojo.dataType,jdbcType=VARCHAR}, #{pojo.status,jdbcType=VARCHAR}, #{pojo.isAvailable,jdbcType=TINYINT},
+    #{pojo.createdOn,jdbcType=TIMESTAMP}, #{pojo.createdBy,jdbcType=VARCHAR}, #{pojo.isDelete,jdbcType=TINYINT},
+    #{pojo.channelId,jdbcType=VARCHAR}, #{pojo.content,jdbcType=LONGVARCHAR})
+    </foreach>
+  </insert>
+
 </mapper>

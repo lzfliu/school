@@ -1,16 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lzf.dao.SysRoleUserRelMapper">
-  <resultMap id="BaseResultMap" type="com.lzf.entity.SysRoleUserRel">
-    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.dao.SysRoleUserRelMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.entity.SysRoleUserRel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
   </resultMap>
-  <insert id="insert" parameterType="com.lzf.entity.SysRoleUserRel">
-    insert into sys_role_user_rel (role_id, user_id)
-    values (#{roleId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR})
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_role_user_rel
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzf.entity.SysRoleUserRel" >
+    insert into sys_role_user_rel (id, user_id, role_id, 
+      created_at, updated_at, deleted_at
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select role_id, user_id
+  <insert id="insertList" parameterType="com.lzf.entity.SysRoleUserRel" >
+    insert into sys_role_user_rel (id, user_id, role_id,
+      created_at, updated_at, deleted_at
+      )
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+     (#{pojo.id,jdbcType=INTEGER}, #{pojo.userId,jdbcType=INTEGER}, #{pojo.roleId,jdbcType=INTEGER},
+      #{pojo.createdAt,jdbcType=TIMESTAMP}, #{pojo.updatedAt,jdbcType=TIMESTAMP}, #{pojo.deletedAt,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.entity.SysRoleUserRel" >
+    update sys_role_user_rel
+    set user_id = #{userId,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, user_id, role_id, created_at, updated_at, deleted_at
     from sys_role_user_rel
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, user_id, role_id, created_at, updated_at, deleted_at
+    from sys_role_user_rel
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select id, user_id, role_id, created_at, updated_at, deleted_at
+    from sys_role_user_rel where deleted_at is null and user_id = #{userId}
   </select>
 </mapper>

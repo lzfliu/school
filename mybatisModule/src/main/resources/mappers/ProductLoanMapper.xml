@@ -33,6 +33,21 @@
       #{createdOn,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{isDelete,jdbcType=TINYINT}, 
       #{isAvailable,jdbcType=TINYINT}, #{manageFeeType,jdbcType=VARCHAR})
   </insert>
+  <insert id="insertList" parameterType="com.lzf.entity.ProductLoan" >
+    insert into product_loan (id, product_id, month_num,
+    manage_fee, interest, rent,
+    month_status, insurance_rate, insurance_multi_rate,
+    created_on, created_by, is_delete,
+    is_available, manage_fee_type)
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+     (#{pojo.id,jdbcType=VARCHAR}, #{pojo.productId,jdbcType=VARCHAR}, #{pojo.monthNum,jdbcType=VARCHAR},
+    #{pojo.manageFee,jdbcType=DECIMAL}, #{pojo.interest,jdbcType=DECIMAL}, #{pojo.rent,jdbcType=DECIMAL},
+    #{pojo.monthStatus,jdbcType=BIT}, #{pojo.insuranceRate,jdbcType=DECIMAL}, #{pojo.insuranceMultiRate,jdbcType=DECIMAL},
+    #{pojo.createdOn,jdbcType=TIMESTAMP}, #{pojo.createdBy,jdbcType=VARCHAR}, #{pojo.isDelete,jdbcType=TINYINT},
+    #{pojo.isAvailable,jdbcType=TINYINT}, #{pojo.manageFeeType,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
   <update id="updateByPrimaryKey" parameterType="com.lzf.entity.ProductLoan" >
     update product_loan
     set product_id = #{productId,jdbcType=VARCHAR},

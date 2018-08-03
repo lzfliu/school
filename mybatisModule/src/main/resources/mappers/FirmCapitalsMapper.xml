@@ -99,6 +99,6 @@
     mobile, province, city, district, address, contract_template_id, due_date, enterprise, 
     bank_card_type, isprefee, `disable`, first_beneficiary, update_by, create_by, created_at, 
     updated_at, deleted_at, `status`, supportprivate
-    from firm_capitals
+    from firm_capitals where  deleted_at is null
   </select>
 </mapper>

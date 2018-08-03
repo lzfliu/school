@@ -1,23 +1,25 @@
 package com.lzf;
 
+import com.alibaba.fastjson.JSON;
 import com.lzf.dao.*;
 import com.lzf.entity.*;
+import com.lzf.utils.BeanUtils;
+import com.lzf.utils.CryptoUtils;
 import com.lzf.utils.IdGenerater;
 import com.lzf.utils.PinYinUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 描述:
@@ -26,8 +28,9 @@ import java.util.List;
  * @author liuzhenfei
  * @create 2017-09-20 上午 10:19
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,classes = MybatisAppaction.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = MybatisAppaction.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestDao {
 
     private static String stage = "stage";
@@ -35,6 +38,19 @@ public class TestDao {
     private static String online = "online";
 
     private static String noCheck = "0";
+
+    private static String check = "1";
+
+    private static Map<String, String> roleRelation = new HashMap<>();
+
+    private static List<SysCompany> list = new ArrayList<>();
+
+    private static List<SysUser> userList = new ArrayList<>();
+
+    private static List<Cas1Relation> cas1RelationList = new ArrayList<>();
+
+    private static Map<String,SysCompany> sysCompanyMap = new HashMap<>();
+
 
     @Autowired
     private FirmFinancesMapper firmFinancesMapper;
@@ -112,51 +128,143 @@ public class TestDao {
     private DealerAllocationMapper dealerAllocationMapper;
 
     @Autowired
+    private SysRoleUserRelForCas2Mapper sysRoleUserRelForCas2Mapper;
+
+    @Autowired
     private SysRoleUserRelMapper sysRoleUserRelMapper;
 
+    @Autowired
+    private CustomerMapper customerMapper;
+
+    @Autowired
+    private CustomerStaffMapper customerStaffMapper;
+
+    @Autowired
+    private CustomerStaffAccountMapper customerStaffAccountMapper;
+
+
+
+    @BeforeClass
+    public static void initRoleRelation(){
+
+        //经销商-金融专员
+        roleRelation.put("43","a10176e7073f17a1e8d50f8fd32562d0");
+        //经销商-管理员
+//        roleRelation.put("45","");
+        //acp/sp抵押办理员
+        roleRelation.put("19","4b6e1adc85571d3dd99f54730663b7fb");
+        /****************************************************************/
+        //PBOC审核专员
+        roleRelation.put("6","71f331250215d8930e6f60c0d213e2e7");
+        //资质初审
+        roleRelation.put("12","0004a975452cb0e67474733bc37f7330");
+        //资质复审
+        roleRelation.put("16","d93fbd09a22a06097f0c9adc40fc16a7");
+        //资质高级审批
+        roleRelation.put("17","20d2e997e689865f4e8b71bb61439175");
+        /****************************************************************/
+        //保险初审
+        roleRelation.put("23","45131b42a20c225aa308b2b9f464e7c0");
+        //人保二审
+        roleRelation.put("26","9e0f372e6722222ae47b556abfd63424");
+        //人保上传承保意向书
+        roleRelation.put("15","d8ac7631ace34a5c914b4922e9d08eb9");
+        //资质复审
+        roleRelation.put("13","9b049272d50095470123a4cf5a0942b9");
+        //抵押材料确认
+//        roleRelation.put("","be050b1d253ec8c527d889ea461c215c");
+        //人保-管理员
+        roleRelation.put("24","be050b1d253ec8c527d889ea461c215c,9b049272d50095470123a4cf5a0942b9," +
+                "d8ac7631ace34a5c914b4922e9d08eb9,9e0f372e6722222ae47b556abfd63424,45131b42a20c225aa308b2b9f464e7c0");
+        /****************************************************************/
+        //放款审批一审
+        roleRelation.put("27","4ae7a1c2d113ffe30b1abe27eda0b124");
+        //放款审批二审
+        roleRelation.put("31","423875ff93dfb672f984d199d07d7109");
+        /****************************************************************/
+        //财务初审员
+        roleRelation.put("125","cc1a516fc38ab753409cd5fd4562bc7f");
+        //财务复审员
+        roleRelation.put("124","8a705109a9ebd7e340eba2c4e4806615");
+        //银行垫资审核-上传回执单
+        roleRelation.put("123","f3096148c5e18696646f1b1542131501");
+        /****************************************************************/
+        //资方待同意签约
+//        roleRelation.put("","aad0338053c3be97531c9c30706a5359");
+        //资方待同意放款
+//        roleRelation.put("","c3c8158d826d31ba5e3ffa541031c5ee");
+        //资方确认放款
+//        roleRelation.put("","2e2639c6a7ac2f38277accff2883cb69");
+        //资方确认放款完成
+//        roleRelation.put("","3ccd929364ad06b1384bc399c11b3cc1");
+        //石化金租待放款
+        roleRelation.put("126","1de1826e75f3f9962fb54832e5365123");
+        /****************************************************************/
+        //单证总公司归档员
+        roleRelation.put("87","7b46dd1ee2327e166072ff6ffa5f9242");
+        //终端单证业务员
+        roleRelation.put("38","5d378e5111373bce36acc73601bad80e");
+        //现章合同快递员
+//        roleRelation.put("","e8048303f5d446fb3b843b067dc3b6db");
+        //人保快递员
+        roleRelation.put("21","ca3b9429b884148c48318b32303f98c0");
+        /****************************************************************/
+        //单证审核员
+        roleRelation.put("41","ff2e7f77a7a0d72a47f4784234fca61c");
+        /****************************************************************/
+        //鲁诺家访管理员
+        roleRelation.put("48","4446da3e88c7ce524aca002908359b3b");
+        //订单异常处理
+//        roleRelation.put("","2be9a6473cc7cd8ae7d55ca10eafcf83");
+        //家访员
+        roleRelation.put("71","7162699e8d5c11ffa19e8529f9897404");
+        //家访公司管理员
+        roleRelation.put("47","490e14e6a5814e260d66dff2219e951b");
+
+    }
+
     @Test
-    public void importFinances() throws IOException {
+    public void testAAACheckLoginName() throws IOException {
+        System.out.println("213 === "+roleRelation.size());
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+        List<SysUsers> usersList = sysUsersMapper.selectAll();
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb3);
+        for (SysUsers sysUsers : usersList) {
+            String loginName = sysUsers.getUsername();
+            System.out.println(loginName);
+            CustomerStaffAccount customerStaffAccount = customerStaffAccountMapper.findByLoginName(loginName);
+            if(customerStaffAccount != null){
+                System.out.println("登录名重复："+JSON.toJSONString(customerStaffAccount));
+            }
+
+        }
+    }
+
+    @Test
+    public void testBBBFinances() throws Exception {
+        clearCollections();
         DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
         List<FirmFinances> firmFinances = firmFinancesMapper.selectAll();
-        List<SysCompany> list= new ArrayList<>();
-        List<BizFinancial> bizFinancialArrayList= new ArrayList<>();
-        List<SysUser> userList= new ArrayList<>();
-        List<Cas1Relation> cas1RelationList= new ArrayList<>();
+        List<BizFinancial> bizFinancialArrayList = new ArrayList<>();
         for (FirmFinances firmFinance : firmFinances) {
-
-            SysCompany sysCompany = new SysCompany();
-            sysCompany.setId(IdGenerater.uuid());
-            sysCompany.setCreatedBy("脚本导入");
-            sysCompany.setCreatedOn(new Date());
-            sysCompany.setIsDelete((byte) 0);
-            sysCompany.setIsAvailable((byte) 1);
+            //填充公司信息
+            SysCompany sysCompany = initSysCompany();
             sysCompany.setName(firmFinance.getName());
-            sysCompany.setStatus(noCheck);
-            sysCompany.setDataType(stage);
-
             String pinYinHeadChar = PinYinUtils.getPinYinHeadChar(firmFinance.getName());
-            if(StringUtils.isBlank(pinYinHeadChar)){
+            if (StringUtils.isBlank(pinYinHeadChar)) {
                 pinYinHeadChar = IdGenerater.RandomLowerCharater(4);
             }
             sysCompany.setCode(pinYinHeadChar);
-
             sysCompany.setPhone(firmFinance.getMobile());
             sysCompany.setLinkman(firmFinance.getLinkman());
             sysCompany.setAddress(firmFinance.getAddress());
             sysCompany.setProvince(firmFinance.getProvince());
             sysCompany.setCity(firmFinance.getCity());
             sysCompany.setDistrict(firmFinance.getDistrict());
-            sysCompany.setCanAcp(false);
-            sysCompany.setCanCapital(false);
-            sysCompany.setCanDealer(false);
-            sysCompany.setCanHelpMortgage(false);
-            sysCompany.setCanSp(false);
-            sysCompany.setCanMortgage(false);
-            sysCompany.setCanVisit(false);
-            sysCompany.setIsQualityDealer(false);
-
             list.add(sysCompany);
+            sysCompanyMap.put("Finance"+firmFinance.getId(),sysCompany);
 
+            //填充金融公司信息
             BizFinancial bizFinancial = new BizFinancial();
             bizFinancial.setId(IdGenerater.uuid());
             bizFinancial.setCreatedBy("脚本导入");
@@ -164,24 +272,30 @@ public class TestDao {
             bizFinancial.setIsDelete(false);
             bizFinancial.setIsAvailable(true);
             bizFinancial.setCompanyId(sysCompany.getId());
-            bizFinancial.setStatus(noCheck);
+            bizFinancial.setCompany(sysCompany);
+            bizFinancial.setStatus(check);
             bizFinancial.setDataType(stage);
             bizFinancialArrayList.add(bizFinancial);
 
+            //CAS1与CAS2关系
             Cas1Relation cas1Relation = new Cas1Relation();
             cas1Relation.setId(sysCompany.getId());
             cas1Relation.setType("Finance");
-            cas1Relation.setCas1Id(firmFinance.getId()+"");
+            cas1Relation.setCas1Id(firmFinance.getId() + "");
             cas1RelationList.add(cas1Relation);
 
-            SysUsers params = new SysUsers();
-            params.setFirmType("Finance");
-            params.setFirmId(firmFinance.getId());
-            List<SysUsers> usersList = sysUsersMapper.findByParams(params);
-            if(!CollectionUtils.isEmpty(usersList)){
-                for (SysUsers sysUsers : usersList) {
-                    addUser(userList, sysCompany, sysUsers);
-                }
+
+
+        }
+
+        //填充用户信息
+        SysUsers params = new SysUsers();
+        params.setFirmType("Finance");
+        List<SysUsers> usersList = sysUsersMapper.findByParams(params);
+        if (!CollectionUtils.isEmpty(usersList)) {
+            for (SysUsers sysUsers : usersList) {
+                SysCompany sysCompany = sysCompanyMap.get("Finance" + sysUsers.getFirmId());
+                addUserAndRelation(userList, cas1RelationList, sysUsers, sysCompany);
             }
         }
 
@@ -194,89 +308,35 @@ public class TestDao {
 
         insertUser(userList);
 
-
-    }
-
-    @Transactional(value = "transactionManagerForSource2")
-    @Rollback(true)// 事务自动回滚，默认是true。可以不写
-    public void insertUser(List<SysUser> userList) {
-        for (SysUser sysUser : userList) {
-            sysUserMapper.insert(sysUser);
-        }
-    }
-
-    @Transactional(value = "transactionManagerForSource2")
-    @Rollback(true)// 事务自动回滚，默认是true。可以不写
-    public void insertCas1Relation(List<Cas1Relation> cas1RelationList) {
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-        for (Cas1Relation cas1Relation : cas1RelationList) {
-            cas1RelationMapper.insert(cas1Relation);
-        }
-    }
-
-    @Transactional(value = "transactionManagerForSource2")
-    @Rollback(true)// 事务自动回滚，默认是true。可以不写
-    public void insertFinancial(List<BizFinancial> bizFinancialArrayList) {
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-        for (BizFinancial bizFinancial : bizFinancialArrayList) {
-            bizFinancialMapper.insert(bizFinancial);
-        }
-    }
-
-    @Transactional(value = "transactionManagerForSource2")
-    @Rollback(true)// 事务自动回滚，默认是true。可以不写
-    public void insertCompany(List<SysCompany> list) {
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-        for (SysCompany sysCompany : list) {
-            sysCompanyMapper.insert(sysCompany);
-        }
     }
 
     @Test
-    public void importCapitals() throws IOException {
+    public void testCCCCapitals() throws Exception {
+        clearCollections();
         DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
         List<FirmCapitals> firmFinances = firmCapitalsMapper.selectAll();
-        List<SysCompany> list= new ArrayList<>();
-        List<BizCapital> bizCapitalList= new ArrayList<>();
-        List<SysUser> userList= new ArrayList<>();
-        List<Cas1Relation> cas1RelationList= new ArrayList<>();
-        for (FirmCapitals firmCapitals : firmFinances) {
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-            SysCompany sysCompany = sysCompanyMapper.selectByName(firmCapitals.getName());
-            if(sysCompany == null ){
-                sysCompany = new SysCompany();
-                sysCompany.setId(IdGenerater.uuid());
-                sysCompany.setCreatedBy("脚本导入");
-                sysCompany.setCreatedOn(new Date());
-                sysCompany.setIsDelete((byte) 0);
-                sysCompany.setIsAvailable((byte) 1);
-                sysCompany.setName(firmCapitals.getName());
+        List<BizCapital> bizCapitalList = new ArrayList<>();
 
+        for (FirmCapitals firmCapitals : firmFinances) {
+            SysCompany sysCompany = null;
+            if (sysCompany == null) {
+                sysCompany = initSysCompany();
+                sysCompany.setName(firmCapitals.getName());
                 String pinYinHeadChar = PinYinUtils.getPinYinHeadChar(firmCapitals.getName());
-                if(StringUtils.isBlank(pinYinHeadChar)){
+                if (StringUtils.isBlank(pinYinHeadChar)) {
                     pinYinHeadChar = IdGenerater.RandomLowerCharater(4);
                 }
                 sysCompany.setCode(pinYinHeadChar);
-
-
                 sysCompany.setPhone(firmCapitals.getLoanPhone());
                 sysCompany.setLinkman(firmCapitals.getLinkman());
                 sysCompany.setAddress(firmCapitals.getAddress());
                 sysCompany.setProvince(firmCapitals.getProvince());
                 sysCompany.setCity(firmCapitals.getCity());
                 sysCompany.setDistrict(firmCapitals.getDistrict());
-                sysCompany.setCanAcp(false);
                 sysCompany.setCanCapital(true);
-                sysCompany.setCanDealer(false);
-                sysCompany.setCanHelpMortgage(false);
-                sysCompany.setCanSp(false);
-                sysCompany.setCanMortgage(false);
-                sysCompany.setCanVisit(false);
-                sysCompany.setIsQualityDealer(false);
-                sysCompany.setDataType(stage);
-                sysCompany.setStatus(noCheck);
                 list.add(sysCompany);
             }
+            sysCompanyMap.put("Capital"+firmCapitals.getId(),sysCompany);
 
 
             BizCapital bizCapital = new BizCapital();
@@ -288,98 +348,66 @@ public class TestDao {
             bizCapital.setIsNeedAppointment(true);
             bizCapital.setAllowPrivateAccount(firmCapitals.getSupportprivate());
             bizCapital.setCompanyId(sysCompany.getId());
+            bizCapital.setCompany(sysCompany);
             bizCapital.setFirstBeneficiary(firmCapitals.getFirstBeneficiary());
-            bizCapital.setTransferKey("transfer_ccb_ceb");//单证流程
+            //单证流程
+            bizCapital.setTransferKey("transfer_ccb_ceb");
+            //还款卡类型默认为借记卡
+            bizCapital.setCardType("1");
+            //日期规则默认为石化金租
+            bizCapital.setOrderDateProvider("tpshOrderDateProvider");
             bizCapital.setDataType(stage);
-            bizCapital.setStatus(noCheck);
+            bizCapital.setStatus(check);
             bizCapitalList.add(bizCapital);
 
             Cas1Relation cas1Relation = new Cas1Relation();
             cas1Relation.setId(sysCompany.getId());
             cas1Relation.setType("Capital");
-            cas1Relation.setCas1Id(firmCapitals.getId()+"");
+            cas1Relation.setCas1Id(firmCapitals.getId() + "");
             cas1RelationList.add(cas1Relation);
 
-            SysUsers params = new SysUsers();
-            params.setFirmType("Capital");
-            params.setFirmId(firmCapitals.getId());
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
-            List<SysUsers> usersList = sysUsersMapper.findByParams(params);
 
-            if(!CollectionUtils.isEmpty(usersList)){
-                DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-
-                for (SysUsers sysUsers : usersList) {
-
-                    addUser(userList, sysCompany, sysUsers);
-
-
-
-                }
-
-            }
 
         }
 
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        SysUsers params = new SysUsers();
+        params.setFirmType("Capital");
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+        List<SysUsers> usersList = sysUsersMapper.findByParams(params);
+
+        if (!CollectionUtils.isEmpty(usersList)) {
+            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+            for (SysUsers sysUsers : usersList) {
+                SysCompany sysCompany = sysCompanyMap.get("Capital" + sysUsers.getFirmId());
+                addUserAndRelation(userList, cas1RelationList, sysUsers, sysCompany);
+
+            }
+        }
 
         insertCompany(list);
 
-        for (BizCapital bizCapital : bizCapitalList) {
-            bizCapitalMapper.insert(bizCapital);
-        }
-
         insertCas1Relation(cas1RelationList);
-
 
         insertUser(userList);
 
-    }
-
-    private SysUser addUser(List<SysUser> userList, SysCompany sysCompany, SysUsers sysUsers) {
-        SysUser sysUser = new SysUser();
-        sysUser.setId(IdGenerater.uuid());
-        sysUser.setCreatedBy("脚本导入");
-        sysUser.setCreatedOn(new Date());
-        sysUser.setIsDelete((byte) 0);
-        sysUser.setIsAvailable((byte) 1);
-        sysUser.setPassword("abcd1234");
-        sysUser.setCompany(sysCompany);
-        sysUser.setCompanyId(sysCompany.getId());
-        sysUser.setLoginName(sysUsers.getUsername());
-        sysUser.setRealName(sysUsers.getTruename());
-        sysUser.setMobile(sysUsers.getMobile());
-        sysUser.setEmail(sysUsers.getEmail());
-        sysUser.setGender((byte) 1);
-        sysUser.setBirth(null);
-        sysUser.setStatus(noCheck);
-        sysUser.setDataType(stage);
-        sysUser.setFace((byte) 1);
-        sysUser.setOnline((byte) 1);
-        userList.add(sysUser);
-        return sysUser;
+        insertCapital(bizCapitalList);
     }
 
     @Test
-    public void importDocument() throws IOException {
+    public void testDDDDocuments() throws Exception {
+        clearCollections();
         DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
         List<FirmDocuments> firmDocumentsList = firmDocumentsMapper.selectAll();
-        List<SysCompany> list= new ArrayList<>();
-        List<BizDocument> bizDocumentList= new ArrayList<>();
-        List<SysUser> userList= new ArrayList<>();
-        List<Cas1Relation> cas1RelationList= new ArrayList<>();
+        List<BizDocument> bizDocumentList = new ArrayList<>();
         for (FirmDocuments firmDocuments : firmDocumentsList) {
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-            SysCompany sysCompany = sysCompanyMapper.selectByName(firmDocuments.getName());
-            if(sysCompany == null ){
-                sysCompany = new SysCompany();
-                sysCompany.setId(IdGenerater.uuid());
-                sysCompany.setCreatedBy("脚本导入");
-                sysCompany.setCreatedOn(new Date());
-                sysCompany.setIsDelete((byte) 0);
-                sysCompany.setIsAvailable((byte) 1);
+            SysCompany sysCompany = null;
+            if (sysCompany == null) {
+                sysCompany = initSysCompany();
                 sysCompany.setName(firmDocuments.getName());
                 String pinYinHeadChar = PinYinUtils.getPinYinHeadChar(firmDocuments.getName());
+                if (StringUtils.isBlank(pinYinHeadChar)) {
+                    pinYinHeadChar = IdGenerater.RandomLowerCharater(4);
+                }
                 sysCompany.setCode(pinYinHeadChar);
                 sysCompany.setPhone(firmDocuments.getMobile());
                 sysCompany.setLinkman(firmDocuments.getLinkman());
@@ -387,118 +415,92 @@ public class TestDao {
                 sysCompany.setProvince(firmDocuments.getProvince());
                 sysCompany.setCity(firmDocuments.getCity());
                 sysCompany.setDistrict(firmDocuments.getDistrict());
-                sysCompany.setCanAcp(false);
-                sysCompany.setCanCapital(false);
-                sysCompany.setCanDealer(false);
-                sysCompany.setCanHelpMortgage(false);
-                sysCompany.setCanSp(false);
-                sysCompany.setCanMortgage(false);
-                sysCompany.setCanVisit(false);
-                sysCompany.setIsQualityDealer(false);
-                sysCompany.setDataType(stage);
-                sysCompany.setStatus(noCheck);
+                sysCompany.setCanDocument(true);
                 list.add(sysCompany);
             }
-
+            sysCompanyMap.put("Document"+firmDocuments.getId(),sysCompany);
 
             BizDocument bizDocument = new BizDocument();
-            if("全国总公司".equals(firmDocuments.getName())){
+            if ("全国总公司".equals(firmDocuments.getName())) {
                 bizDocument.setId("1234567890");
                 bizDocument.setParentId(null);
-
-            }else{
+                bizDocument.setType("0");
+            } else {
                 bizDocument.setId(IdGenerater.uuid());
                 bizDocument.setParentId("1234567890");
+                bizDocument.setType("1");
             }
             bizDocument.setCreatedBy("脚本导入");
             bizDocument.setCreatedOn(new Date());
             bizDocument.setIsDelete(false);
             bizDocument.setIsAvailable(true);
             bizDocument.setDataType(stage);
-            bizDocument.setStatus(noCheck);
+            bizDocument.setStatus(check);
             bizDocument.setCompanyId(sysCompany.getId());
+            bizDocument.setCompany(sysCompany);
             bizDocumentList.add(bizDocument);
 
             Cas1Relation cas1Relation = new Cas1Relation();
             cas1Relation.setId(sysCompany.getId());
             cas1Relation.setType("Document");
-            cas1Relation.setCas1Id(firmDocuments.getId()+"");
+            cas1Relation.setCas1Id(firmDocuments.getId() + "");
             cas1RelationList.add(cas1Relation);
 
-            SysUsers params = new SysUsers();
-            params.setFirmType("Document");
-            params.setFirmId(firmDocuments.getId());
 
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
-            List<SysUsers> usersList = sysUsersMapper.findByParams(params);
-            if(!CollectionUtils.isEmpty(usersList)){
-                DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-                for (SysUsers sysUsers : usersList) {
-
-                    addUser(userList,sysCompany,sysUsers);
-                }
-
-            }
         }
 
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        SysUsers params = new SysUsers();
+        params.setFirmType("Document");
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+        List<SysUsers> usersList = sysUsersMapper.findByParams(params);
+        if (!CollectionUtils.isEmpty(usersList)) {
+            for (SysUsers sysUsers : usersList) {
+                SysCompany sysCompany = sysCompanyMap.get("Document" + sysUsers.getFirmId());
+                addUserAndRelation(userList,cas1RelationList, sysUsers, sysCompany);
+            }
+
+        }
+
+
 
         insertCompany(list);
 
-        for (BizDocument bizDocument : bizDocumentList) {
-            bizDocumentMapper.insert(bizDocument);
-        }
-
         insertCas1Relation(cas1RelationList);
 
-
         insertUser(userList);
+
+        insertDocument(bizDocumentList);
 
     }
 
     @Test
-    public void importHomeVisits() throws IOException {
+    public void testEEEHomeVisits() throws Exception {
+        clearCollections();
         DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
         List<FirmHomeVisits> firmHomeVisitsList = firmHomeVisitsMapper.selectAll();
-        List<SysCompany> list= new ArrayList<>();
-        List<BizVisit> bizVisitList= new ArrayList<>();
-        List<SysUser> userList= new ArrayList<>();
-        List<Cas1Relation> cas1RelationList= new ArrayList<>();
+        List<BizVisit> bizVisitList = new ArrayList<>();
         for (FirmHomeVisits firmHomeVisits : firmHomeVisitsList) {
 
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-            SysCompany sysCompany = sysCompanyMapper.selectByName(firmHomeVisits.getName());
-            if(sysCompany == null ){
-                sysCompany = new SysCompany();
-                sysCompany.setId(IdGenerater.uuid());
-                sysCompany.setCreatedBy("脚本导入");
-                sysCompany.setCreatedOn(new Date());
-                sysCompany.setIsDelete((byte) 0);
-                sysCompany.setIsAvailable((byte) 1);
+            SysCompany sysCompany = null;
+            if (sysCompany == null) {
+                sysCompany = initSysCompany();
                 sysCompany.setName(firmHomeVisits.getName());
-
                 String pinYinHeadChar = PinYinUtils.getPinYinHeadChar(firmHomeVisits.getName());
+                if (StringUtils.isBlank(pinYinHeadChar)) {
+                    pinYinHeadChar = IdGenerater.RandomLowerCharater(4);
+                }
                 sysCompany.setCode(pinYinHeadChar);
-
                 sysCompany.setPhone(firmHomeVisits.getMobile());
                 sysCompany.setLinkman(firmHomeVisits.getContactMan());
                 sysCompany.setAddress(firmHomeVisits.getAddress());
                 sysCompany.setProvince(firmHomeVisits.getProvince());
                 sysCompany.setCity(firmHomeVisits.getCity());
                 sysCompany.setDistrict(firmHomeVisits.getDistrict());
-                sysCompany.setCanAcp(false);
-                sysCompany.setCanCapital(false);
-                sysCompany.setCanDealer(false);
-                sysCompany.setCanHelpMortgage(false);
-                sysCompany.setCanSp(false);
-                sysCompany.setCanMortgage(false);
-                sysCompany.setCanVisit(false);
-                sysCompany.setIsQualityDealer(false);
-                sysCompany.setStatus(noCheck);
-                sysCompany.setDataType(stage);
+
                 list.add(sysCompany);
             }
 
+            sysCompanyMap.put("HomeVisit"+firmHomeVisits.getId(),sysCompany);
 
             BizVisit bizVisit = new BizVisit();
             bizVisit.setId(IdGenerater.uuid());
@@ -507,67 +509,56 @@ public class TestDao {
             bizVisit.setIsDelete(false);
             bizVisit.setIsAvailable(true);
             bizVisit.setCompanyId(sysCompany.getId());
-            bizVisit.setStatus(noCheck);
+            bizVisit.setCompany(sysCompany);
+            bizVisit.setStatus(check);
             bizVisit.setDataType(stage);
             bizVisitList.add(bizVisit);
 
             Cas1Relation cas1Relation = new Cas1Relation();
             cas1Relation.setId(sysCompany.getId());
             cas1Relation.setType("HomeVisit");
-            cas1Relation.setCas1Id(firmHomeVisits.getId()+"");
+            cas1Relation.setCas1Id(firmHomeVisits.getId() + "");
             cas1RelationList.add(cas1Relation);
-
-            SysUsers params = new SysUsers();
-            params.setFirmType("HomeVisit");
-            params.setFirmId(firmHomeVisits.getId());
-
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
-            List<SysUsers> usersList = sysUsersMapper.findByParams(params);
-            if(!CollectionUtils.isEmpty(usersList)){
-                DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-
-                for (SysUsers sysUsers : usersList) {
-                    addUser(userList,sysCompany,sysUsers);
-                }
-            }
 
         }
 
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        SysUsers params = new SysUsers();
+        params.setFirmType("HomeVisit");
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+        List<SysUsers> usersList = sysUsersMapper.findByParams(params);
+        if (!CollectionUtils.isEmpty(usersList)) {
+            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+            for (SysUsers sysUsers : usersList) {
+                SysCompany sysCompany = sysCompanyMap.get("HomeVisit" + sysUsers.getFirmId());
+                addUserAndRelation(userList, cas1RelationList,sysUsers,sysCompany);
+            }
+        }
 
         insertCompany(list);
 
-        for (BizVisit bizVisit : bizVisitList) {
-            bizVisitMapper.insert(bizVisit);
-        }
+        insertVisit(bizVisitList);
 
         insertCas1Relation(cas1RelationList);
-
 
         insertUser(userList);
 
     }
 
     @Test
-    public void importInsures() throws IOException {
+    public void testFFFInsures() throws Exception {
+        clearCollections();
         DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
         List<FirmInsures> firmInsuresList = firmInsuresMapper.selectAll();
-        List<SysCompany> list= new ArrayList<>();
-        List<SysUser> userList= new ArrayList<>();
-        List<Cas1Relation> cas1RelationList= new ArrayList<>();
         for (FirmInsures firmInsures : firmInsuresList) {
 
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-            SysCompany sysCompany = sysCompanyMapper.selectByName(firmInsures.getName());
-            if(sysCompany == null ){
-                sysCompany = new SysCompany();
-                sysCompany.setId(IdGenerater.uuid());
-                sysCompany.setCreatedBy("脚本导入");
-                sysCompany.setCreatedOn(new Date());
-                sysCompany.setIsDelete((byte) 0);
-                sysCompany.setIsAvailable((byte) 1);
+            SysCompany sysCompany = null;
+            if (sysCompany == null) {
+                sysCompany =initSysCompany();
                 sysCompany.setName(firmInsures.getName());
                 String pinYinHeadChar = PinYinUtils.getPinYinHeadChar(firmInsures.getName());
+                if (StringUtils.isBlank(pinYinHeadChar)) {
+                    pinYinHeadChar = IdGenerater.RandomLowerCharater(4);
+                }
                 sysCompany.setCode(pinYinHeadChar);
                 sysCompany.setPhone(firmInsures.getMobile());
                 sysCompany.setLinkman(firmInsures.getLinkman());
@@ -575,38 +566,29 @@ public class TestDao {
                 sysCompany.setProvince(firmInsures.getProvince());
                 sysCompany.setCity(firmInsures.getCity());
                 sysCompany.setDistrict(firmInsures.getDistrict());
-                sysCompany.setCanAcp(false);
-                sysCompany.setCanCapital(false);
-                sysCompany.setCanDealer(false);
-                sysCompany.setCanHelpMortgage(false);
-                sysCompany.setCanSp(false);
-                sysCompany.setCanMortgage(false);
-                sysCompany.setCanVisit(false);
-                sysCompany.setIsQualityDealer(false);
-                sysCompany.setDataType(stage);
-                sysCompany.setStatus(noCheck);
+
                 list.add(sysCompany);
             }
+
+            sysCompanyMap.put("Insure"+firmInsures.getId(),sysCompany);
 
             Cas1Relation cas1Relation = new Cas1Relation();
             cas1Relation.setId(sysCompany.getId());
             cas1Relation.setType("Insure");
-            cas1Relation.setCas1Id(firmInsures.getId()+"");
+            cas1Relation.setCas1Id(firmInsures.getId() + "");
             cas1RelationList.add(cas1Relation);
 
-            SysUsers params = new SysUsers();
-            params.setFirmType("Insure");
-            params.setFirmId(firmInsures.getId());
+        }
 
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
-            List<SysUsers> usersList = sysUsersMapper.findByParams(params);
-            if(!CollectionUtils.isEmpty(usersList)){
-                DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-
-                for (SysUsers sysUsers : usersList) {
-                    addUser(userList,sysCompany,sysUsers);
-                }
-
+        SysUsers params = new SysUsers();
+        params.setFirmType("Insure");
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+        List<SysUsers> usersList = sysUsersMapper.findByParams(params);
+        if (!CollectionUtils.isEmpty(usersList)) {
+            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+            for (SysUsers sysUsers : usersList) {
+                SysCompany sysCompany = sysCompanyMap.get("Insure" + sysUsers.getFirmId());
+                addUserAndRelation(userList,cas1RelationList,sysUsers,sysCompany);
             }
 
         }
@@ -620,38 +602,24 @@ public class TestDao {
         insertUser(userList);
 
     }
-//
-//    @Test
-//    public void importMortgage() throws IOException {
-//
-//    }
-//
+
     @Test
-    public void importACP() throws IOException {
+    public void testGGGACP() throws Exception {
+        clearCollections();
         DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
         List<FirmDealers> firmDealersList = firmDealersMapper.selectACP();
-        List<SysCompany> list= new ArrayList<>();
-        List<BizChannel> bizChannelList= new ArrayList<>();
-        List<SysUser> userList= new ArrayList<>();
-        List<SysRoleUserRel> sysRoleUserRels= new ArrayList<>();
-        List<Cas1Relation> relationList = new ArrayList<>();
+        List<BizChannel> bizChannelList = new ArrayList<>();
         for (FirmDealers firmDealers : firmDealersList) {
 
-            Cas1Relation cas1Relation = new Cas1Relation();
-            cas1Relation.setId(IdGenerater.uuid());
-            cas1Relation.setType("Dealer");
-            cas1Relation.setCas1Id(firmDealers.getId()+"");
-            relationList.add(cas1Relation);
-
             DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-            SysCompany sysCompany = sysCompanyMapper.selectByName(firmDealers.getName());
-            if(sysCompany == null ){
-                sysCompany = new SysCompany();
-                sysCompany.setId(cas1Relation.getId());
-                sysCompany.setCreatedBy("脚本导入");
-                sysCompany.setCreatedOn(new Date());
-                sysCompany.setIsDelete((byte) 0);
-                sysCompany.setIsAvailable((byte) 1);
+            SysCompany sysCompany = null;
+            if (sysCompany == null) {
+                sysCompany = initSysCompany();
+                String pinYinHeadChar = PinYinUtils.getPinYinHeadChar(firmDealers.getName());
+                if (StringUtils.isBlank(pinYinHeadChar)) {
+                    pinYinHeadChar = IdGenerater.RandomLowerCharater(4);
+                }
+                sysCompany.setCode(pinYinHeadChar);
                 sysCompany.setName(firmDealers.getName());
                 sysCompany.setPhone(firmDealers.getMobile());
                 sysCompany.setLinkman(firmDealers.getLinkman());
@@ -661,108 +629,86 @@ public class TestDao {
                 sysCompany.setDistrict(firmDealers.getDistrict());
                 sysCompany.setCreditCode(firmDealers.getEnterpriseCode());//营业执照编号
                 sysCompany.setCanAcp(true);
-                sysCompany.setCanSp(false);
-                sysCompany.setCanDealer(false);
-                sysCompany.setCanCapital(false);
-                sysCompany.setCanHelpMortgage(false);
-                sysCompany.setCanMortgage(false);
-                sysCompany.setCanVisit(false);
-                sysCompany.setStatus(noCheck);
-                sysCompany.setDataType(stage);
-                if(firmDealers.getIsGood()!= null && firmDealers.getIsGood() == 1){
-                    sysCompany.setIsQualityDealer(true);
-                }else{
-                    sysCompany.setIsQualityDealer(false);
-                }
                 list.add(sysCompany);
             }
 
+            sysCompanyMap.put("Dealer"+firmDealers.getId(),sysCompany);
+
+            Cas1Relation cas1Relation = new Cas1Relation();
+            cas1Relation.setId(sysCompany.getId());
+            cas1Relation.setType("Dealer");
+            cas1Relation.setCas1Id(firmDealers.getId() + "");
+            cas1RelationList.add(cas1Relation);
+
 
             BizChannel bizChannel = new BizChannel();
-            bizChannel.setId(sysCompany.getId());
+            bizChannel.setId(firmDealers.getId()+"");
             bizChannel.setCreatedBy("脚本导入");
             bizChannel.setCreatedOn(new Date());
             bizChannel.setIsDelete((byte) 0);
             bizChannel.setIsAvailable((byte) 1);
             bizChannel.setCompanyId(sysCompany.getId());
+            bizChannel.setCompany(sysCompany);
             bizChannel.setChannelRole("acp");
             bizChannel.setParentId(null);
-            bizChannel.setStatus(noCheck);
+            bizChannel.setStatus(check);
             bizChannel.setDataType(stage);
             bizChannel.setTrustAccountNo(firmDealers.getTrusteeshipCard());
             bizChannel.setReciveAccountNo(firmDealers.getCollectionCard());
             bizChannel.setReciveAccountBank(firmDealers.getCollectionCardBank());
             bizChannelList.add(bizChannel);
 
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
-            SysUsers params = new SysUsers();
-            params.setFirmType("Dealer");
-            params.setFirmId(firmDealers.getId());
 
 
-            List<SysUsers> usersList = sysUsersMapper.findByParams(params);
-            if(!CollectionUtils.isEmpty(usersList)){
-                DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-                for (SysUsers sysUsers : usersList) {
-                    SysUser sysUser = addUser(userList, sysCompany, sysUsers);
+        }
 
-                    SysRoleUserRel sysRoleUserRel = new SysRoleUserRel();
-                    sysRoleUserRel.setUserId(sysUser.getId());
-                    sysRoleUserRel.setRoleId("8af2a5751c593255bfea42a3b8c65e56");//ACP-管理员
-                    sysRoleUserRels.add(sysRoleUserRel);
-
-                }
-
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+        SysUsers params = new SysUsers();
+        params.setFirmType("Dealer");
+        List<SysUsers> usersList = sysUsersMapper.findByParams(params);
+        if (!CollectionUtils.isEmpty(usersList)) {
+            for (SysUsers sysUsers : usersList) {
+                SysCompany sysCompany = sysCompanyMap.get("Dealer" + sysUsers.getFirmId());
+                addUserAndRelation(userList,cas1RelationList,sysUsers,sysCompany);
             }
 
         }
 
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+
 
         insertCompany(list);
 
-        for (BizChannel bizChannel : bizChannelList) {
-            bizChannelMapper.insert(bizChannel);
-        }
+        insertChannel(bizChannelList);
 
-        insertCas1Relation(relationList);
+        insertCas1Relation(cas1RelationList);
 
 
         insertUser(userList);
 
-        for (SysRoleUserRel sysRoleUserRel : sysRoleUserRels) {
-            sysRoleUserRelMapper.insert(sysRoleUserRel);
-        }
+
 
     }
 
     @Test
-    public void importSP() throws IOException {
+    public void testHHHSP() throws Exception {
+        clearCollections();
         DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
         List<FirmDealers> firmDealersList = firmDealersMapper.selectSP();
-        List<SysCompany> list= new ArrayList<>();
-        List<BizChannel> bizChannelList= new ArrayList<>();
-        List<SysUser> userList= new ArrayList<>();
-        List<SysRoleUserRel> sysRoleUserRels= new ArrayList<>();
-        List<Cas1Relation> relationList = new ArrayList<>();
+
+        List<BizChannel> bizChannelList = new ArrayList<>();
         for (FirmDealers firmDealers : firmDealersList) {
 
-            Cas1Relation cas1Relation = new Cas1Relation();
-            cas1Relation.setId(IdGenerater.uuid());
-            cas1Relation.setType("Dealer");
-            cas1Relation.setCas1Id(firmDealers.getId()+"");
-            relationList.add(cas1Relation);
 
             DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-            SysCompany sysCompany = sysCompanyMapper.selectByName(firmDealers.getName());
-            if(sysCompany == null ){
-                sysCompany = new SysCompany();
-                sysCompany.setId(cas1Relation.getId());
-                sysCompany.setCreatedBy("脚本导入");
-                sysCompany.setCreatedOn(new Date());
-                sysCompany.setIsDelete((byte) 0);
-                sysCompany.setIsAvailable((byte) 1);
+            SysCompany sysCompany = null;
+            if (sysCompany == null) {
+                sysCompany = initSysCompany();
                 sysCompany.setName(firmDealers.getName());
+                String pinYinHeadChar = PinYinUtils.getPinYinHeadChar(firmDealers.getName());
+                if (StringUtils.isBlank(pinYinHeadChar)) {
+                    pinYinHeadChar = IdGenerater.RandomLowerCharater(4);
+                }
+                sysCompany.setCode(pinYinHeadChar);
                 sysCompany.setPhone(firmDealers.getMobile());
                 sysCompany.setLinkman(firmDealers.getLinkman());
                 sysCompany.setAddress(firmDealers.getAddress());
@@ -770,47 +716,35 @@ public class TestDao {
                 sysCompany.setCity(firmDealers.getCity());
                 sysCompany.setDistrict(firmDealers.getDistrict());
                 sysCompany.setCreditCode(firmDealers.getEnterpriseCode());//营业执照编号
-                sysCompany.setCanAcp(false);
                 sysCompany.setCanSp(true);
-                sysCompany.setCanDealer(false);
-                sysCompany.setCanCapital(false);
-                sysCompany.setCanHelpMortgage(false);
-                sysCompany.setCanMortgage(false);
-                sysCompany.setCanVisit(false);
-                sysCompany.setDataType(stage);
-                sysCompany.setStatus(noCheck);
                 list.add(sysCompany);
             }
+            sysCompanyMap.put("Dealer"+firmDealers.getId(),sysCompany);
 
+            Cas1Relation cas1Relation = new Cas1Relation();
+            cas1Relation.setId(sysCompany.getId());
+            cas1Relation.setType("Dealer");
+            cas1Relation.setCas1Id(firmDealers.getId() + "");
+            cas1RelationList.add(cas1Relation);
 
 
             BizChannel bizChannel = new BizChannel();
-            bizChannel.setId(sysCompany.getId());
+            bizChannel.setId(firmDealers.getId()+"");
             bizChannel.setCreatedBy("脚本导入");
             bizChannel.setCreatedOn(new Date());
             bizChannel.setIsDelete((byte) 0);
             bizChannel.setIsAvailable((byte) 1);
             bizChannel.setCompanyId(sysCompany.getId());
+            bizChannel.setCompany(sysCompany);
             bizChannel.setChannelRole("sp");
-            bizChannel.setStatus(noCheck);
+            bizChannel.setStatus(check);
             bizChannel.setDataType(stage);
-            if(firmDealers.getIsGood()!= null && firmDealers.getIsGood() == 1){
+            if (firmDealers.getIsGood() != null && firmDealers.getIsGood() == 1) {
                 bizChannel.setQualityDealer(true);
-            }else{
+            } else {
                 bizChannel.setQualityDealer(false);
             }
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-            Cas1Relation cas1RelationParams = new Cas1Relation();
-            cas1RelationParams.setType("Dealer");
-            cas1RelationParams.setCas1Id(firmDealers.getpId()+"");
-            try {
-                Cas1Relation cas1RelationForParent =  cas1RelationMapper.findByParams(cas1RelationParams);
-                bizChannel.setParentId(cas1RelationForParent.getId());
-            }catch (Exception e){
-               throw new RuntimeException("查询异常");
-            }
-
-
+            bizChannel.setParentId(firmDealers.getpId()+"");
 
             bizChannel.setTrustAccountNo(firmDealers.getTrusteeshipCard());
             bizChannel.setReciveAccountNo(firmDealers.getCollectionCard());
@@ -818,72 +752,53 @@ public class TestDao {
             bizChannelList.add(bizChannel);
 
 
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
-            SysUsers params = new SysUsers();
-            params.setFirmType("Dealer");
-            params.setFirmId(firmDealers.getId());
 
-            List<SysUsers> usersList = sysUsersMapper.findByParams(params);
-            if(!CollectionUtils.isEmpty(usersList)){
-                DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-                for (SysUsers sysUsers : usersList) {
 
-                    SysUser sysUser = addUser(userList, sysCompany, sysUsers);
-                    SysRoleUserRel sysRoleUserRel = new SysRoleUserRel();
-                    sysRoleUserRel.setUserId(sysUser.getId());
-                    sysRoleUserRel.setRoleId("d498fc26bbf964740f50cecd6336c7b9");//SP-管理员
-                    sysRoleUserRels.add(sysRoleUserRel);
-                }
+        }
 
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+        SysUsers params = new SysUsers();
+        params.setFirmType("Dealer");
+        List<SysUsers> usersList = sysUsersMapper.findByParams(params);
+        if (!CollectionUtils.isEmpty(usersList)) {
+            for (SysUsers sysUsers : usersList) {
+                SysCompany sysCompany = sysCompanyMap.get("Dealer" + sysUsers.getFirmId());
+                addUserAndRelation(userList,cas1RelationList,sysUsers,sysCompany);
             }
 
         }
 
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+
 
         insertCompany(list);
 
-        for (BizChannel bizChannel : bizChannelList) {
-            bizChannelMapper.insert(bizChannel);
-        }
+        insertChannel(bizChannelList);
 
-        insertCas1Relation(relationList);
-
+        insertCas1Relation(cas1RelationList);
 
         insertUser(userList);
 
-        for (SysRoleUserRel sysRoleUserRel : sysRoleUserRels) {
-            sysRoleUserRelMapper.insert(sysRoleUserRel);
-        }
     }
 
     @Test
-    public void importDealer() throws IOException {
+    public void testIIIDealer() throws Exception {
+        clearCollections();
         DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
         List<FirmDealers> firmDealersList = firmDealersMapper.selectDealer();
-        List<SysCompany> list= new ArrayList<>();
-        List<BizChannel> bizChannelList= new ArrayList<>();
-        List<SysUser> userList= new ArrayList<>();
-        List<SysRoleUserRel> sysRoleUserRels= new ArrayList<>();
-        List<Cas1Relation> relationList = new ArrayList<>();
+        List<BizChannel> bizChannelList = new ArrayList<>();
         for (FirmDealers firmDealers : firmDealersList) {
 
-            Cas1Relation cas1Relation = new Cas1Relation();
-            cas1Relation.setId(IdGenerater.uuid());
-            cas1Relation.setType("Dealer");
-            cas1Relation.setCas1Id(firmDealers.getId()+"");
-            relationList.add(cas1Relation);
 
             DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-            SysCompany sysCompany = sysCompanyMapper.selectByName(firmDealers.getName());
-            if(sysCompany == null ){
-                sysCompany = new SysCompany();
-                sysCompany.setId(cas1Relation.getId());
-                sysCompany.setCreatedBy("脚本导入");
-                sysCompany.setCreatedOn(new Date());
-                sysCompany.setIsDelete((byte) 0);
-                sysCompany.setIsAvailable((byte) 1);
+            SysCompany sysCompany = null;
+            if (sysCompany == null) {
+                sysCompany = initSysCompany();
                 sysCompany.setName(firmDealers.getName());
+                String pinYinHeadChar = PinYinUtils.getPinYinHeadChar(firmDealers.getName());
+                if (StringUtils.isBlank(pinYinHeadChar)) {
+                    pinYinHeadChar = IdGenerater.RandomLowerCharater(4);
+                }
+                sysCompany.setCode(pinYinHeadChar);
                 sysCompany.setPhone(firmDealers.getMobile());
                 sysCompany.setLinkman(firmDealers.getLinkman());
                 sysCompany.setAddress(firmDealers.getAddress());
@@ -891,22 +806,22 @@ public class TestDao {
                 sysCompany.setCity(firmDealers.getCity());
                 sysCompany.setDistrict(firmDealers.getDistrict());
                 sysCompany.setCreditCode(firmDealers.getEnterpriseCode());//营业执照编号
-                sysCompany.setCanAcp(false);
-                sysCompany.setCanSp(false);
                 sysCompany.setCanDealer(true);
-                sysCompany.setCanCapital(false);
-                sysCompany.setCanHelpMortgage(false);
-                sysCompany.setCanMortgage(false);
-                sysCompany.setCanVisit(false);
-                if(firmDealers.getIsGood()!= null && firmDealers.getIsGood() == 1){
+                if (firmDealers.getIsGood() != null && firmDealers.getIsGood() == 1) {
                     sysCompany.setIsQualityDealer(true);
-                }else{
+                } else {
                     sysCompany.setIsQualityDealer(false);
                 }
                 list.add(sysCompany);
             }
 
+            sysCompanyMap.put("Dealer"+firmDealers.getId(),sysCompany);
 
+            Cas1Relation cas1Relation = new Cas1Relation();
+            cas1Relation.setId(sysCompany.getId());
+            cas1Relation.setType("Dealer");
+            cas1Relation.setCas1Id(firmDealers.getId() + "");
+            cas1RelationList.add(cas1Relation);
 
             BizChannel bizChannel = new BizChannel();
             bizChannel.setId(IdGenerater.uuid());
@@ -915,69 +830,353 @@ public class TestDao {
             bizChannel.setIsDelete((byte) 0);
             bizChannel.setIsAvailable((byte) 1);
             bizChannel.setCompanyId(sysCompany.getId());
+            bizChannel.setCompany(sysCompany);
             bizChannel.setChannelRole("dealer");
             DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
             Integer pId = firmDealers.getpId();
-            if(pId != 0){
-                Cas1Relation cas1RelationParams = new Cas1Relation();
-                cas1RelationParams.setType("Dealer");
-                cas1RelationParams.setCas1Id(firmDealers.getpId()+"");
-
-                try {
-                    Cas1Relation cas1RelationForParent =  cas1RelationMapper.findByParams(cas1RelationParams);
-                    bizChannel.setParentId(cas1RelationForParent.getId());
-                }catch (Exception e){
-                    throw new RuntimeException("查询异常");
-                }
-            }else{
-                bizChannel.setParentId(null);
-            }
-
+            bizChannel.setParentId(pId+"");
             bizChannel.setTrustAccountNo(firmDealers.getTrusteeshipCard());
             bizChannel.setReciveAccountNo(firmDealers.getCollectionCard());
             bizChannel.setReciveAccountBank(firmDealers.getCollectionCardBank());
             bizChannelList.add(bizChannel);
+            if (firmDealers.getIsGood() != null && firmDealers.getIsGood() == 1) {
+                bizChannel.setQualityDealer(true);
+            } else {
+                bizChannel.setQualityDealer(false);
+            }
 
 
-            DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
-            SysUsers params = new SysUsers();
-            params.setFirmType("Dealer");
-            params.setFirmId(firmDealers.getId());
-            List<SysUsers> usersList = sysUsersMapper.findByParams(params);
-            if(!CollectionUtils.isEmpty(usersList)){
-                DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
-                for (SysUsers sysUsers : usersList) {
-                    SysUser sysUser = addUser(userList, sysCompany, sysUsers);
-                    SysRoleUserRel sysRoleUserRel = new SysRoleUserRel();
-                    sysRoleUserRel.setUserId(sysUser.getId());
-                    sysRoleUserRel.setRoleId("a10176e7073f17a1e8d50f8fd32562d0");//经销商业务员
-                    sysRoleUserRels.add(sysRoleUserRel);
 
-                }
+        }
+
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+        SysUsers params = new SysUsers();
+        params.setFirmType("Dealer");
+        List<SysUsers> usersList = sysUsersMapper.findByParams(params);
+        if (!CollectionUtils.isEmpty(usersList)) {
+            for (SysUsers sysUsers : usersList) {
+                SysCompany sysCompany = sysCompanyMap.get("Dealer" + sysUsers.getFirmId());
+                addUserAndRelation(userList,cas1RelationList,sysUsers,sysCompany);
 
             }
 
         }
 
-        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+
 
         insertCompany(list);
 
-        for (BizChannel bizChannel : bizChannelList) {
-            bizChannelMapper.insert(bizChannel);
-        }
+        insertChannel(bizChannelList);
 
-        insertCas1Relation(relationList);
+        insertCas1Relation(cas1RelationList);
 
 
         insertUser(userList);
 
-        for (SysRoleUserRel sysRoleUserRel : sysRoleUserRels) {
-            sysRoleUserRelMapper.insert(sysRoleUserRel);
+
+    }
+
+    @Test
+    public void testJJJRoleUser() throws Exception {
+        clearCollections();
+        System.out.println( "大1111："+JSON.toJSONString(roleRelation) );
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        List<Cas1Relation> userRelationList = cas1RelationMapper.findByType("User");
+        System.out.println( "大小123："+userRelationList.size() );
+        List<SysRoleUserRelForCas2> sysRoleUserRelForCas2s = new ArrayList<>();
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
+        for (Cas1Relation cas1Relation : userRelationList) {
+            List<SysRoleUserRel> cas1List = sysRoleUserRelMapper.selectByUserId(cas1Relation.getCas1Id());
+            System.out.println( "大小："+ JSON.toJSONString(cas1Relation)+"     "+cas1List.size() );
+            for (SysRoleUserRel sysRoleUserRel : cas1List) {
+                Integer roleId = sysRoleUserRel.getRoleId();
+                String ids = roleRelation.get(roleId+"");
+                System.out.println(roleId+"    213    "+ids);
+                if(StringUtils.isNotBlank(ids)){
+                    String[] roleArr = ids.split(",");
+                    for (String cas2RoleId : roleArr) {
+                        SysRoleUserRelForCas2 cas2Role = new SysRoleUserRelForCas2();
+                        cas2Role.setRoleId(cas2RoleId);
+                        cas2Role.setUserId(cas1Relation.getId());
+                        sysRoleUserRelForCas2s.add(cas2Role);
+                    }
+                }
+
+            }
+        }
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        if(!CollectionUtils.isEmpty(sysRoleUserRelForCas2s)){
+            List<SysRoleUserRelForCas2> onLineCas2 = new ArrayList<>();
+            for (SysRoleUserRelForCas2 sysRoleUserRelForCas2 : sysRoleUserRelForCas2s) {
+                SysUser stageUser = sysUserMapper.selectByPrimaryKey(sysRoleUserRelForCas2.getUserId());
+                SysRoleUserRelForCas2 onLine = new SysRoleUserRelForCas2();
+                onLine.setUserId(stageUser.getSerialNum());
+                onLine.setRoleId(sysRoleUserRelForCas2.getRoleId());
+                onLineCas2.add(onLine);
+
+            }
+            sysRoleUserRelForCas2Mapper.insertList(onLineCas2);
+            sysRoleUserRelForCas2Mapper.insertList(sysRoleUserRelForCas2s);
         }
 
     }
 
+
+
+
+    private void addUserAndRelation(List<SysUser> userList, List<Cas1Relation> cas1RelationList, SysUsers sysUsers, SysCompany sysCompany) {
+        if(sysCompany != null){
+            SysUser sysUser = addUser(userList, sysCompany, sysUsers);
+            Cas1Relation cas1Relation = new Cas1Relation();
+            cas1Relation.setId(sysUser.getId());
+            cas1Relation.setType("User");
+            cas1Relation.setCas1Id(sysUsers.getId() + "");
+            cas1RelationList.add(cas1Relation);
+        }
+    }
+
+    private SysUser addUser(List<SysUser> userList, SysCompany sysCompany, SysUsers sysUsers) {
+        SysUser sysUser = new SysUser();
+        sysUser.setId(IdGenerater.uuid());
+        sysUser.setCreatedBy("脚本导入");
+        sysUser.setCreatedOn(new Date());
+        sysUser.setIsDelete((byte) 0);
+        sysUser.setIsAvailable((byte) 1);
+        sysUser.setPassword("123456");
+        sysUser.setCompany(sysCompany);
+        sysUser.setCompanyId(sysCompany.getId());
+        sysUser.setLoginName(sysUsers.getUsername());
+        sysUser.setRealName(sysUsers.getTruename());
+        sysUser.setMobile(sysUsers.getMobile());
+        sysUser.setEmail(sysUsers.getEmail());
+        sysUser.setGender((byte) 1);
+        sysUser.setBirth(null);
+        sysUser.setStatus(check);
+        sysUser.setDataType(stage);
+        sysUser.setFace((byte) 1);
+        sysUser.setOnline((byte) 1);
+        sysUser.setCoreStaffId(IdGenerater.nextId());
+        userList.add(sysUser);
+        return sysUser;
+    }
+
+    private SysCompany initSysCompany() {
+        SysCompany sysCompany = new SysCompany();
+        sysCompany.setId(IdGenerater.nextId());
+        sysCompany.setCreatedBy("脚本导入");
+        sysCompany.setCreatedOn(new Date());
+        sysCompany.setIsDelete((byte) 0);
+        sysCompany.setIsAvailable((byte) 1);
+        sysCompany.setStatus(check);
+        sysCompany.setDataType(stage);
+        sysCompany.setCanAcp(false);
+        sysCompany.setCanCapital(false);
+        sysCompany.setCanDealer(false);
+        sysCompany.setCanHelpMortgage(false);
+        sysCompany.setCanSp(false);
+        sysCompany.setCanMortgage(false);
+        sysCompany.setCanVisit(false);
+        sysCompany.setIsQualityDealer(false);
+        sysCompany.setCanDocument(false);
+        sysCompany.setCoreCustomerId(IdGenerater.nextId());
+        return sysCompany;
+    }
+
+    private void insertUser(List<SysUser> userList)throws Exception  {
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        List<SysUser> onLineList = new ArrayList<>();
+        List<CustomerStaff> staffList = new ArrayList<>();
+        List<CustomerStaffAccount> staffAccountList = new ArrayList<>();
+        for (SysUser stageUser : userList) {
+            if("admin".equals(stageUser.getLoginName())){
+                stageUser.setLoginName("admin123");
+            }
+            SysUser onLineUser = new SysUser();
+            BeanUtils.object2Object(stageUser,onLineUser);
+            onLineUser.setId(IdGenerater.nextId());
+            onLineUser.setCreatedBy(stageUser.getCreatedBy());
+            onLineUser.setDataType(online);
+            onLineUser.setCompanyId(stageUser.getCompany().getSerialNum());
+            onLineUser.setSerialNum(stageUser.getId());
+            stageUser.setSerialNum(onLineUser.getId());
+            onLineList.add(onLineUser);
+
+            CustomerStaff customerStaff = new CustomerStaff();
+            customerStaff.setCustomerId(stageUser.getCompany().getCoreCustomerId());
+            customerStaff.setId(stageUser.getCoreStaffId());
+            customerStaff.setStaffName(stageUser.getRealName());
+            customerStaff.setContactMobile(stageUser.getMobile());
+            customerStaff.setEmail(stageUser.getEmail());
+            customerStaff.setProvince(stageUser.getProvince());
+            customerStaff.setCity(stageUser.getCity());
+            customerStaff.setDistrict(stageUser.getDistrict());
+            customerStaff.setAddress(stageUser.getAddress());
+            customerStaff.setAvatar(stageUser.getAvatar());
+            customerStaff.setGender(Integer.toString(stageUser.getGender()));
+            customerStaff.setCreateBy(stageUser.getCreatedBy());
+            customerStaff.setCreateTime(stageUser.getCreatedOn());
+            customerStaff.setIsDelete((byte) 0);
+            customerStaff.setIsAvailable((byte) 1);
+            staffList.add(customerStaff);
+            CustomerStaffAccount customerStaffAccount = new CustomerStaffAccount();
+            customerStaffAccount.setId(IdGenerater.nextId());
+            customerStaffAccount.setCreateTime(new Date());
+            customerStaffAccount.setCreateBy(customerStaff.getCreateBy());
+            customerStaffAccount.setStaffId(customerStaff.getId());
+            customerStaffAccount.setLoginName(stageUser.getLoginName());
+            customerStaffAccount.setIsDelete((byte) 0);
+            customerStaffAccount.setIsAvailable((byte) 1);
+            String salt= IdGenerater.RandomLowerCharater(3);
+            String password = stageUser.getPassword()+salt;
+            String encode= CryptoUtils.encodeMD5(password);
+            customerStaffAccount.setPassword(encode);
+            customerStaffAccount.setSalt(salt);
+            staffAccountList.add(customerStaffAccount);
+        }
+        sysUserMapper.insertList(onLineList);
+        sysUserMapper.insertList(userList);
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb3);
+        customerStaffMapper.insertList(staffList);
+        customerStaffAccountMapper.insertList(staffAccountList);
+    }
+
+    private void insertCas1Relation(List<Cas1Relation> cas1RelationList) {
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        cas1RelationMapper.insertList(cas1RelationList);
+    }
+
+    private void insertChannel(List<BizChannel> bizChannelList)throws Exception {
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        List<BizChannel> onLineList = new ArrayList<>();
+        for (BizChannel stageChannel : bizChannelList) {
+            BizChannel onLineChannel = new BizChannel();
+            BeanUtils.object2Object(stageChannel,onLineChannel);
+            if("dealer".equals(stageChannel.getChannelRole())){
+                onLineChannel.setId(IdGenerater.nextId());
+            }else{
+                onLineChannel.setId(stageChannel.getId()+"1234567890");
+            }
+
+            if(StringUtils.isBlank(stageChannel.getParentId())){
+                onLineChannel.setParentId(null);
+            }else{
+                onLineChannel.setParentId(stageChannel.getParentId()+"1234567890");
+            }
+            onLineChannel.setCreatedBy(stageChannel.getCreatedBy());
+            onLineChannel.setDataType(online);
+            onLineChannel.setCompanyId(stageChannel.getCompany().getSerialNum());
+            onLineChannel.setSerialNum(stageChannel.getId());
+            stageChannel.setSerialNum(onLineChannel.getId());
+            onLineList.add(onLineChannel);
+        }
+        bizChannelMapper.insertList(onLineList);
+        bizChannelMapper.insertList(bizChannelList);
+    }
+
+    private void insertFinancial(List<BizFinancial> bizFinancialArrayList)throws Exception {
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        List<BizFinancial> onLineList = new ArrayList<>();
+        for (BizFinancial stageFinancial : bizFinancialArrayList) {
+            BizFinancial onLineFinancial = new BizFinancial();
+            BeanUtils.object2Object(stageFinancial,onLineFinancial);
+            onLineFinancial.setId(IdGenerater.nextId());
+            onLineFinancial.setCreatedBy(stageFinancial.getCreatedBy());
+            onLineFinancial.setCompanyId(stageFinancial.getCompany().getSerialNum());
+            onLineFinancial.setDataType(online);
+            onLineFinancial.setSerialNum(stageFinancial.getId());
+            stageFinancial.setSerialNum(onLineFinancial.getId());
+            onLineList.add(onLineFinancial);
+        }
+        bizFinancialMapper.insertList(onLineList);
+        bizFinancialMapper.insertList(bizFinancialArrayList);
+    }
+
+    private void insertVisit(List<BizVisit> bizVisitList)throws Exception  {
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        List<BizVisit> onLineList = new ArrayList<>();
+        for (BizVisit stageVisit : bizVisitList) {
+            BizVisit onLineVisit = new BizVisit();
+            BeanUtils.object2Object(stageVisit,onLineVisit);
+            onLineVisit.setId(IdGenerater.nextId());
+            onLineVisit.setCreatedBy(stageVisit.getCreatedBy());
+            onLineVisit.setDataType(online);
+            onLineVisit.setCompanyId(stageVisit.getCompany().getSerialNum());
+            onLineVisit.setSerialNum(stageVisit.getId());
+            stageVisit.setSerialNum(onLineVisit.getId());
+            onLineList.add(onLineVisit);
+        }
+        bizVisitMapper.insertList(onLineList);
+        bizVisitMapper.insertList(bizVisitList);
+    }
+
+    private void insertCapital(List<BizCapital> bizCapitalList)throws Exception  {
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        List<BizCapital> onLineList = new ArrayList<>();
+        for (BizCapital stageCapital : bizCapitalList) {
+            BizCapital onLineCapital = new BizCapital();
+            BeanUtils.object2Object(stageCapital,onLineCapital);
+            onLineCapital.setId(IdGenerater.nextId());
+            onLineCapital.setCreatedBy(stageCapital.getCreatedBy());
+            onLineCapital.setDataType(online);
+            onLineCapital.setCompanyId(stageCapital.getCompany().getSerialNum());
+            onLineCapital.setSerialNum(stageCapital.getId());
+            stageCapital.setSerialNum(onLineCapital.getId());
+            onLineList.add(onLineCapital);
+        }
+        bizCapitalMapper.insertList(onLineList);
+        bizCapitalMapper.insertList(bizCapitalList);
+    }
+
+    private void insertDocument(List<BizDocument> bizDocumentList)throws Exception {
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        List<BizDocument> onLineList = new ArrayList<>();
+        for (BizDocument stageDocument : bizDocumentList) {
+            BizDocument onLineDocument = new BizDocument();
+            BeanUtils.object2Object(stageDocument,onLineDocument);
+            if("1234567890".equals(stageDocument.getId())){
+                onLineDocument.setId("0987654321");
+                onLineDocument.setParentId(null);
+            }else{
+                onLineDocument.setId(IdGenerater.nextId());
+                onLineDocument.setParentId("0987654321");
+            }
+
+            onLineDocument.setCreatedBy(stageDocument.getCreatedBy());
+            onLineDocument.setDataType(online);
+            onLineDocument.setCompanyId(stageDocument.getCompany().getSerialNum());
+            onLineDocument.setSerialNum(stageDocument.getId());
+            stageDocument.setSerialNum(onLineDocument.getId());
+            onLineList.add(onLineDocument);
+        }
+        bizDocumentMapper.insertList(onLineList);
+        bizDocumentMapper.insertList(bizDocumentList);
+    }
+
+    public void insertCompany(List<SysCompany> list) throws Exception {
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb2);
+        List<SysCompany> onLineList = new ArrayList<>();
+        for (SysCompany stageCompany : list) {
+            SysCompany onLineCompany = new SysCompany();
+            BeanUtils.object2Object(stageCompany,onLineCompany);
+            onLineCompany.setId(IdGenerater.nextId());
+            onLineCompany.setCreatedBy(stageCompany.getCreatedBy());
+            onLineCompany.setDataType(online);
+            onLineCompany.setSerialNum(stageCompany.getId());
+            stageCompany.setSerialNum(onLineCompany.getId());
+            onLineList.add(onLineCompany);
+        }
+        sysCompanyMapper.insertList(onLineList);
+        sysCompanyMapper.insertList(list);
+        DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb3);
+        customerMapper.insertList(list);
+    }
+
+    private void clearCollections(){
+        list.clear();
+        userList.clear();
+        cas1RelationList.clear();
+        sysCompanyMap.clear();
+    }
 
 //    @Test
 //    public void testUser() throws IOException {
@@ -1402,7 +1601,7 @@ public class TestDao {
 //            }
 //        } else {
 //            System.out.println(result);
-//            throw new RuntimeException("推送核心数据库--公司数据失败");
+//            throw new RuntimeException("推送核心数据库--公司数据失败"); 4600
 //        }
 //
 //        return id;

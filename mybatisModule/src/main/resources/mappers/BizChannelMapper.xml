@@ -117,4 +117,35 @@
     check_remark, update_remark
     from biz_channel
   </select>
+
+  <insert id="insertList" parameterType="com.lzf.entity.BizChannel" >
+    insert into biz_channel (id, channel_role, company_id,
+    parent_id, loan_stop, trust_account_no,
+    trust_account_bank, trust_account_owner, recive_account_no,
+    recive_account_bank, recive_account_owner,
+    `sequence`, created_on, created_by,
+    is_delete, is_available, entrust_account_no,
+    entrust_account_bank, entrust_account_owner,
+    lazy_upload, quality_dealer, `status`,
+    serial_num, data_type, delete_at,
+    bond, trust_account_up, recive_account_up,
+    entrust_account_up, check_remark,
+    update_remark)
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+    (#{pojo.id,jdbcType=VARCHAR}, #{pojo.channelRole,jdbcType=VARCHAR}, #{pojo.companyId,jdbcType=VARCHAR},
+    #{pojo.parentId,jdbcType=VARCHAR}, #{pojo.loanStop,jdbcType=TINYINT}, #{pojo.trustAccountNo,jdbcType=VARCHAR},
+    #{pojo.trustAccountBank,jdbcType=VARCHAR}, #{pojo.trustAccountOwner,jdbcType=VARCHAR}, #{pojo.reciveAccountNo,jdbcType=VARCHAR},
+    #{pojo.reciveAccountBank,jdbcType=VARCHAR}, #{pojo.reciveAccountOwner,jdbcType=VARCHAR},
+    #{pojo.sequence,jdbcType=INTEGER}, #{pojo.createdOn,jdbcType=TIMESTAMP}, #{pojo.createdBy,jdbcType=VARCHAR},
+    #{pojo.isDelete,jdbcType=TINYINT}, #{pojo.isAvailable,jdbcType=TINYINT}, #{pojo.entrustAccountNo,jdbcType=VARCHAR},
+    #{pojo.entrustAccountBank,jdbcType=VARCHAR}, #{pojo.entrustAccountOwner,jdbcType=VARCHAR},
+    #{pojo.lazyUpload,jdbcType=BIT}, #{pojo.qualityDealer,jdbcType=BIT}, #{pojo.status,jdbcType=VARCHAR},
+    #{pojo.serialNum,jdbcType=VARCHAR}, #{pojo.dataType,jdbcType=VARCHAR}, #{pojo.deleteAt,jdbcType=TIMESTAMP},
+    #{pojo.bond,jdbcType=DECIMAL}, #{pojo.trustAccountUp,jdbcType=LONGVARCHAR}, #{pojo.reciveAccountUp,jdbcType=LONGVARCHAR},
+    #{pojo.entrustAccountUp,jdbcType=LONGVARCHAR}, #{pojo.checkRemark,jdbcType=LONGVARCHAR},
+    #{pojo.updateRemark,jdbcType=LONGVARCHAR})
+    </foreach>
+  </insert>
+
 </mapper>

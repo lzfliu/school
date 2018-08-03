@@ -113,4 +113,32 @@
     `status`, serial_num, data_type, delete_at, check_remark, update_remark
     from biz_capital
   </select>
+
+  <insert id="insertList" parameterType="com.lzf.entity.BizCapital" >
+    insert into biz_capital (id, company_id, repay_type,
+    card_type, first_beneficiary, repay_day_type,
+    loan_sign_type, rate_type, account_no,
+    account_bank, account_owner, allow_private_account,
+    mortgages, max_loan_rate, overrate,
+    created_by, is_available, created_on,
+    is_delete, min_pay_down, rate_delay,
+    transfer_key, total_document_id, is_need_appointment,
+    order_date_provider, `status`, serial_num,
+    data_type, delete_at, check_remark,
+    update_remark)
+    values
+    <foreach collection="list" index="index" item="pojo" separator=",">
+    (#{pojo.id,jdbcType=VARCHAR}, #{pojo.companyId,jdbcType=VARCHAR}, #{pojo.repayType,jdbcType=VARCHAR},
+    #{pojo.cardType,jdbcType=VARCHAR}, #{pojo.firstBeneficiary,jdbcType=VARCHAR}, #{pojo.repayDayType,jdbcType=VARCHAR},
+    #{pojo.loanSignType,jdbcType=VARCHAR}, #{pojo.rateType,jdbcType=VARCHAR}, #{pojo.accountNo,jdbcType=VARCHAR},
+    #{pojo.accountBank,jdbcType=VARCHAR}, #{pojo.accountOwner,jdbcType=VARCHAR}, #{pojo.allowPrivateAccount,jdbcType=BIT},
+    #{pojo.mortgages,jdbcType=VARCHAR}, #{pojo.maxLoanRate,jdbcType=DECIMAL}, #{pojo.overrate,jdbcType=DECIMAL},
+    #{pojo.createdBy,jdbcType=VARCHAR}, #{pojo.isAvailable,jdbcType=BIT}, #{pojo.createdOn,jdbcType=TIMESTAMP},
+    #{pojo.isDelete,jdbcType=BIT}, #{pojo.minPayDown,jdbcType=DECIMAL}, #{pojo.rateDelay,jdbcType=DECIMAL},
+    #{pojo.transferKey,jdbcType=VARCHAR}, #{pojo.totalDocumentId,jdbcType=VARCHAR}, #{pojo.isNeedAppointment,jdbcType=BIT},
+    #{pojo.orderDateProvider,jdbcType=VARCHAR}, #{pojo.status,jdbcType=VARCHAR}, #{pojo.serialNum,jdbcType=VARCHAR},
+    #{pojo.dataType,jdbcType=VARCHAR}, #{pojo.deleteAt,jdbcType=TIMESTAMP}, #{pojo.checkRemark,jdbcType=LONGVARCHAR},
+    #{pojo.updateRemark,jdbcType=LONGVARCHAR})
+    </foreach>
+  </insert>
 </mapper>

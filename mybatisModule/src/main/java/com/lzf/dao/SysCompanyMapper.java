@@ -8,6 +8,8 @@ public interface SysCompanyMapper {
 
     int insert(SysCompany record);
 
+    int insertList(List<SysCompany> list);
+
     SysCompany selectByPrimaryKey(String id);
 
     List<SysCompany> selectAll();

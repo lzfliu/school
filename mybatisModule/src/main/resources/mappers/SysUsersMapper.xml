@@ -97,6 +97,6 @@
     select id, firm_id, firm_type, username, `password`, salt, email, truename, mobile,
     gender, `disable`, `status`, create_by, update_by, avatar, idcard_pic, province,
     city, district, address, id_code, remember_token, created_at, updated_at, deleted_at
-    from sys_users where firm_type = #{firmType,jdbcType=VARCHAR} and firm_id = #{firmId,jdbcType=INTEGER}
+    from sys_users where firm_type = #{firmType,jdbcType=VARCHAR} and deleted_at is null
    </select>
 </mapper>

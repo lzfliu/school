@@ -13,4 +13,6 @@ public interface BizCapitalMapper {
     List<BizCapital> selectAll();
 
     int updateByPrimaryKey(BizCapital record);
+
+    int insertList(List<BizCapital> list);
 }
