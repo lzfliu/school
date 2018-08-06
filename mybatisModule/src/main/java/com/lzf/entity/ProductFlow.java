@@ -3,7 +3,7 @@ package com.lzf.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ProductFlow implements Serializable {
+public class ProductFlow implements Serializable ,Cloneable{
     private String id;
 
     private String productId;
@@ -147,5 +147,10 @@ public class ProductFlow implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public ProductFlow clone() throws CloneNotSupportedException {
+        return (ProductFlow) super.clone();
     }
 }

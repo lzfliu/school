@@ -2,7 +2,7 @@ package com.lzf.entity;
 
 import java.io.Serializable;
 
-public class Cas1Relation implements Serializable {
+public class Cas1Relation implements Serializable,Cloneable {
     private String id;
 
     private String type;
@@ -47,5 +47,10 @@ public class Cas1Relation implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public Cas1Relation clone() throws CloneNotSupportedException {
+        return (Cas1Relation) super.clone();
     }
 }

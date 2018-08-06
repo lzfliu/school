@@ -3,6 +3,7 @@ package com.lzf.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Products implements Serializable {
     private Integer id;
@@ -118,6 +119,16 @@ public class Products implements Serializable {
     private String maxKm;
 
     private String carageLimit;
+
+    private List<ProductLoans> productLoansList;
+
+    public List<ProductLoans> getProductLoansList() {
+        return productLoansList;
+    }
+
+    public void setProductLoansList(List<ProductLoans> productLoansList) {
+        this.productLoansList = productLoansList;
+    }
 
     private static final long serialVersionUID = 1L;
 
