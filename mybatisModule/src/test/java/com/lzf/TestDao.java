@@ -1196,6 +1196,11 @@ public class TestDao {
 //    }
 //
 
+    /**
+     * 导入公司数据时候对于资方 金融 放款公司没有做处理  考虑在导入时候写死对应的公司id或者在导入数据后在cas2数据库里面对相应的公司做操作
+     * @throws IOException
+     * @throws CloneNotSupportedException
+     */
     @Test
     public void importProduct() throws IOException, CloneNotSupportedException {
         DatabaseContextHolder.setDatabaseType(DatabaseType.mytestdb);
