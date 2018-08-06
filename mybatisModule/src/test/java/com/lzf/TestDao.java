@@ -629,6 +629,7 @@ public class TestDao {
                 sysCompany.setDistrict(firmDealers.getDistrict());
                 sysCompany.setCreditCode(firmDealers.getEnterpriseCode());//营业执照编号
                 sysCompany.setCanAcp(true);
+                sysCompany.setCanHelpMortgage(true);
                 list.add(sysCompany);
             }
 
@@ -717,6 +718,7 @@ public class TestDao {
                 sysCompany.setDistrict(firmDealers.getDistrict());
                 sysCompany.setCreditCode(firmDealers.getEnterpriseCode());//营业执照编号
                 sysCompany.setCanSp(true);
+                sysCompany.setCanHelpMortgage(true);
                 list.add(sysCompany);
             }
             sysCompanyMap.put("Dealer"+firmDealers.getId(),sysCompany);
